@@ -18,6 +18,22 @@ const scoutVisorTilt = 0.26;
 const scoutAssemblyScale = 0.96;
 const scoutVerticalScale = scoutAssemblyScale * 0.97;
 
+type AvatarModel = {
+  cap: (x: number, y: number) => number;
+  shell: BufferGeometry;
+  rim: BufferGeometry;
+  screen: BufferGeometry;
+  smile: BufferGeometry;
+  smileEnds: BufferGeometry[];
+  eyes: BufferGeometry[];
+  bottom: number;
+  top: number;
+};
+
+// Shape geometry is expensive to derive and does not depend on color or face
+// choices. Keep one shared model per body so switching back is immediate.
+const avatarModels = new Map<AvatarConfig["body"], AvatarModel>();
+
 function scoutShellGeometry() {
   // Normalize the reference to 100 px per model unit. The front is 180 px
   // wide, and the back facet tapers from 94 to 44 px over 60 px of height.
@@ -148,6 +164,8 @@ export function AvatarFigure({ avatar, color, pointerLook, reactToChoices = fals
   });
   const model = useMemo(() => {
     const body = avatar.body;
+    const cached = avatarModels.get(body);
+    if (cached) return cached;
     const shell = shellGeometry(body);
     const probeMaterial = new MeshBasicMaterial();
     const probe = new Mesh(shell, probeMaterial);
@@ -365,9 +383,10 @@ export function AvatarFigure({ avatar, color, pointerLook, reactToChoices = fals
     const smile = geometry(smileVertices, smileIndices);
     const smileEnds = [0, 1].map(t => disk((a, r) => { const [x, y] = path(t); return [x + Math.cos(a) * smileRadius * r, y + Math.sin(a) * smileRadius * r]; }, (x, y) => cap(x, y) + 0.0016));
     probeMaterial.dispose();
-    return { cap, shell, rim, screen, smile, smileEnds, eyes, bottom: body === "comet" ? -0.81 : body === "scout" ? scoutBaseHeight : tall ? -1.03 : body === "prism" ? -0.755 : body === "cube" ? -0.79 : -0.85, top: body === "comet" ? 0.81 : body === "scout" ? scoutCrownHeight : tall ? 1.03 : body === "prism" ? 0.79 : body === "cube" ? 0.79 : 0.85 };
+    const model: AvatarModel = { cap, shell, rim, screen, smile, smileEnds, eyes, bottom: body === "comet" ? -0.81 : body === "scout" ? scoutBaseHeight : tall ? -1.03 : body === "prism" ? -0.755 : body === "cube" ? -0.79 : -0.85, top: body === "comet" ? 0.81 : body === "scout" ? scoutCrownHeight : tall ? 1.03 : body === "prism" ? 0.79 : body === "cube" ? 0.79 : 0.85 };
+    avatarModels.set(body, model);
+    return model;
   }, [avatar.body]);
-  useEffect(() => () => { model.shell.dispose(); model.rim.dispose(); model.screen.dispose(); model.smile.dispose(); model.eyes.forEach(g => g.dispose()); model.smileEnds.forEach(g => g.dispose()); }, [model]);
   const scout = avatar.body === "scout";
   // Keep the soles at the same height when scaling the assembled model.
   const lift = -1 - model.bottom + (scout ? -0.93 * (1 - scoutVerticalScale) : 0);
