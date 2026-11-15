@@ -1,10 +1,14 @@
 import { z } from "zod";
 
 const sha256Schema = z.string().regex(/^[a-f0-9]{64}$/i, "Expected SHA-256");
+const coordinateSchema = z.object({
+  longitude: z.number().finite().min(-180).max(360),
+  latitude: z.number().finite().min(-90).max(90),
+});
 
 export const scientificMeasurementSchema = z
   .object({
-    wavelength: z.number().finite().optional(),
+    wavelength: z.number().finite().positive().optional(),
     value: z.number().finite(),
     units: z.string().min(1),
     valid: z.boolean().optional(),
@@ -12,9 +16,7 @@ export const scientificMeasurementSchema = z
     element: z.string().min(1).optional(),
     uncertainty: z.number().finite().nonnegative().nullable().optional(),
     uncertaintyAvailable: z.boolean().optional(),
-    coordinate: z
-      .object({ longitude: z.number().finite(), latitude: z.number().finite() })
-      .optional(),
+    coordinate: coordinateSchema.optional(),
   })
   .passthrough();
 
@@ -44,11 +46,17 @@ const adapterArtifactSchema = z.object({
     }),
   }),
   source: z.object({
-    url: z.string().url().refine((value) => value.startsWith("https://")),
+    url: z
+      .string()
+      .url()
+      .refine((value) => value.startsWith("https://")),
     labelSha256: sha256Schema,
     dataSha256: sha256Schema,
   }),
-  measurements: z.object({ count: z.number().int().nonnegative(), path: z.string().min(1) }),
+  measurements: z.object({
+    count: z.number().int().nonnegative(),
+    path: z.string().min(1),
+  }),
   quality: z.record(z.string(), z.unknown()),
   limitations: z.array(z.string().min(1)),
 });
@@ -59,10 +67,7 @@ export const scientificDatasetOptionsSchema = z.object({
   measurementType: z.string().min(1),
   classification: z.enum(["observed", "derived", "contextual", "simulated"]),
   validationStatus: z.enum(["staged-unapproved", "approved"]),
-  coordinates: z
-    .object({ longitude: z.number().finite(), latitude: z.number().finite() })
-    .nullable()
-    .default(null),
+  coordinates: coordinateSchema.nullable().default(null),
 });
 
 export type ScientificMeasurement = z.infer<typeof scientificMeasurementSchema>;
@@ -75,7 +80,11 @@ export type ScientificDataset = {
   units: string;
   sourceUrl: string;
   coordinates: { longitude: number; latitude: number } | null;
-  observationTime: { start: string | null; end: string | null; sol: string | null };
+  observationTime: {
+    start: string | null;
+    end: string | null;
+    sol: string | null;
+  };
   validationStatus: "staged-unapproved" | "approved";
   classification: "observed" | "derived" | "contextual" | "simulated";
   limitations: string[];
@@ -92,7 +101,8 @@ export class ScientificDatasetNotApprovedError extends Error {}
 function freeze<T>(value: T): T {
   if (value && typeof value === "object" && !Object.isFrozen(value)) {
     Object.freeze(value);
-    for (const child of Object.values(value as Record<string, unknown>)) freeze(child);
+    for (const child of Object.values(value as Record<string, unknown>))
+      freeze(child);
   }
   return value;
 }
@@ -112,11 +122,61 @@ export function scientificDatasetFromAdapterArtifact(
   if (expectedType !== parsed.artifactType) {
     throw new Error("Dataset identifier does not match adapter artifact type");
   }
+  const instrument =
+    parsed.artifactType === "quantitative-crism" ? "CRISM" : "PIXL";
+  if (!parsed.product.instrument.toUpperCase().includes(instrument)) {
+    throw new Error("Instrument does not match adapter artifact type");
+  }
+  if (
+    config.validationStatus === "approved" &&
+    parsed.quality.checksumVerified !== true
+  ) {
+    throw new Error(
+      "Approved scientific datasets require verified source checksums",
+    );
+  }
   const rawMeasurements = measurementRecords;
-  if (!Array.isArray(rawMeasurements) || rawMeasurements.length !== parsed.measurements.count) {
+  if (
+    !Array.isArray(rawMeasurements) ||
+    rawMeasurements.length !== parsed.measurements.count
+  ) {
     throw new Error("Adapter measurement count does not match the artifact");
   }
-  const measurements = rawMeasurements.map((item) => scientificMeasurementSchema.parse(item));
+  const measurements = rawMeasurements.map((item) =>
+    scientificMeasurementSchema.parse(item),
+  );
+  for (const measurement of measurements) {
+    if (measurement.units !== parsed.product.units)
+      throw new Error("Measurement units do not match the source product");
+    if (instrument === "CRISM" && measurement.wavelength === undefined)
+      throw new Error("CRISM measurements require a wavelength");
+    if (instrument === "PIXL" && !measurement.element)
+      throw new Error("PIXL measurements require an element identity");
+    if (
+      measurement.value === parsed.product.nodata &&
+      measurement.valid !== false
+    )
+      throw new Error("No-data measurements must be marked invalid");
+    if (
+      measurement.uncertaintyAvailable === true &&
+      measurement.uncertainty == null
+    )
+      throw new Error("Available uncertainty requires a numeric value");
+    if (measurement.coordinate) {
+      const bounds = parsed.product.bounds;
+      if (
+        !bounds ||
+        measurement.coordinate.longitude < bounds.west ||
+        measurement.coordinate.longitude > bounds.east ||
+        measurement.coordinate.latitude < bounds.south ||
+        measurement.coordinate.latitude > bounds.north
+      ) {
+        throw new Error(
+          "Measurement coordinates lie outside declared product bounds",
+        );
+      }
+    }
+  }
   const result: ScientificDataset = {
     datasetId: config.datasetId,
     version: config.version,
@@ -134,17 +194,24 @@ export function scientificDatasetFromAdapterArtifact(
     validationStatus: config.validationStatus,
     classification: config.classification,
     limitations: [...parsed.limitations],
-    quality: { ...parsed.quality, sourceArtifactSchemaVersion: parsed.schemaVersion },
+    quality: {
+      ...parsed.quality,
+      sourceArtifactSchemaVersion: parsed.schemaVersion,
+    },
     source: { ...parsed.source },
     nodata: parsed.product.nodata,
     coordinateSystem: parsed.product.coordinateSystem,
     measurements,
   };
-  return freeze(result);
+  return freeze(structuredClone(result));
 }
 
 export interface ReadOnlyScientificDatasetRepository {
-  get(datasetId: string, version: string, options?: { allowStaged?: boolean }): ScientificDataset;
+  get(
+    datasetId: string,
+    version: string,
+    options?: { allowStaged?: boolean },
+  ): ScientificDataset;
   list(options?: { allowStaged?: boolean }): ScientificDataset[];
 }
 
@@ -152,22 +219,40 @@ export class InMemoryScientificDatasetRepository implements ReadOnlyScientificDa
   private readonly datasets: ReadonlyMap<string, ScientificDataset>;
 
   constructor(datasets: ScientificDataset[]) {
-    const entries = datasets.map((dataset) => [`${dataset.datasetId}@${dataset.version}`, freeze(dataset)] as const);
+    const entries = datasets.map(
+      (dataset) =>
+        [
+          JSON.stringify([dataset.datasetId, dataset.version]),
+          freeze(structuredClone(dataset)),
+        ] as const,
+    );
+    if (new Set(entries.map(([key]) => key)).size !== entries.length)
+      throw new Error("Duplicate scientific dataset version");
     this.datasets = new Map(entries);
   }
 
-  get(datasetId: string, version: string, options: { allowStaged?: boolean } = {}): ScientificDataset {
-    const dataset = this.datasets.get(`${datasetId}@${version}`);
-    if (!dataset) throw new ScientificDatasetNotFoundError("Scientific dataset was not found");
+  get(
+    datasetId: string,
+    version: string,
+    options: { allowStaged?: boolean } = {},
+  ): ScientificDataset {
+    const dataset = this.datasets.get(JSON.stringify([datasetId, version]));
+    if (!dataset)
+      throw new ScientificDatasetNotFoundError(
+        "Scientific dataset was not found",
+      );
     if (!options.allowStaged && dataset.validationStatus !== "approved") {
-      throw new ScientificDatasetNotApprovedError("Scientific dataset is staged and not approved for production");
+      throw new ScientificDatasetNotApprovedError(
+        "Scientific dataset is staged and not approved for production",
+      );
     }
     return dataset;
   }
 
   list(options: { allowStaged?: boolean } = {}): ScientificDataset[] {
     return [...this.datasets.values()].filter(
-      (dataset) => options.allowStaged || dataset.validationStatus === "approved",
+      (dataset) =>
+        options.allowStaged || dataset.validationStatus === "approved",
     );
   }
 }

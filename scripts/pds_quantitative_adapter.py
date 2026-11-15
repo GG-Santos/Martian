@@ -347,7 +347,8 @@ def stage_product(
             "quality": {
                 "labelValidated": True,
                 "checksumVerified": bool(expected_data_sha256 and expected_label_sha256),
-                "coordinatesValidated": all("coordinate" in item for item in measurements) or not any("coordinate" in item for item in measurements),
+                "coordinatesAvailable": any("coordinate" in item for item in measurements),
+                "coordinatesValidated": all("coordinate" in item for item in measurements),
                 "unitsValidated": True,
                 "nodataPreserved": kind == "crism",
                 "uncertaintyValidated": kind == "pixl",

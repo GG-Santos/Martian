@@ -26,6 +26,15 @@ The repository rejects unknown dataset IDs, version mismatches, malformed
 measurements, missing source metadata, and staged data requested without
 `allowStaged: true`. It never mutates an artifact or dataset record.
 
+Approved adapter artifacts must report verified source checksums. The contract
+also checks instrument identity, measurement units, CRISM wavelengths, PIXL
+element identity, no-data flags, uncertainty availability, and measurement
+coordinates against the declared product bounds. Latitude must be within
+-90 to 90 degrees; longitude supports Mars conventions from -180 to 360 degrees.
+Missing coordinates remain unavailable and are never reported as validated.
+Dataset versions must be unique. Returned records are independent, deeply frozen
+copies, so constructing a repository does not freeze the caller's source data.
+
 Example repository usage:
 
 ```ts

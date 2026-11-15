@@ -10,7 +10,8 @@ const crismArtifact = {
   schemaVersion: 1,
   artifactType: "quantitative-crism",
   product: {
-    productId: "urn:nasa:pds:mro_crism_mtrdr:data_mtrdr:hrl000040ff_07_if183j_mtr3",
+    productId:
+      "urn:nasa:pds:mro_crism_mtrdr:data_mtrdr:hrl000040ff_07_if183j_mtr3",
     versionId: "1.0",
     instrument: "CRISM",
     units: "I/F",
@@ -18,7 +19,11 @@ const crismArtifact = {
     coordinateSystem: "Mars map projection",
     processingLevel: "MTRDR",
     bounds: { west: 77.2, east: 77.6, south: 18.2, north: 18.8 },
-    observation: { start: "2007-01-29T10:48:10Z", end: "2007-01-29T10:50:17Z", sol: null },
+    observation: {
+      start: "2007-01-29T10:48:10Z",
+      end: "2007-01-29T10:50:17Z",
+      sol: null,
+    },
   },
   source: {
     url: "https://pds.example/crism",
@@ -30,7 +35,9 @@ const crismArtifact = {
   limitations: ["Single-pixel spectrum; no mineral classification."],
 };
 
-function dataset(status: "staged-unapproved" | "approved" = "staged-unapproved") {
+function dataset(
+  status: "staged-unapproved" | "approved" = "staged-unapproved",
+) {
   return scientificDatasetFromAdapterArtifact(
     crismArtifact,
     {
@@ -45,6 +52,87 @@ function dataset(status: "staged-unapproved" | "approved" = "staged-unapproved")
 }
 
 describe("read-only scientific dataset contract", () => {
+  const config = {
+    datasetId: "crism-hrl000040ff-07-if183j-mtr3",
+    version: "1.0",
+    measurementType: "CRISM single-pixel I/F spectrum",
+    classification: "observed" as const,
+    validationStatus: "approved" as const,
+  };
+
+  it.each([
+    { value: 0.1, units: "I/F" },
+    { wavelength: -1, value: 0.1, units: "I/F" },
+    { wavelength: 436.13, value: 0.1, units: "wt%" },
+    { wavelength: 436.13, value: 65535, units: "I/F", valid: true },
+    {
+      wavelength: 436.13,
+      value: 0.1,
+      units: "I/F",
+      coordinate: { longitude: 77.4, latitude: 95 },
+    },
+    {
+      wavelength: 436.13,
+      value: 0.1,
+      units: "I/F",
+      coordinate: { longitude: 80, latitude: 18.5 },
+    },
+    {
+      wavelength: 436.13,
+      value: 0.1,
+      units: "I/F",
+      uncertaintyAvailable: true,
+      uncertainty: null,
+    },
+  ])("rejects scientifically inconsistent records: %j", (record) => {
+    expect(() =>
+      scientificDatasetFromAdapterArtifact(crismArtifact, config, [record]),
+    ).toThrow();
+  });
+
+  it("requires verified checksums before approving an adapter artifact", () => {
+    expect(() =>
+      scientificDatasetFromAdapterArtifact(
+        { ...crismArtifact, quality: { checksumVerified: false } },
+        config,
+        [{ wavelength: 436.13, value: 0.1, units: "I/F" }],
+      ),
+    ).toThrow(/checksum/i);
+  });
+
+  it("rejects an instrument that disagrees with the adapter type", () => {
+    expect(() =>
+      scientificDatasetFromAdapterArtifact(
+        {
+          ...crismArtifact,
+          product: { ...crismArtifact.product, instrument: "PIXL" },
+        },
+        config,
+        [{ wavelength: 436.13, value: 0.1, units: "I/F" }],
+      ),
+    ).toThrow(/instrument/i);
+  });
+
+  it("does not freeze the caller's nested metadata or measurement fields", () => {
+    const calibration = { revision: 1 };
+    const sourceFields = { column: "if_value" };
+    const result = scientificDatasetFromAdapterArtifact(
+      { ...crismArtifact, quality: { checksumVerified: true, calibration } },
+      config,
+      [{ wavelength: 436.13, value: 0.1, units: "I/F", sourceFields }],
+    );
+    expect(Object.isFrozen(calibration)).toBe(false);
+    expect(Object.isFrozen(sourceFields)).toBe(false);
+    calibration.revision = 2;
+    expect(result.quality.calibration).toEqual({ revision: 1 });
+  });
+
+  it("rejects duplicate dataset versions instead of replacing immutable data", () => {
+    expect(
+      () => new InMemoryScientificDatasetRepository([dataset(), dataset()]),
+    ).toThrow(/duplicate/i);
+  });
+
   it("normalizes adapter metadata and measurements without coordinates by default", () => {
     const value = dataset();
     expect(value.productId).toContain("hrl000040ff_07_if183j_mtr3");
@@ -54,18 +142,22 @@ describe("read-only scientific dataset contract", () => {
   });
 
   it("rejects unknown datasets and version mismatches", () => {
-    const repository = new InMemoryScientificDatasetRepository([dataset("approved")]);
-    expect(() => repository.get("unknown", "1.0")).toThrow(ScientificDatasetNotFoundError);
-    expect(() => repository.get("crism-hrl000040ff-07-if183j-mtr3", "2.0")).toThrow(
+    const repository = new InMemoryScientificDatasetRepository([
+      dataset("approved"),
+    ]);
+    expect(() => repository.get("unknown", "1.0")).toThrow(
       ScientificDatasetNotFoundError,
     );
+    expect(() =>
+      repository.get("crism-hrl000040ff-07-if183j-mtr3", "2.0"),
+    ).toThrow(ScientificDatasetNotFoundError);
   });
 
   it("does not expose staged data as production-ready", () => {
     const repository = new InMemoryScientificDatasetRepository([dataset()]);
-    expect(() => repository.get("crism-hrl000040ff-07-if183j-mtr3", "1.0")).toThrow(
-      ScientificDatasetNotApprovedError,
-    );
+    expect(() =>
+      repository.get("crism-hrl000040ff-07-if183j-mtr3", "1.0"),
+    ).toThrow(ScientificDatasetNotApprovedError);
     expect(repository.list()).toEqual([]);
     expect(repository.list({ allowStaged: true })).toHaveLength(1);
   });
@@ -85,7 +177,10 @@ describe("read-only scientific dataset contract", () => {
       },
       [{ wavelength: 436.13, value: 0.1, units: "I/F" }],
     );
-    expect(value.coordinates).toEqual({ longitude: 77.5112, latitude: 18.4637 });
+    expect(value.coordinates).toEqual({
+      longitude: 77.5112,
+      latitude: 18.4637,
+    });
     expect(() =>
       scientificDatasetFromAdapterArtifact(
         crismArtifact,

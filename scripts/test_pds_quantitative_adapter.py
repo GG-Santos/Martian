@@ -64,6 +64,8 @@ class QuantitativeAdapterTests(unittest.TestCase):
             self.assertEqual(measurements[0]["sourceFields"], {"wavelength": "wavelength_nm", "value": "if_value"})
             self.assertFalse(measurements[1]["valid"])
             self.assertEqual(result["product"]["bounds"]["west"], 77.2)
+            self.assertFalse(result["quality"]["coordinatesValidated"])
+            self.assertFalse(result["quality"]["coordinatesAvailable"])
 
     def test_authentic_pixl_wide_schema_normalizes_values_and_missing_uncertainty(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -76,6 +78,8 @@ class QuantitativeAdapterTests(unittest.TestCase):
             self.assertEqual(measurements[0]["element"], "SiO2")
             self.assertEqual(measurements[0]["uncertainty"], 1.88)
             self.assertIsNone(result["product"]["bounds"])
+            self.assertFalse(result["quality"]["coordinatesValidated"])
+            self.assertFalse(result["quality"]["coordinatesAvailable"])
 
     def test_crism_staging_is_deterministic_and_preserves_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -89,6 +93,8 @@ class QuantitativeAdapterTests(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(json.loads((output_a / "measurements.json").read_text())[1]["valid"], False)
             self.assertTrue(first["quality"]["checksumVerified"])
+            self.assertTrue(first["quality"]["coordinatesAvailable"])
+            self.assertTrue(first["quality"]["coordinatesValidated"])
 
     def test_rejects_product_identifier_mismatch(self):
         with tempfile.TemporaryDirectory() as directory:
