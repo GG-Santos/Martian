@@ -42,6 +42,17 @@ These are research artifacts and are not consumed by the application unless sepa
 
 The notebook runs dataset integrity, baseline slope reproduction, Horn slope sensitivity, four- versus eight-neighbor hazards, route-cost sensitivity, cross-layer registration checks, and runtime/memory observations. Each result records assumptions and limitations. No accuracy or confidence score is invented without independent validation data.
 
+## Terrain roughness convention
+
+The current local-relief diagnostic is `local_relief(values, radius_cells=1)` in
+`terrain_metrics.py`. For each cell it reports the maximum minus minimum finite
+elevation in the surrounding square window, including the center cell. It is a
+descriptive elevation-range metric in metres, not a calibrated geomorphology
+roughness index. The default calculation operates on the 257 x 257, 8 m
+analysis grid. The bundled `relief.f32` asset is a separate 513 x 513, 4 m
+grid and must not be compared cell-for-cell with the 8 m diagnostic or silently
+substituted into gameplay calculations.
+
 ## Local tests
 
 Tests use synthetic grids and do not require the Mars assets. They should be run only after approval:
