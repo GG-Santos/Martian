@@ -1,6 +1,6 @@
 "use client";
-import { Component, Suspense, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Component, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { CameraController } from "./CameraController";
 import { HazardOverlay } from "../hazards/HazardOverlay";
 import type { Hazard } from "../hazards/hazard-types";
@@ -24,7 +24,7 @@ import { TerrainFallback } from "./TerrainFallback";
 import { RouteOverlay } from "./RouteOverlay";
 import type { LayerSettings } from "../layers/layer-state";
 class SceneBoundary extends Component<
-  { children: React.ReactNode },
+  { children: ReactNode; fallback: ReactNode },
   { failed: boolean }
 > {
   state = { failed: false };
@@ -33,12 +33,22 @@ class SceneBoundary extends Component<
   }
   render() {
     return this.state.failed ? (
-      <TerrainFallback reason="The 3D view is unavailable. Use the local image and source notes." />
+      this.props.fallback
     ) : (
       this.props.children
     );
   }
 }
+
+function ContextLoss({ onLost }: { onLost: () => void }) {
+  const canvas = useThree((state) => state.gl.domElement);
+  useEffect(() => {
+    canvas.addEventListener("webglcontextlost", onLost);
+    return () => canvas.removeEventListener("webglcontextlost", onLost);
+  }, [canvas, onLost]);
+  return null;
+}
+
 export function TerrainCanvas({
   mission,
   grid,
@@ -60,6 +70,7 @@ export function TerrainCanvas({
   onManual,
   crew,
   followPoint,
+  getFollowPoint,
   selectionFocus,
   hazards = [],
   selectedHazardId = null,
@@ -72,7 +83,11 @@ export function TerrainCanvas({
   onLiveSelect,
   showRouteNodes = true,
   includePresetStops = true,
+  children,
+  fallback,
 }: {
+  children?: ReactNode;
+  fallback?: ReactNode;
   liveMarkers?: LiveMarker[];
   liveRadiusM?: number;
   liveExposure?: LiveExposure;
@@ -86,6 +101,7 @@ export function TerrainCanvas({
   onHazardSelect?: (id: string) => void;
   crew?: CrewSceneProps;
   followPoint?: LocalPoint | null;
+  getFollowPoint?: () => LocalPoint | null;
   selectionFocus?: { point: LocalPoint; token: number } | null;
   detail?: HeightGrid | null;
   focus?: FocusCommand | null;
@@ -107,17 +123,20 @@ export function TerrainCanvas({
   focusedSample?: number | null;
 }) {
   const markerPortal = useRef<HTMLDivElement>(null);
+  const [contextLost, setContextLost] = useState(false);
+  const showFallback = useCallback(() => setContextLost(true), []);
+  const unavailable = fallback ?? <TerrainFallback reason="The 3D view is unavailable. Use the local image and source notes." />;
+  if (contextLost) return unavailable;
   return (
-    <SceneBoundary>
+    <SceneBoundary fallback={unavailable}>
       <div className="scanner-marker-portal" ref={markerPortal} />
       <Canvas
         frameloop="demand"
         dpr={[1, 1.5]}
         camera={{ position: [1700, 1550, 1900], fov: 43, near: 1, far: 15000 }}
-        fallback={
-          <TerrainFallback reason="WebGL is unavailable. The packaged overview remains usable." />
-        }
+        fallback={<p>This browser cannot display the 3D canvas.</p>}
       >
+        <ContextLoss onLost={showFallback} />
         <Suspense fallback={null}>
           <TerrainMesh
             mission={mission}
@@ -144,7 +163,7 @@ export function TerrainCanvas({
               onPick={onPick}
             />
           )}
-          {onHazardSelect && (
+          {hazards.length > 0 && (
             <HazardOverlay
               hazards={hazards}
               selectedId={selectedHazardId}
@@ -201,6 +220,7 @@ export function TerrainCanvas({
               focusedSample={focusedSample}
             />
           )}
+          {children}
         </Suspense>
         <ambientLight intensity={1.6} />
         <directionalLight position={[-400, 1000, 400]} intensity={2.2} />
@@ -209,6 +229,7 @@ export function TerrainCanvas({
           datum={mission.manifest.elevationRangeM[0]}
           scale={display.scale}
           followPoint={followPoint}
+          getFollowPoint={getFollowPoint}
           selectionFocus={selectionFocus}
           view={view}
           token={token}

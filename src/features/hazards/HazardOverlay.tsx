@@ -20,7 +20,7 @@ export function HazardOverlay({
 }: {
   hazards: Hazard[];
   selectedId: string | null;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
   grid: HeightGrid;
   detail: HeightGrid | null;
   datum: number;
@@ -41,9 +41,9 @@ export function HazardOverlay({
           hazard={hazard}
           selected={hazard.id === selectedId}
           showMarker={
-            hazard.category !== "slope" || markedSlopes.has(hazard.id)
+            !!onSelect && (hazard.category !== "slope" || markedSlopes.has(hazard.id))
           }
-          onSelect={() => onSelect(hazard.id)}
+          onSelect={() => onSelect?.(hazard.id)}
           grid={grid}
           detail={detail}
           datum={datum}

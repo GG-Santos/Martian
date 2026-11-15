@@ -45,12 +45,14 @@ export function CameraController({
   datum = 0,
   scale = 1,
   followPoint = null,
+  getFollowPoint,
   selectionFocus = null,
 }: {
   detail?: HeightGrid | null;
   datum?: number;
   scale?: ReliefScale;
   followPoint?: LocalPoint | null;
+  getFollowPoint?: () => LocalPoint | null;
   selectionFocus?: { point: LocalPoint; token: number } | null;
   view: "orbit" | "top";
   token: number;
@@ -163,9 +165,10 @@ export function CameraController({
     scale,
   ]);
   useFrame(() => {
-    if (!followPoint || !controls.current) return;
+    const point = getFollowPoint ? getFollowPoint() : followPoint;
+    if (!point || !controls.current) return;
     const desired = sampleDisplayedPosition(
-      followPoint,
+      point,
       grid,
       detail,
       datum,

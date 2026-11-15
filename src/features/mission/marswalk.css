@@ -4,6 +4,87 @@
   background: #0f1216;
   color: #e9edf0;
 }
+.simulation-terrain, .simulation-terrain-fallback {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+.simulation-terrain-viewport {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 300px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #2a302f, #11171b 75%);
+}
+.simulation-terrain-viewport > div:not(.scanner-marker-portal) {
+  flex: 1;
+  min-width: 0;
+}
+.simulation-terrain-viewport .scanner-marker-portal {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+}
+.simulation-terrain-controls, .simulation-view-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.simulation-terrain-controls {
+  padding: 7px 16px;
+  border-bottom: 1px solid #343b42;
+  background: #14191e;
+  color: #d7e0e4;
+  font-size: 11px;
+}
+.simulation-terrain-controls [role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.simulation-terrain-controls button, .simulation-terrain-controls select, .simulation-view-switch button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 3px 8px;
+  border: 1px solid #46535c;
+  background: #20282f;
+  color: #d7e0e4;
+  font-size: 11px;
+}
+.simulation-terrain-controls label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.simulation-terrain-controls button[aria-pressed="true"], .simulation-view-switch button[aria-pressed="true"] {
+  border-color: #afc8ba;
+  background: #c8d9ce;
+  color: #15251e;
+}
+.simulation-terrain-loading, .simulation-terrain-fallback > p, .simulation-terrain-message {
+  margin: 0;
+  padding: 10px 16px;
+  color: #d7e0e4;
+  font-size: 12px;
+}
+.simulation-terrain-loading {
+  flex: 1;
+}
+.simulation-terrain-message {
+  position: absolute;
+  inset: 0 auto auto 0;
+  background: #151b20;
+  pointer-events: none;
+}
+@media (max-width: 700px) {
+  .simulation-terrain-controls { padding-inline: 10px; }
+  .simulation-terrain-viewport { min-height: 380px; }
+  .stage-simulation .walk-layer-context { flex-wrap: wrap; }
+}
 .marswalk-console {
   max-width: 1800px;
   margin: auto;

@@ -19,7 +19,7 @@ This project addresses the 2026 NASA Space Apps challenge to combine data from m
 1. Open **Mission Command** (`/`) to explore Mars on the globe, then select **Build your crew**.
 2. In **Crew** (`/crew`), select a published mission, choose a habitat and crew size, and customize your astronaut. A room supports one to five members. Use capacity one for a solo run, share the room code with teammates, or let the captain fill open slots with crew bots.
 3. **Launch expedition** opens **Scanner** (`/scanner`). In **Plan**, switch science views, compare routes, add optional stops or return detours, and confirm the field kit. Check the predicted return resources before starting.
-4. In **Simulate**, watch the crew walk the route, work at its stops, and head back. Pause, change playback speed, or end the rehearsal. The outcome distinguishes a successful return, a reserve breach, resource exhaustion, and an aborted run.
+4. In **Simulate**, follow the crew across Jezero's 3D terrain as it walks the route, works at science stops, and returns to the habitat. Orbit the terrain, switch to top down, or use the 2D map. Pause, change playback speed, or end the rehearsal. The outcome distinguishes a successful return, a reserve breach, resource exhaustion, and an aborted run.
 5. In **Results**, review the run, download the field report, or return to planning. To propose your own science task, use the **Quest Board** (`/board`).
 
 ## NASA data in the Science Atlas

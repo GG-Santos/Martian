@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ArrowRight,
   ArrowLeft,
@@ -49,6 +50,11 @@ import {
 import { MarswalkResults } from "./MarswalkResults";
 import { ModelNotes } from "./MarswalkModelNotes";
 import "./marswalk.css";
+
+const MarswalkSimulationScene = dynamic(
+  () => import("./MarswalkSimulationScene").then((module) => module.MarswalkSimulationScene),
+  { ssr: false, loading: () => <p className="simulation-terrain-loading" role="status">Loading 3D terrain…</p> },
+);
 
 const atlasLayers = [
   {
@@ -157,6 +163,7 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
   const { snapshot: room, connection, setExpeditionPlan } = useRoom();
   const [selectedStage, setStage] = useState<Stage>("plan");
   const [layer, setLayer] = useState<SurfaceLayer>("optical");
+  const [simulationView, setSimulationView] = useState<"3d" | "2d">("3d");
   const atlasNavigation = useRef<HTMLElement>(null);
   useEffect(() => {
     const nav = atlasNavigation.current;
@@ -376,6 +383,7 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
       signature,
     });
     setLayer("optical");
+    setSimulationView("3d");
     setStage("simulation");
     setAddingWaypoint(false);
   };
@@ -389,6 +397,25 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
     setStage(next);
   };
   const failed = !!run?.aborted || !sample?.success;
+  const localLayer = layer === "optical" || layer === "slope" || layer === "thermal" || layer === "topographic" ? layer : null;
+  const showSimulationTerrain = stage === "simulation" && simulationView === "3d" && localLayer && run;
+  const surfaceMap = <MarswalkMap
+    mission={mission}
+    room={room}
+    route={stage === "simulation" && run ? run.route : route}
+    hazards={hazards}
+    showHazards={showHazards}
+    opacity={opacity}
+    layer={layer}
+    thermal={thermal}
+    slope={slope}
+    crewPoint={stage === "simulation" && sample ? sample.point : (room.base ?? undefined)}
+    onPick={stage === "plan" && addingWaypoint ? point => {
+      setWaypoints(list => [...list, point]);
+      setAddingWaypoint(false);
+      setNotice("Return detour added. The round trip and resource forecast have been recalculated.");
+    } : undefined}
+  />;
   const layerRange =
     layer === "thermal"
       ? `${mission.manifest.thermalDnRange.join("–")} DN · relative IR brightness, not °C`
@@ -776,6 +803,10 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
               </nav>
               <div className="walk-layer-context">
                 <span>{currentLayer.note}</span>
+                {stage === "simulation" && !archive && <div className="simulation-view-switch" role="group" aria-label="Simulation map view">
+                  <button aria-pressed={simulationView === "3d"} onClick={() => setSimulationView("3d")}>3D terrain</button>
+                  <button aria-pressed={simulationView === "2d"} onClick={() => setSimulationView("2d")}>2D map</button>
+                </div>}
                 {!archive && layer !== "optical" && (
                   <label>
                     Blend{" "}
@@ -827,33 +858,15 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
               </div>
             ) : (
               <>
-                <MarswalkMap
-                  mission={mission}
-                  room={room}
-                  route={stage === "simulation" && run ? run.route : route}
-                  hazards={hazards}
-                  showHazards={showHazards}
-                  opacity={opacity}
-                  layer={layer}
-                  thermal={thermal}
-                  slope={slope}
-                  crewPoint={
-                    stage === "simulation" && sample
-                      ? sample.point
-                      : (room.base ?? undefined)
-                  }
-                  onPick={
-                    stage === "plan" && addingWaypoint
-                      ? (point) => {
-                          setWaypoints((list) => [...list, point]);
-                          setAddingWaypoint(false);
-                          setNotice(
-                            "Return detour added. The round trip and resource forecast have been recalculated.",
-                          );
-                        }
-                      : undefined
-                  }
-                />
+                {showSimulationTerrain ? <MarswalkSimulationScene
+                  mission={mission} route={run.route} timeline={run.timeline} minute={run.minute}
+                  playing={run.playing} members={room.members} hazards={showHazards ? hazards : []}
+                  layer={localLayer} opacity={opacity} slope={slope} thermal={thermal}
+                  fallback={<div className="simulation-terrain-fallback">
+                    <p role="status">3D terrain unavailable. The simulation is continuing on the 2D map.</p>
+                    {surfaceMap}
+                  </div>}
+                /> : surfaceMap}
                 {addingWaypoint && (
                   <p className="walk-map-prompt" role="status">
                     Click the surface to add a waypoint to the return leg.
@@ -882,7 +895,9 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
               <small>
                 {archive
                   ? "Reference evidence · separate coverage"
-                  : "2.048 km local sector · drag to pan · use + / − to zoom"}
+                  : showSimulationTerrain
+                    ? "2.048 km local sector"
+                    : "2.048 km local sector · drag to pan · use + / − to zoom"}
               </small>
             </footer>
           </section>
