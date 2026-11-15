@@ -1,0 +1,99 @@
+{
+  "weather": {
+    "sol": 119,
+    "location": "Perseverance rover in Jezero crater. Regional observation; not measured at the hypothetical field stations.",
+    "sourceTime": "2021-06-20 to 2021-06-21 UTC",
+    "units": {
+      "temperatureC": "\u00b0C",
+      "pressurePa": "Pa",
+      "windMps": "m/s"
+    },
+    "timeBasis": "Local mean solar time (LMST) at the rover",
+    "method": "Exact nearest valid sample per channel within \u00b110 minutes of each 3-hour LMST bin. Channels may have different sample times. Gaps remain unavailable.",
+    "quality": "ATS_LOCAL_TEMP1 (K converted to \u00b0C), BAROCAP1_PRESSURE (Pa), BOOM1_HORIZONTAL_WIND_SPEED (m/s), wind only when control algorithm stable and rover still. Pressure/wind require a usable derived sample at the same SCLK, per SIS section 3.3.4. Empty cells and numeric fill sentinels excluded. Calibrated per-detector channels, not derived ambient estimates.",
+    "products": [
+      {
+        "channel": "ATS",
+        "productId": "urn:nasa:pds:mars2020_meda:data_calibrated_env:we__0119___________cal_ats_________________p",
+        "file": "WE__0119___________CAL_ATS_________________P01.CSV",
+        "url": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_ATS_________________P01.CSV",
+        "label": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_ATS_________________P01.xml",
+        "sha256": "650c05f55eb9ed024377f6fcbbf399084c454f7939598af96a624721fc556b04",
+        "sourceStart": "2021-06-20T10:55:12.078Z",
+        "sourceEnd": "2021-06-21T11:34:44.778Z"
+      },
+      {
+        "channel": "PS",
+        "productId": "urn:nasa:pds:mars2020_meda:data_calibrated_env:we__0119___________cal_ps__________________p",
+        "file": "WE__0119___________CAL_PS__________________P01.CSV",
+        "url": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_PS__________________P01.CSV",
+        "label": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_PS__________________P01.xml",
+        "sha256": "210701e7e221b1b71d66318bcbe0bff73d80a56f778b4f5a26badd3a331b17fa",
+        "sourceStart": "2021-06-20T10:55:16.078Z",
+        "sourceEnd": "2021-06-21T11:34:44.778Z"
+      },
+      {
+        "channel": "WS",
+        "productId": "urn:nasa:pds:mars2020_meda:data_calibrated_env:we__0119___________cal_ws__________________p",
+        "file": "WE__0119___________CAL_WS__________________P03.CSV",
+        "url": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_WS__________________P03.CSV",
+        "label": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0090_0179/sol_0119/WE__0119___________CAL_WS__________________P03.xml",
+        "sha256": "663c888831cd1e4e776e04b6294a8f88f96669cc25e3a17eda01fa9819f315d7",
+        "sourceStart": "2021-06-20T10:56:50.079Z",
+        "sourceEnd": "2021-06-21T11:34:44.778Z"
+      },
+      {
+        "channel": "Derived PS availability mask",
+        "productId": "urn:nasa:pds:mars2020_meda:data_derived_env:we__0119___________der_ps__________________p",
+        "file": "WE__0119___________DER_PS__________________P01.CSV",
+        "url": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_derived_env/sol_0090_0179/sol_0119/WE__0119___________DER_PS__________________P01.CSV",
+        "label": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_derived_env/sol_0090_0179/sol_0119/WE__0119___________DER_PS__________________P01.xml",
+        "sha256": "9a81457f2acb76c5f92ea8b59c9f12ff5412edd30666d0dc0a035057b5cdeef8",
+        "sourceStart": "2021-06-20T10:55:16.078Z",
+        "sourceEnd": "2021-06-21T11:34:44.778Z"
+      },
+      {
+        "channel": "Derived WS availability mask",
+        "productId": "urn:nasa:pds:mars2020_meda:data_derived_env:we__0119___________der_ws__________________p",
+        "file": "WE__0119___________DER_WS__________________P02.CSV",
+        "url": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_derived_env/sol_0090_0179/sol_0119/WE__0119___________DER_WS__________________P02.CSV",
+        "label": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_derived_env/sol_0090_0179/sol_0119/WE__0119___________DER_WS__________________P02.xml",
+        "sha256": "8e1f87112cdbedc2034d75379011db4f7c7024fdbf3be18fbdd0c7f32eae1848",
+        "sourceStart": "2021-06-20T10:55:39.079Z",
+        "sourceEnd": "2021-06-21T11:34:44.778Z"
+      }
+    ]
+  },
+  "regional": {
+    "title": "Jezero regional traverse",
+    "dateRange": "Archived traverse, sols 14\u2013686 (2021\u20132023)",
+    "credit": "NASA/JPL-Caltech \u00b7 M20 MMGIS traverse",
+    "source": "https://mars.nasa.gov/mmgis-maps/M20/Layers/json/M20_traverse.json",
+    "sourceSha256": "6ddd0ece913d75b45d105946082f95ed84e68f4718b68d32a4421dc30877e7e6",
+    "registration": "Source Mars planetocentric east longitude/latitude transformed into the playable patch PDS equirectangular frame. Simplified to 10 m spacing, original leg endpoints retained.",
+    "frame": "Local east/north meters in the same CRS and origin as the playable terrain",
+    "patch": [
+      [
+        0,
+        0
+      ],
+      [
+        2048,
+        0
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        0,
+        2048
+      ]
+    ],
+    "threeForks": {
+      "title": "Three Forks sample depot",
+      "date": "Completed January 28, 2023 \u00b7 sol 690",
+      "url": "https://science.nasa.gov/resource/perseverances-three-forks-sample-depot-map/"
+    }
+  }
+}

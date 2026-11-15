@@ -1,0 +1,169 @@
+{
+  "datasetId": "jezero-hirise-048842-048908-v1",
+  "status": "reviewed illustrative annotations",
+  "depressionMeasurement": {
+    "center": {
+      "x": 296,
+      "y": 1392
+    },
+    "method": "mean elevations at east, west, north and south offsets of 64 m minus center elevation, 8 m HiRISE analysis",
+    "centerElevationM": -2577.249755859375,
+    "reliefM": 7.159423828125
+  },
+  "annotations": [
+    {
+      "id": "H-01",
+      "category": "depression",
+      "title": "Depression edge",
+      "severity": "caution",
+      "evidence": "Reviewed scenario",
+      "marker": {
+        "x": 300.0,
+        "y": 1400.0
+      },
+      "geometry": {
+        "kind": "polygon",
+        "points": [
+          {
+            "x": 240,
+            "y": 1336
+          },
+          {
+            "x": 360,
+            "y": 1336
+          },
+          {
+            "x": 360,
+            "y": 1464
+          },
+          {
+            "x": 240,
+            "y": 1464
+          }
+        ]
+      },
+      "description": "Terrain around this reviewed depression has about 7.2 m of local relief relative to the mean of four samples 64 m from its center. Crater origin and rim depth are uncertain.",
+      "risks": [
+        "A descent can increase the effort needed to return. Edges may conceal a change in footing."
+      ],
+      "precautions": [
+        "Inspect the contour and return profile, and consider routing around the depression."
+      ],
+      "sources": [
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985",
+        "https://robotics.jpl.nasa.gov/what-we-do/flight-projects/mars-science-laboratory/surface-system-software-and-rover-navigation/"
+      ]
+    },
+    {
+      "id": "H-02",
+      "category": "sand",
+      "title": "Loose-sand scenario",
+      "severity": "caution",
+      "evidence": "Reviewed scenario",
+      "marker": {
+        "x": 820.0,
+        "y": 925.0
+      },
+      "geometry": {
+        "kind": "polygon",
+        "points": [
+          {
+            "x": 730,
+            "y": 830
+          },
+          {
+            "x": 910,
+            "y": 830
+          },
+          {
+            "x": 910,
+            "y": 1020
+          },
+          {
+            "x": 730,
+            "y": 1020
+          }
+        ]
+      },
+      "description": "Illustrative loose-material zone positioned in the orbital texture context. Surface bearing strength has not been measured here.",
+      "risks": [
+        "Loose material could reduce traction and increase walking effort."
+      ],
+      "precautions": [
+        "Assess the local surface and consider a firmer alternative in this scenario."
+      ],
+      "sources": [
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985",
+        "https://robotics.jpl.nasa.gov/what-we-do/flight-projects/mars-science-laboratory/surface-system-software-and-rover-navigation/"
+      ]
+    },
+    {
+      "id": "H-03",
+      "category": "rockfall",
+      "title": "Scarp exposure scenario",
+      "severity": "warning",
+      "evidence": "Reviewed scenario",
+      "marker": {
+        "x": 1190.0,
+        "y": 1265.0
+      },
+      "geometry": {
+        "kind": "polygon",
+        "points": [
+          {
+            "x": 1130,
+            "y": 1190
+          },
+          {
+            "x": 1250,
+            "y": 1190
+          },
+          {
+            "x": 1250,
+            "y": 1340
+          },
+          {
+            "x": 1130,
+            "y": 1340
+          }
+        ]
+      },
+      "description": "Illustrative exposure area near terrain relief. The archive does not provide a rockfall forecast.",
+      "risks": [
+        "Material falling from higher terrain could affect an exposed traverse."
+      ],
+      "precautions": [
+        "Review a wider stand-off route and inspect the slope context."
+      ],
+      "sources": [
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985",
+        "https://robotics.jpl.nasa.gov/what-we-do/flight-projects/mars-science-laboratory/surface-system-software-and-rover-navigation/"
+      ],
+      "communicationsNote": "Nearby relief may obstruct the habitat view. Review relay visibility; radio coverage has not been calculated."
+    },
+    {
+      "id": "H-04",
+      "category": "dust",
+      "title": "Dust-storm scenario",
+      "severity": "warning",
+      "evidence": "Scenario event",
+      "marker": {
+        "x": 1800,
+        "y": 1750
+      },
+      "geometry": {
+        "kind": "sector"
+      },
+      "description": "A user-enabled visibility scenario affecting this entire demonstration sector.",
+      "risks": [
+        "Reduced visibility could obscure landmarks and delay progress."
+      ],
+      "precautions": [
+        "Review the habitat return route and pause the scenario if visibility assumptions are unsuitable."
+      ],
+      "sources": [
+        "https://www.nasa.gov/wp-content/uploads/2024/01/acr23-white-papers-compiled-v10.pdf"
+      ]
+    }
+  ]
+}

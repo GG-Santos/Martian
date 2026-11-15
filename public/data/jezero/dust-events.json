@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "id": "jezero-my36-2022-01-08-ds1",
+      "locationId": "jezero",
+      "footprint": {
+        "west": 77.5,
+        "east": 77.54,
+        "south": 18.44,
+        "north": 18.49
+      },
+      "sourceUrl": "https://doi.org/10.1029/2024JE008565",
+      "productId": "2024JE008565 §6.4 and Figure 9(a–b), MRO MARCI",
+      "solarLongitude": [
+        154.4,
+        155.03
+      ],
+      "acquisitionRange": [
+        "2022-01-08T11:08:03Z",
+        "2022-01-09T11:26:49Z"
+      ],
+      "nativeResolutionKm": [
+        1,
+        10
+      ],
+      "processing": [
+        "Mars Year 36. Times and solar longitudes are transcribed from the MARCI acquisitions in Figure 9(a–b). Elapsed time uses 88,775.244 seconds per Mars sol.",
+        "The reported Jan 8 regional center and 4.1 million km² area become a single area-equivalent circle retained as regional context on both dates. The circle is neither a mapped boundary nor a measurement of storm motion.",
+        "Jan 8 and Jan 9 optical depths use published Perseverance atmospheric retrievals for sols 315 and 316. The measurements represent the rover's column on those sols and are not synchronized with the MARCI overpasses or rasterized across the local map.",
+        "The replay footprint is a bounding box around the Jezero scanner sector and is only used to match replay locations. Source coordinates are east-positive longitude and latitude in degrees."
+      ],
+      "sourceRecords": [
+        {
+          "id": "marci-ds1-fig9",
+          "url": "https://doi.org/10.1029/2024JE008565",
+          "productId": "2024JE008565 §6.4 and Figure 9(a–b), MRO MARCI",
+          "acquisitionRange": [
+            "2022-01-08T11:08:03Z",
+            "2022-01-09T11:26:49Z"
+          ],
+          "nativeResolutionKm": [
+            1,
+            10
+          ],
+          "units": "degrees east, degrees north, km²",
+          "processing": "Published regional location, area and acquisition caption transcribed. MARCI's nominal selectable scale is 1–10 km/pixel. Exact resolution of the figure inputs is not reported.",
+          "referenceUrls": [
+            "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/science-instruments/",
+            "https://astrogeology.usgs.gov/search/map/mars_mro_marci_daily_global_weather_maps_pds4_archive",
+            "https://science.nasa.gov/photojournal/dust-storm-and-jezero-crater/"
+          ]
+        },
+        {
+          "id": "perseverance-opacity-sol315-316",
+          "url": "https://doi.org/10.1029/2022GL100126",
+          "productId": "2022GL100126 Figure 1, Perseverance atmospheric optical depth",
+          "acquisitionRange": [
+            "2022-01-08",
+            "2022-01-09"
+          ],
+          "nativeResolutionKm": null,
+          "units": "dimensionless visible column optical depth (dust and clouds)",
+          "processing": "Sánchez-Lavega et al. §6.4 reports the approximate sol 315 value (0.8). Munguira et al. §5 reports the sol 316 peak (1.4 ± 0.04). The zero-width sol 315 pair encodes the published approximate value with no supplied interval. Dates are day precision. The source is a rover column retrieval and has no ground pixel resolution.",
+          "referenceUrls": [
+            "https://doi.org/10.1029/2024JE008565",
+            "https://doi.org/10.1029/2022JE007559",
+            "https://doi.org/10.17189/q3ts-c749"
+          ]
+        }
+      ],
+      "frames": [
+        {
+          "elapsedSol": 0,
+          "centerLon": 63,
+          "centerLat": 25,
+          "radiusKm": 1142,
+          "opacityRange": [
+            0.8,
+            0.8
+          ],
+          "observed": true,
+          "acquisitionSol": "315",
+          "acquisitionUtc": "2022-01-08T11:08:03Z",
+          "solarLongitude": 154.4,
+          "sourceRecordIds": [
+            "marci-ds1-fig9",
+            "perseverance-opacity-sol315-316"
+          ],
+          "regional": true
+        },
+        {
+          "elapsedSol": 0.9859280138954053,
+          "centerLon": 63,
+          "centerLat": 25,
+          "radiusKm": 1142,
+          "opacityRange": [
+            1.36,
+            1.44
+          ],
+          "observed": true,
+          "acquisitionSol": "316",
+          "acquisitionUtc": "2022-01-09T11:26:49Z",
+          "solarLongitude": 155.03,
+          "sourceRecordIds": [
+            "marci-ds1-fig9",
+            "perseverance-opacity-sol315-316"
+          ],
+          "regional": true
+        }
+      ]
+    }
+  ]
+}

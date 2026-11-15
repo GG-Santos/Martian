@@ -1,0 +1,265 @@
+{
+  "datasetId": "jezero-hirise-048842-048908-v1",
+  "coverage": {
+    "kind": "route-grade",
+    "datasetId": "jezero-hirise-048842-048908-v1",
+    "reason": "Registered HiRISE imagery and elevation cover this Jezero sector."
+  },
+  "grid": {
+    "width": 257,
+    "height": 257,
+    "cellSizeM": 8.0,
+    "westM": 0,
+    "northM": 2048
+  },
+  "reliefGrid": {
+    "width": 513,
+    "height": 513,
+    "cellSizeM": 4.0,
+    "westM": 0,
+    "northM": 2048
+  },
+  "scalarGrid": {
+    "width": 257,
+    "height": 257
+  },
+  "bounds": {
+    "westM": 0,
+    "eastM": 2048,
+    "southM": 0,
+    "northM": 2048
+  },
+  "sourceCrs": "PROJCS[\"EQUIRECTANGULAR MARS\",GEOGCS[\"GCS_MARS\",DATUM[\"D_MARS\",SPHEROID[\"MARS_localRadius\",3394839.8133163,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Equirectangular\"],PARAMETER[\"standard_parallel_1\",15],PARAMETER[\"central_meridian\",77.52],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+  "localTransform": {
+    "eastingOriginM": -1024.0,
+    "northingOriginM": 1093176.0
+  },
+  "center": {
+    "longitude": 77.52,
+    "latitude": 18.46715762472811
+  },
+  "verticalDatum": "Mars 2000 equipotential surface",
+  "noData": "NaN float32",
+  "textureConvention": "outer texture edges coincide with grid sample bounds; top row north",
+  "layers": [
+    {
+      "category": "optical",
+      "mission": "MRO",
+      "instrument": "HiRISE",
+      "productId": "ESP_048908_1985_RED_C_01_ORTHO",
+      "url": "https://hirise.lpl.arizona.edu/PDS/DTM/ESP/ORB_048800_048899/ESP_048842_1985_ESP_048908_1985/ESP_048908_1985_RED_C_01_ORTHO.JP2",
+      "labelUrl": "https://hirise.lpl.arizona.edu/PDS/DTM/ESP/ORB_048800_048899/ESP_048842_1985_ESP_048908_1985/ESP_048908_1985_RED_C_01_ORTHO.LBL",
+      "credit": "NASA/JPL-Caltech/UArizona/USGS",
+      "nativeResolutionM": 1.0096633268711,
+      "acquired": null,
+      "units": "relative optical brightness",
+      "license": "HiRISE image usage policy; retain credit",
+      "reference": "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985",
+      "id": "optical",
+      "status": "observed",
+      "outputResolutionM": 1
+    },
+    {
+      "category": "topographic",
+      "mission": "MRO",
+      "instrument": "HiRISE stereo",
+      "productId": "DTEEC_048842_1985_048908_1985_U01",
+      "url": "https://hirise.lpl.arizona.edu/PDS/DTM/ESP/ORB_048800_048899/ESP_048842_1985_ESP_048908_1985/DTEEC_048842_1985_048908_1985_U01.IMG",
+      "credit": "NASA/JPL-Caltech/UArizona/USGS",
+      "nativeResolutionM": 1.0096633268711,
+      "acquired": null,
+      "units": "meters above Mars 2000 equipotential datum",
+      "license": "HiRISE image usage policy; retain credit",
+      "reference": "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985",
+      "id": "slope",
+      "status": "derived",
+      "outputResolutionM": 8.0
+    },
+    {
+      "category": "thermal",
+      "mission": "Mars Odyssey",
+      "instrument": "THEMIS",
+      "productId": "mc13_syrtis_major_dir",
+      "url": "https://astrogeo-ard.s3.us-west-2.amazonaws.com/mars/mo/themis/controlled_mosaics/mc13_syrtis_major_dir/mc13_syrtis_major_dir.tif",
+      "credit": "NASA/USGS/ASU",
+      "nativeResolutionM": 100,
+      "acquired": null,
+      "units": "relative IR brightness (DN)",
+      "license": "CC0-1.0",
+      "reference": "https://registry.opendata.aws/nasa-usgs-themis-mosaics/",
+      "dateNote": "STAC lists reversed start/end dates (2021-10-01 / 2018-07-31); acquisition range left unknown rather than repaired by guesswork.",
+      "id": "thermal",
+      "status": "observed",
+      "outputResolutionM": 8.0
+    }
+  ],
+  "controlPoints": [
+    {
+      "sourcePixel": [
+        2502,
+        6312
+      ],
+      "localMeters": [
+        200.0,
+        1848.0
+      ],
+      "longitude": 77.50560251020946,
+      "latitude": 18.481064531950537,
+      "centerResidualM": 0.4391436659886305
+    },
+    {
+      "sourcePixel": [
+        4135,
+        6312
+      ],
+      "localMeters": [
+        1848.0,
+        1848.0
+      ],
+      "longitude": 77.53439748979054,
+      "latitude": 18.481064531950537,
+      "centerResidualM": 0.4391436658092689
+    },
+    {
+      "sourcePixel": [
+        3319,
+        7944
+      ],
+      "localMeters": [
+        1024.0,
+        200.0
+      ],
+      "longitude": 77.52,
+      "latitude": 18.45325071750569,
+      "centerResidualM": 0.5055963607599671
+    }
+  ],
+  "elevationRangeM": [
+    -2630.55517578125,
+    -2542.671875
+  ],
+  "slopeRangeDeg": [
+    0.00524558499455452,
+    37.606388092041016
+  ],
+  "thermalDnRange": [
+    96,
+    164
+  ],
+  "processing": "PDS-authoritative HiRISE registration; bilinear height/optical resampling; nearest-neighbor THEMIS; no vertical exaggeration",
+  "assets": {
+    "heights.f32": "ea55d1a17cf303e4389f90c05edec95c8e4416a006fcebede4127e6cb6fe140d",
+    "mission.json": "c8e1475f5cc21e45507654104758d1cb71db5171edbdc4bdbeca9ab27ce0b79f",
+    "optical.webp": "b73a859ac792174d3d0fe97e4392e6845ad5e701621c57b7823b4b693803c333",
+    "overview.webp": "883a7925c96178e86965692f24401f4f86c1d851d8059d2923650ea30aa2b200",
+    "regional-panorama.webp": "532b08e20a24cb1fcdf3880510b1d58f6cc96263c2b2ffd815cda8e590d5e872",
+    "relief.f32": "a351ef718213659dafa3804a83bac3cc9aa2068c32ba92f9e4ae3baa00181c6c",
+    "slope.u8": "ad621b3187f119d91030f4408fd97703bcfc766b3e12732fa45284278ce0c3e7",
+    "slope.webp": "6c9a550b0f53e79f3ca9464a0836e2e7128f238893139492adc8927d7023415c",
+    "thermal.u8": "5eaceca78017398457e79ca4d481158ccd3adf733b4e6a8e2cbade34f3261820",
+    "thermal.webp": "412a582caedb8c62a0991f14582322901f584e01354f04974d89671098f6f5a5",
+    "detail-a.f32": "7e253ea8bea4664703c39c1f2ed992f36edb093db52fe110c4154f964a5037da",
+    "detail-b.f32": "0eec6e94ac41fb44c053ff883b5dd6baaad5525ce741c590847f680aa0081920",
+    "detail-c.f32": "322fec9279af6830af797c5a356980ff4d8c39196c4cb5793966f75d5aab7918",
+    "expedition-evidence.json": "4719e3e893d1ea6fe455f599b34c2a5efd0580986a24918f26e045c8c98a6fe9",
+    "scenario.json": "e466f34ad08ec37ccf12a345a84a1cab0de6f35d4b4803c9237a5b62e64f8c3b",
+    "atlas/spectral.webp": "9e9cfe2db0b485b94f6c9a5c1ea639b6c55e0178e53a4e64e80fb73a37d7ddea",
+    "atlas/geophysical.webp": "97599a34b1d5494ef1001b99b040769872e7b7ee3e7e435e6ff59ff6afba3fee",
+    "atlas/radiation.webp": "7664ff4ca34ed69403a32176dd75e762e0b668b67071251745eaeedbcdc6fee8",
+    "atlas/chemical.webp": "e8c999c527611ffb2a54e5202d3535516368a5659169612268cbef16fd38edc1",
+    "science-atlas.json": "99c602ce6c0372655ee6433d9c9d88bd4293a485a28daea3e478c68112e92e11",
+    "dust-events.json": "01c2c89b984b70efafaaf1fbc5be3e6f22de68c6646c064bc49681dc14eb91d3"
+  },
+  "detailTiles": [
+    {
+      "stopId": "A",
+      "asset": "detail-a.f32",
+      "grid": {
+        "width": 513,
+        "height": 513,
+        "cellSizeM": 1,
+        "westM": 376,
+        "northM": 968
+      }
+    },
+    {
+      "stopId": "B",
+      "asset": "detail-b.f32",
+      "grid": {
+        "width": 513,
+        "height": 513,
+        "cellSizeM": 1,
+        "westM": 896,
+        "northM": 1608
+      }
+    },
+    {
+      "stopId": "C",
+      "asset": "detail-c.f32",
+      "grid": {
+        "width": 513,
+        "height": 513,
+        "cellSizeM": 1,
+        "westM": 1328,
+        "northM": 1160
+      }
+    }
+  ],
+  "dustEvents": {
+    "asset": "dust-events.json",
+    "eventId": "jezero-my36-2022-01-08-ds1",
+    "acquisitionRange": [
+      "2022-01-08T11:08:03Z",
+      "2022-01-09T11:26:49Z"
+    ],
+    "nativeResolutionKm": [
+      1,
+      10
+    ],
+    "sourceRecords": [
+      {
+        "id": "marci-ds1-fig9",
+        "url": "https://doi.org/10.1029/2024JE008565",
+        "productId": "2024JE008565 §6.4 and Figure 9(a–b), MRO MARCI",
+        "acquisitionRange": [
+          "2022-01-08T11:08:03Z",
+          "2022-01-09T11:26:49Z"
+        ],
+        "nativeResolutionKm": [
+          1,
+          10
+        ],
+        "units": "degrees east, degrees north, km²",
+        "processing": "Published regional location, area and acquisition caption transcribed. MARCI's nominal selectable scale is 1–10 km/pixel. Exact resolution of the figure inputs is not reported.",
+        "referenceUrls": [
+          "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/science-instruments/",
+          "https://astrogeology.usgs.gov/search/map/mars_mro_marci_daily_global_weather_maps_pds4_archive",
+          "https://science.nasa.gov/photojournal/dust-storm-and-jezero-crater/"
+        ]
+      },
+      {
+        "id": "perseverance-opacity-sol315-316",
+        "url": "https://doi.org/10.1029/2022GL100126",
+        "productId": "2022GL100126 Figure 1, Perseverance atmospheric optical depth",
+        "acquisitionRange": [
+          "2022-01-08",
+          "2022-01-09"
+        ],
+        "nativeResolutionKm": null,
+        "units": "dimensionless visible column optical depth (dust and clouds)",
+        "processing": "Sánchez-Lavega et al. §6.4 reports the approximate sol 315 value (0.8). Munguira et al. §5 reports the sol 316 peak (1.4 ± 0.04). The zero-width sol 315 pair encodes the published approximate value with no supplied interval. Dates are day precision. The source is a rover column retrieval and has no ground pixel resolution.",
+        "referenceUrls": [
+          "https://doi.org/10.1029/2024JE008565",
+          "https://doi.org/10.1029/2022JE007559",
+          "https://doi.org/10.17189/q3ts-c749"
+        ]
+      }
+    ],
+    "processing": [
+      "Mars Year 36. Times and solar longitudes are transcribed from the MARCI acquisitions in Figure 9(a–b). Elapsed time uses 88,775.244 seconds per Mars sol.",
+      "The reported Jan 8 regional center and 4.1 million km² area become a single area-equivalent circle retained as regional context on both dates. The circle is neither a mapped boundary nor a measurement of storm motion.",
+      "Jan 8 and Jan 9 optical depths use published Perseverance atmospheric retrievals for sols 315 and 316. The measurements represent the rover's column on those sols and are not synchronized with the MARCI overpasses or rasterized across the local map.",
+      "The replay footprint is a bounding box around the Jezero scanner sector and is only used to match replay locations. Source coordinates are east-positive longitude and latitude in degrees."
+    ]
+  }
+}

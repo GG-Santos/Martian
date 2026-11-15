@@ -1,0 +1,5 @@
+# Hashed text assets must have identical bytes on Windows and Linux.
+public/data/**/*.json text eol=lf
+public/data/**/*.f32 binary
+public/data/**/*.webp binary
+public/data/**/*.u8 binary

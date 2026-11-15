@@ -1,0 +1,40 @@
+.location-preview {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #3c3532 url("/data/jezero/overview.webp") center / cover no-repeat;
+}
+
+.location-preview.gale,
+.location-preview.valles {
+  background: #493831;
+}
+
+.location-preview.gale {
+  background-image: url("/images/locations/gale-orbital.jpg");
+  background-position: center 48%;
+  background-size: cover;
+}
+
+.location-preview.valles {
+  background-image: url("/images/locations/melas-orbital.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.location-preview::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0b0c0de5 0%, #0b0c0d00 42%, #0b0c0d31 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.location-preview-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(#ffffff19 1px, transparent 1px), linear-gradient(90deg, #ffffff19 1px, transparent 1px);
+  background-size: 80px 80px;
+  mix-blend-mode: screen;
+  opacity: .25;
+}

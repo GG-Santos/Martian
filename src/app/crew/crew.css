@@ -1,0 +1,996 @@
+.crew-page{padding:30px 32px 60px;max-width:1700px;margin:auto}.eyebrow{font:10px "DM Sans",sans-serif;letter-spacing:.16em;color:#9297a1}.crew-section-heading p{color:#aeb3bc;margin-top:7px;max-width:65ch}.crew-error{padding:12px 14px;border:1px solid #985b56;background:#382321;color:#fff;margin-bottom:16px}.crew-error button{float:right;text-decoration:underline}.crew-entry,.crew-workspace{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.4fr);border:1px solid #34373e;min-height:520px}.crew-entry-aside,.crew-roster{padding:32px;border-right:1px solid #34373e;background:#14161a}.crew-entry-aside{display:flex;flex-direction:column;align-items:start}.crew-entry-aside h2{font:600 35px "Barlow Condensed",sans-serif;margin:20px 0 12px}.crew-entry-aside p{max-width:40ch;color:#afb3bc;line-height:1.65}.crew-entry-count{margin-top:auto;display:flex;gap:12px;align-items:center;border-top:1px solid #34373e;padding-top:20px;width:100%;font-size:13px}.crew-entry-form{padding:40px;display:flex;flex-direction:column;justify-content:center;gap:20px;max-width:520px;width:100%;margin:auto}.crew-entry-form label{display:grid;gap:8px;font-size:13px}.crew-entry-form label span{color:#9297a1}.crew-entry-form small{color:#9297a1;line-height:1.5}.crew-entry-form>button[type=submit]{align-self:start;min-width:150px}.crew-workspace{grid-template-columns:minmax(280px,.72fr) minmax(0,1.5fr)}.crew-section-heading h2{font:600 30px "Barlow Condensed",sans-serif;margin-top:9px}.room-code-line{display:flex;align-items:center;gap:10px;margin:28px 0}.room-code-line strong{font:600 28px ui-monospace,monospace;letter-spacing:.17em}.crew-list{border-top:1px solid #34373e}.crew-member{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;min-height:67px;border-bottom:1px solid #34373e}.crew-member-number{color:#777e87;font:11px ui-monospace,monospace}.crew-member div{display:grid;gap:3px}.crew-member strong{font-size:13px}.crew-member small{color:#9297a1}.ready-chip{color:#9da3ac;font:10px ui-monospace,monospace}.ready-chip.ready{color:#9cdbc0}.crew-roster-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}.crew-planning{padding:32px;min-width:0}.mission-choice{display:flex;justify-content:space-between;gap:20px;align-items:center;border:1px solid #34373e;padding:18px;margin-top:23px}.mission-choice div{display:grid;gap:5px}.mission-choice strong{font-size:14px}.mission-choice span{color:#aeb3bc;font-size:12px}.base-heading{margin-top:36px}.base-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:20px;border:1px solid #34373e}.base-choice{text-align:left;display:flex;flex-direction:column;gap:10px;min-height:142px;padding:17px;border-right:1px solid #34373e;background:#16181c;cursor:pointer}.base-choice:last-child{border-right:0}.base-choice:hover:not(:disabled),.base-choice.selected{background:#22252a}.base-choice.selected{box-shadow:inset 0 2px #f1f1ed}.base-choice:disabled{cursor:default;opacity:.68}.base-choice-top{display:flex;justify-content:space-between;gap:10px}.base-choice-top strong{font-size:13px}.base-choice-top span{font:10px ui-monospace,monospace;color:#b6bbc3}.base-choice>span:nth-child(2){font-size:12px}.base-choice small{color:#999fa8;line-height:1.5}.crew-launch{display:flex;justify-content:space-between;align-items:center;gap:18px;border-top:1px solid #34373e;margin-top:30px;padding-top:22px}.crew-launch p{margin-top:7px;font-size:13px}.crew-enter{display:inline-flex;gap:8px;align-items:center;background:#f0f0ed;color:#111216;text-decoration:none;font-size:13px;font-weight:600;border-radius:8px;padding:10px 14px;white-space:nowrap}@media(max-width:1000px){.crew-workspace,.crew-entry{grid-template-columns:1fr}.crew-entry-aside,.crew-roster{border-right:0;border-bottom:1px solid #34373e}.base-choices{grid-template-columns:1fr}.base-choice{border-right:0;border-bottom:1px solid #34373e;min-height:100px}.base-choice:last-child{border-bottom:0}}@media(max-width:700px){.crew-page{padding:22px 16px 50px}.crew-entry-aside,.crew-roster,.crew-planning,.crew-entry-form{padding:22px}.mission-choice,.crew-launch{align-items:start;flex-direction:column}}
+.crew-equipment{border-top:1px solid #34373e;margin-top:28px;padding-top:20px}.crew-equipment h3{font-size:13px;font-weight:600}.crew-equipment p{font-size:11px;color:#aeb3bc;line-height:1.5;margin:6px 0 14px}.crew-equipment>div{display:flex;flex-wrap:wrap;gap:7px}
+
+/* Crew assembly and waiting lobby */
+.crew-page--choice { display: flex; min-height: 100%; flex-direction: column; padding: 16px 24px 18px; }
+.crew-entry-options--landing { display: grid; flex: 1; min-height: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.crew-entry-options--landing button { position: relative; display: flex; min-width: 0; min-height: 190px; flex-direction: column; align-items: flex-start; justify-content: space-between; overflow: hidden; padding: clamp(22px, 2.5vw, 38px); border: 1px solid #454b53; border-radius: 2px; background: transparent; text-align: left; isolation: isolate; container-type: inline-size; transition: border-color .22s ease; }
+.crew-entry-options--landing button:hover, .crew-entry-options--landing button:focus-visible { border-color: #e1e5ec; }
+.crew-entry-options--landing button:focus-visible { outline: 2px solid #e1e5ec; outline-offset: 3px; }
+.crew-linework { color: #d0dadc; --hairline-plate: #0e0f12; --hairline-hi: #e4ebeb; --hairline-edge: #a8b7bd; --hairline-mid: #73848b; --hairline-lo: #36434a; --hairline-stroke: 1; }
+.crew-linework>div { width: 100%; }
+.crew-entry-options--landing .crew-linework { position: absolute; z-index: 0; top: 9%; left: 50%; width: min(82cqw, 520px); transform: translateX(-50%); opacity: .92; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease; }
+.crew-card-index,.crew-card-copy,.crew-card-action { position: relative; z-index: 1; }
+.crew-entry-options--landing button:hover .crew-linework, .crew-entry-options--landing button:focus-visible .crew-linework { transform: translate(-50%, -8px); opacity: 1; }
+.crew-card-index { color: #b5bec7; font-size: 10px; letter-spacing: .15em; }
+.crew-card-copy { display: grid; gap: 10px; margin-top: auto; padding-bottom: 22px; }
+.crew-card-copy strong { color: #f1f3f2; font: 600 clamp(39px, 4.3vw, 63px)/.94 "Barlow Condensed", sans-serif; letter-spacing: -.012em; }
+.crew-card-copy small { max-width: 32ch; color: #c0c7cd; font-size: 14px; line-height: 1.5; letter-spacing: 0; }
+.crew-card-action { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid #454d55; color: #edf1f1; font-size: 12px; font-weight: 600; letter-spacing: .01em; }
+.crew-card-action svg { flex: none; }
+.crew-choice-back { align-self: flex-start; min-height: 0; padding: 0; border: 0; background: transparent; color: #b9c2ca; }
+@media (max-width: 650px) {
+  .crew-page--choice { padding: 14px 16px 16px; }
+  .crew-entry-options--landing { grid-template-columns: 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .crew-entry-options--landing button { min-height: 170px; padding: 17px 20px; }
+  .crew-entry-options--landing .crew-linework { top: 10%; left: auto; right: 0; width: min(50cqw, 280px); transform: none; opacity: .78; }
+  .crew-entry-options--landing button:hover .crew-linework, .crew-entry-options--landing button:focus-visible .crew-linework { transform: translateY(-5px); }
+  .crew-card-index { font-size: 9px; }
+  .crew-card-copy { gap: 3px; padding-bottom: 7px; }
+  .crew-card-copy strong { font-size: 35px; }
+  .crew-card-copy small { font-size: 11px; }
+  .crew-card-action { padding-top: 9px; font-size: 11px; }
+}
+.crew-page--step{display:flex;min-height:100%;flex-direction:column;padding-bottom:30px}
+.crew-details-step{display:grid;flex:1;min-height:620px;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #34373e;background:#111419}
+.crew-details-aside{position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;min-width:0;padding:clamp(26px,3vw,46px);border-right:1px solid #34373e;background:#191e24}
+.crew-details-aside>div:first-child{position:relative;z-index:1}
+.crew-details-aside>div:first-child span{color:#aeb6c1;font-size:10px;letter-spacing:.12em}
+.crew-details-aside h2{max-width:12ch;margin:24px 0 10px;font:600 clamp(35px,4vw,58px)/.98 "Barlow Condensed",sans-serif}
+.crew-details-aside p{max-width:34ch;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-details-aside .crew-linework{position:absolute;right:-18%;bottom:7%;width:112%;height:auto;opacity:.55;--hairline-plate:#191e24;pointer-events:none}
+.crew-details-aside .crew-linework--assemble{right:-8%;bottom:5%;width:92%}
+.crew-details-aside .crew-linework--assemble{pointer-events:auto;cursor:crosshair}
+.crew-setup-timeline{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:18px 0 0;list-style:none;color:#aeb6c1}
+.crew-setup-timeline li{position:relative;display:flex;min-width:0;flex-direction:column;align-items:center;gap:7px;text-align:center;font-size:10px;letter-spacing:.04em}
+.crew-setup-timeline li:not(:last-child)::after{position:absolute;top:13px;left:calc(50% + 15px);right:calc(-50% + 15px);height:1px;background:#4a5159;content:""}
+.crew-setup-timeline li>span:first-child{position:relative;z-index:1;display:grid;width:27px;height:27px;place-items:center;border:1px solid #56616a;border-radius:50%;background:#191e24;color:#aeb6c1;font:10px/1 "DM Sans",sans-serif}
+.crew-setup-timeline li[aria-current="step"]{color:#f1f3f2}
+.crew-setup-timeline li[aria-current="step"]>span:first-child{border-color:#e1e5ec;background:#e1e5ec;color:#111419}
+.crew-details-step .crew-entry-form{max-width:580px;padding:36px 42px;gap:24px}
+.crew-entry-form-head{display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:14px}
+.crew-entry-form-head h1{margin:0;font:600 31px "Barlow Condensed",sans-serif}
+.crew-lobby-top h1{font:600 31px "Barlow Condensed",sans-serif;margin:6px 0 3px}
+.crew-mode-switch,.crew-mode-switch:hover,.crew-mode-switch:focus-visible{min-width:0;min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#b5bec7;font:500 11px/1.4 "DM Sans",sans-serif;text-decoration:none}
+.crew-mode-switch:hover,.crew-mode-switch:focus-visible{color:#fff;text-decoration:underline;text-decoration-color:#fff;text-underline-offset:4px}
+.crew-mode-switch:focus-visible{outline:none}
+.crew-entry-fields{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}
+.crew-entry-fields label{min-width:0;gap:7px}
+.crew-entry-fields input{width:100%;min-width:0}
+.crew-entry-fields-wide{grid-column:1/-1}
+.crew-room-code-group{width:100%;height:32px;gap:0;padding:0 8px;border:1px solid #454951;border-radius:6px;background:color-mix(in oklab,var(--input) 30%,transparent)}
+.crew-room-code-slot{flex:1;height:30px;border:0!important;border-right:1px solid #454951!important;border-radius:0!important;background:transparent!important;color:#f1f1ef;font:500 13px/1 ui-monospace,monospace}
+.crew-room-code-slot:last-child{border-right:0!important}
+.crew-details-step .crew-entry-fields [data-slot="input-otp"]{width:100%}
+.crew-details-step .crew-entry-fields .cn-input-otp:focus-within .crew-room-code-group{border-color:#e1e5ec;box-shadow:0 0 0 3px color-mix(in oklab,var(--ring) 50%,transparent)}
+.crew-room-code-group--invalid,.crew-details-step .crew-entry-fields .cn-input-otp:focus-within .crew-room-code-group--invalid{border-color:#cf665e;box-shadow:0 0 0 3px color-mix(in oklab,#cf665e 25%,transparent)}
+.crew-room-code-slot--invalid,.crew-room-code-slot--invalid:last-child{border-right-color:#85443f!important;color:#ffb4aa}
+.crew-details-step .crew-entry-form>[data-slot="button"][type="submit"]{align-self:flex-end;min-width:170px}
+.crew-lobby-top p{color:#aeb3bc;font-size:13px;line-height:1.5}
+.crew-character-step{display:grid;flex:1;width:100%;min-height:0;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);border:1px solid #34373e;background:#111419}
+.crew-character-aside{display:grid;min-width:0;min-height:0;grid-template-rows:auto minmax(0,1fr) auto;gap:8px;overflow:hidden;padding:clamp(26px,3vw,46px);border-right:1px solid #34373e;background:#191e24}
+.crew-character-intro .eyebrow{color:#aeb6c1}
+.crew-character-intro h1{max-width:12ch;margin:24px 0 10px;font:600 clamp(35px,4vw,58px)/.98 "Barlow Condensed",sans-serif}
+.crew-character-intro p{max-width:34ch;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-character-aside .avatar-preview{width:100%;height:100%;min-height:0;max-height:none;margin:0 auto;background:#191e24}
+.crew-character-aside .crew-setup-timeline{align-self:stretch;width:100%;margin:0;padding-top:12px}
+.crew-character-controls{display:flex;min-width:0;min-height:0;flex-direction:column;overflow-y:auto;padding:clamp(26px,3vw,46px)}
+.crew-character-step-head{display:flex;align-items:center;justify-content:flex-start;margin-bottom:clamp(16px,2.5vh,28px)}
+.crew-character-step-head .crew-choice-back{font-size:12px}
+.crew-character-controls .avatar-creator--controls-only{display:flex;min-width:0;flex:1;flex-direction:column;gap:0;padding:0;border:0;background:transparent}
+.crew-character-controls .avatar-choice-group:first-of-type{padding-top:0;border-top:0}
+.crew-character-controls .avatar-creator--controls-only .avatar-choice-group>div{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.crew-character-controls .avatar-creator--controls-only .avatar-choice-group>div>button{width:100%;min-width:0;min-height:44px;justify-content:center;padding:5px 7px;font-size:12px;line-height:1.15}
+.crew-character-controls .avatar-creator--controls-only .avatar-swatch{display:inline-flex;height:44px;align-items:center;gap:7px;font-size:12px}
+.crew-character-controls .avatar-creator--controls-only .avatar-swatch:before{flex:none;width:12px;height:12px;margin:0}
+.crew-character-controls .avatar-creator--controls-only .avatar-feature-choice{min-height:44px;justify-content:center;padding:7px 10px;font-size:12px}
+.crew-character-step-actions{position:sticky;z-index:2;bottom:0;display:flex;justify-content:flex-end;margin-top:auto;padding-top:16px;border-top:1px solid #34373e;background:#111419}
+.crew-lobby-name{display:block;margin:5px 0;color:#e5e8ea;font-size:15px}
+.avatar-creator{padding:24px 28px;border-right:1px solid #34373e;background:radial-gradient(circle at 65% 18%,#303b40 0,#181e24 45%,#111419 80%);min-width:0}
+.avatar-creator-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,220px);align-items:center;gap:18px}
+.avatar-creator-head h2{font:600 28px "Barlow Condensed",sans-serif;line-height:1.1;margin:8px 0}
+.avatar-creator-head p{font-size:12px;line-height:1.5;color:#aeb3bc;max-width:32ch}
+.avatar-variation-count{display:inline-block;margin-top:15px;color:#b9cec9;font:10px ui-monospace,monospace;letter-spacing:.12em}
+.avatar-preview{position:relative;overflow:hidden;width:100%;height:225px;min-height:160px}
+.avatar-preview canvas{display:block!important;width:100%!important;height:100%!important}
+.avatar-choice-group{border-top:1px solid #3c444b;padding:16px 0 13px;display:grid;gap:10px}
+.avatar-choice-group>strong{font-size:11px;font-weight:600;color:#d2d8dd;text-transform:uppercase;letter-spacing:.09em}
+.avatar-choice-group>div{display:flex;flex-wrap:wrap;gap:8px}
+.avatar-swatch{height:38px;min-width:82px;padding:4px 9px;border:1px solid #444c54;border-radius:5px;color:#f4f5f6;background:#222830;font-size:11px;cursor:pointer}
+.avatar-swatch:before{content:"";display:inline-block;vertical-align:middle;width:14px;height:14px;border-radius:50%;background:#e7e4d9;margin-right:7px}
+.avatar-swatch.mint:before{background:#8fc9b9}.avatar-swatch.coral:before{background:#d79c86}.avatar-swatch.violet:before{background:#a8a0d2}
+.avatar-swatch.copper:before{background:#bb795c}.avatar-swatch.sky:before{background:#80b9d7}.avatar-swatch.moss:before{background:#a5b678}.avatar-swatch.slate:before{background:#778da3}
+.avatar-swatch.amber:before{background:#e2ac51}.avatar-swatch.ruby:before{background:#c85f70}.avatar-swatch.teal:before{background:#47b5a8}.avatar-swatch.indigo:before{background:#666fba}
+.avatar-swatch[aria-pressed=true]{border-color:#f3f1eb;box-shadow:0 0 0 1px #f3f1eb}
+.crew-page--character{height:100%;min-height:0;max-width:none;padding:16px 24px 18px}
+@media(max-width:900px){.crew-page--character{height:auto;min-height:100%}.crew-character-step{flex:none;min-height:0;grid-template-columns:1fr}.crew-character-aside{display:flex;flex-direction:column;gap:0;border-right:0;border-bottom:1px solid #34373e}.crew-character-aside .avatar-preview{height:clamp(300px,40dvh,400px);min-height:300px;max-height:400px;flex:none;margin:12px auto 18px}.crew-character-aside .crew-setup-timeline{margin-top:0}.crew-character-controls{overflow:visible;padding:28px}.crew-character-controls .avatar-choice-group:first-of-type{padding-top:0;border-top:0}}
+@media(max-width:650px){.crew-page--character{padding:14px 16px 22px}.crew-character-aside{padding:22px}.crew-character-intro h1{margin:16px 0 8px}.crew-character-aside .avatar-preview{height:280px;min-height:280px;max-height:280px}.crew-character-controls{padding:22px}.crew-character-step-actions{padding-top:18px}}
+.crew-character-step{min-height:0}
+.crew-member-profile-fields{margin-bottom:12px;padding-bottom:14px;border-bottom:1px solid #34373e}
+.crew-character-aside{display:flex;min-height:0;flex-direction:column;gap:10px;overflow:hidden;padding-inline:clamp(22px,2vw,34px)}
+.crew-character-intro{flex:none}
+.crew-character-intro h1{margin-top:16px;margin-bottom:8px}
+.crew-character-intro p{margin-bottom:0}
+.crew-character-aside .avatar-preview{flex:1 1 auto;width:100%;height:auto;min-height:260px;max-height:none;margin:0;background:#191e24}
+.crew-character-aside .crew-setup-timeline{flex:none;align-self:stretch;width:100%;margin:0;padding-top:9px;padding-bottom:2px}
+.crew-character-controls .avatar-face-choice-group>div{gap:7px}
+.crew-character-controls .avatar-face-choice-group .avatar-feature-choice{display:flex!important;min-height:44px!important;align-items:center;justify-content:center;gap:0!important;padding:8px 10px!important;font-size:12px;line-height:1.2;text-align:center}
+.crew-character-controls{padding-block:clamp(20px,2vw,30px)}
+.crew-character-controls .avatar-choice-group{gap:7px;padding:10px 0 8px}
+.crew-character-controls .avatar-choice-group{border-top:0}
+.crew-character-intro h1{font-size:clamp(34px,3.2vw,50px)}
+@media(max-width:900px){.crew-character-aside{padding-inline:clamp(22px,4vw,34px)}}
+@media(max-width:900px){.crew-character-aside{overflow:visible}.crew-character-aside .avatar-preview{flex:none;height:clamp(340px,48dvh,460px);min-height:340px;max-height:460px;margin:8px auto 10px}.crew-character-aside .crew-setup-timeline{margin:0}}
+@media(max-width:650px){.crew-character-controls .avatar-creator--controls-only .avatar-choice-group>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}}
+@media(max-width:650px){.crew-character-aside .avatar-preview{height:320px;min-height:320px;max-height:320px}}
+.crew-lobby{border:1px solid #34373e;background:#121519}
+.crew-lobby-top{padding:23px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.crew-lobby-code{display:flex;gap:10px;align-items:center}.crew-lobby-code>strong{font:600 26px ui-monospace,monospace;letter-spacing:.17em}
+.lobby-stage{position:relative;height:310px;overflow:hidden;border-top:1px solid #34373e;border-bottom:1px solid #34373e;background:radial-gradient(ellipse at 50% 105%,#303a3e 0,#1b2329 42%,#0f1419 85%)}
+.lobby-stage canvas{display:block!important;width:100%!important;height:100%!important}
+.lobby-stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,#a9c1bf0d,transparent 63%);z-index:1}
+.lobby-stage-labels{position:absolute;bottom:12px;left:0;right:0;z-index:2;pointer-events:none;text-align:center}
+.lobby-stage-labels>div{position:absolute;bottom:0;display:grid;gap:3px;width:20%;padding:0 4px;transform:translateX(-50%)}.lobby-stage-labels strong{display:-webkit-box;min-height:2.4em;overflow:hidden;font-size:12px;line-height:1.2;white-space:normal;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}.lobby-stage-labels small{font-size:9px;color:#adb6bf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lobby-stage-labels span{font:10px ui-monospace,monospace;color:#9eabb1}
+.crew-lobby-grid{display:grid;grid-template-columns:minmax(320px,.82fr) minmax(0,1.4fr)}.crew-lobby-roster{padding:28px;border-right:1px solid #34373e}
+.crew-lobby-roster .avatar-creator{padding:18px 0;border-right:0;margin-top:18px;background:none}
+.crew-lobby-roster .avatar-creator-head{grid-template-columns:1fr 125px}.crew-lobby-roster .avatar-creator-head .avatar-preview{height:130px;min-height:130px}
+.crew-lobby-roster .avatar-creator-head h2{font-size:21px}.crew-lobby-roster .avatar-creator-head p{font-size:10px}
+.crew-lobby-roster .avatar-choice-group{padding:10px 0}.crew-lobby-roster .avatar-choice-group button{font-size:10px}
+.crew-location-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #34373e;margin-top:20px}
+.crew-location-card{padding:15px 12px;background:#171c21;display:grid;align-content:start;gap:5px;text-align:left;border-right:1px solid #34373e;cursor:pointer;min-height:98px}
+.crew-location-card:last-child{border-right:0}.crew-location-card.selected,.crew-location-card:hover{background:#263139}.crew-location-card.selected{box-shadow:inset 0 2px #d7e2e3}
+.crew-location-card strong{font-size:13px}.crew-location-card span,.crew-location-card small{font-size:10px;color:#aeb6be;line-height:1.3}
+.mission-choice small{font-size:10px;color:#8fa7ae}
+@media(max-width:1000px){.crew-lobby-grid{grid-template-columns:1fr}.avatar-creator,.crew-lobby-roster{border-right:0;border-bottom:1px solid #34373e}.crew-lobby-roster{padding:22px}}
+@media(max-width:700px){.crew-entry-fields{grid-template-columns:1fr}.crew-entry-fields-wide{grid-column:auto}}
+@media(max-width:650px){.crew-page--step{padding-bottom:22px}.crew-details-step .crew-entry-form{padding:24px;gap:20px}.crew-entry-form-head{align-items:flex-start;flex-direction:column;gap:10px}.crew-character-step-head,.crew-character-step-actions{padding:16px 20px}}
+@media(max-width:700px){.crew-details-step{min-height:0;grid-template-columns:1fr}.crew-details-aside{display:none}}
+@media(max-width:650px){.avatar-creator-head{grid-template-columns:minmax(0,1fr) 140px}.avatar-preview{height:170px}.avatar-creator{padding:20px}.crew-lobby-top{padding:18px;align-items:flex-start;flex-direction:column}.lobby-stage{height:220px}.lobby-stage-labels strong{font-size:9px}.lobby-stage-labels span{font-size:8px}.crew-location-cards{grid-template-columns:1fr}.crew-location-card{min-height:60px;border-right:0;border-bottom:1px solid #34373e}.crew-location-card:last-child{border-bottom:0}.crew-lobby-roster .avatar-creator-head{grid-template-columns:1fr 100px}}
+
+/* Keep both crew setup steps on the same page frame and align their actions. */
+.crew-page--step{height:100%;min-height:0;max-width:none;padding:16px 24px 18px}
+.crew-details-step{min-height:0}
+.crew-character-step-actions{align-items:center;justify-content:space-between}
+.crew-character-step-actions .crew-choice-back{align-self:flex-start;padding-inline:0}
+.avatar-preview--interactive{touch-action:pan-y}
+@media(max-width:900px){.crew-page--step{height:auto;min-height:100%}}
+@media(max-width:700px){.crew-page--step{padding:14px 16px 22px}}
+@media(max-width:650px){.crew-character-step-actions{align-items:stretch;flex-direction:column-reverse;gap:10px;padding:16px 0 0}.crew-character-step-actions>[data-slot="button"]{width:100%;justify-content:center}.crew-character-step-actions .crew-choice-back{align-self:stretch}}
+
+/* Mission acceptance and base placement happen before a room exists. */
+.crew-page--setup{min-height:100%;padding:16px 24px 24px}
+.crew-setup-frame{display:flex;min-height:0;flex:1;flex-direction:column;border:1px solid #34373e;background:#111419;padding:clamp(20px,2.4vw,34px)}
+.crew-setup-frame--mission{min-height:800px;flex:none}
+.crew-setup-frame>.crew-setup-timeline{flex:none;grid-template-columns:repeat(5,minmax(0,1fr));width:min(760px,100%);margin:0 auto 26px;padding:0}
+.crew-setup-timeline--create{grid-template-columns:repeat(5,minmax(0,1fr))}
+.crew-setup-timeline--join{grid-template-columns:repeat(3,minmax(0,1fr))}
+.crew-setup-frame .crew-setup-timeline li{font-size:10px}
+.crew-setup-board,.crew-base-setup{display:flex;min-height:0;flex:1;flex-direction:column}
+.crew-setup-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:0 0 22px}
+.crew-setup-heading h1{margin:0;font:600 clamp(30px,3vw,42px)/1 "Barlow Condensed",sans-serif}
+.crew-setup-heading p{max-width:58ch;margin:8px 0 0;color:#c0c7cd;font-size:13px;line-height:1.5}
+.crew-catalog-state{margin:auto;padding:40px;color:#c0c7cd;text-align:center}
+.crew-mission-tools{flex:none;margin:0 0 14px}
+.crew-mission-filters{display:grid;grid-template-columns:minmax(220px,1fr) repeat(3,minmax(135px,170px));gap:8px;align-items:center}
+.crew-mission-filters [data-slot="select-field"]{width:100%}
+.crew-mission-filters [data-slot="input"],.crew-mission-filters .shadcn-select-trigger{height:40px;min-height:40px;border:1px solid #454950;border-radius:2px;background:#171a1e;color:#f1f1ef;font:400 12px/1 "DM Sans",sans-serif}
+.crew-mission-filters [data-slot="input"]{padding-left:36px}
+.crew-mission-filters [data-slot="input"]::placeholder{color:#b8bec5}
+.crew-mission-filters .shadcn-select-trigger:hover{background:#20242a}
+.crew-mission-search{position:relative;display:block;min-width:0}
+.crew-mission-search>svg{position:absolute;z-index:1;top:12px;left:12px;color:#b8bec5;pointer-events:none}
+.crew-mission-clear{margin-top:6px}
+.crew-mission-layout{display:grid;min-height:0;flex:1;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid #34373e;background:#111419}
+.crew-mission-brief{min-width:0;min-height:0;overflow-y:auto;border:0;border-right:1px solid #34373e;padding:clamp(20px,2vw,30px);background:#15171a}
+.crew-mission-catalog{display:flex;min-width:0;min-height:0;flex-direction:column;padding:16px}
+.crew-mission-grid{display:grid;min-height:400px;flex:1;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:1px;overflow:hidden;border:1px solid #3b3d43;background:#3b3d43}
+.crew-mission-option{display:flex;min-width:0;min-height:0;flex-direction:column;align-items:stretch;gap:0;padding:18px;border:0;background:#15171a;color:#f4f4f2;text-align:left;text-decoration:none;cursor:pointer;transition:background 160ms ease}
+.crew-mission-option:hover,.crew-mission-option:focus-visible{background:#24272c;outline:none}
+.crew-mission-option:focus-visible{box-shadow:inset 0 0 0 2px #e4e8eb}
+.crew-mission-option[aria-pressed="true"]{background:#24272c;color:#f4f4f2;box-shadow:inset 0 0 0 2px #d4d9de}
+.crew-mission-option .quest-tags{display:flex;flex-wrap:wrap;gap:6px}
+.crew-mission-option .quest-tags span{border:1px solid #626871;padding:4px 7px;font-size:10px;color:#d4d7dc;text-transform:capitalize}
+.crew-mission-option h2{margin:12px 0 6px;font:600 24px/1.05 "Barlow Condensed",sans-serif;text-align:left}
+.crew-mission-option p{display:-webkit-box;overflow:hidden;margin:0;color:#c2c5cc;font-size:12px;line-height:1.45;text-align:left;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.crew-mission-option .quest-tile-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px;color:#c2c5cc;font-size:11px}
+.crew-mission-pagination{display:flex;flex:none;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.crew-mission-pagination>span{color:#c2c5cc;font-size:11px;font-variant-numeric:tabular-nums}
+.crew-mission-no-results{display:grid;flex:1;align-content:center;justify-items:center;min-height:300px;padding:32px;border:1px solid #3b3d43;text-align:center}
+.crew-mission-no-results h2{margin:0;font:600 30px/1.05 "Barlow Condensed",sans-serif}
+.crew-mission-no-results p{margin:8px 0;color:#c2c5cc;font-size:13px}
+.crew-mission-brief-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.crew-mission-brief-head h2,.crew-mission-empty h2{margin:9px 0 0;font:600 clamp(28px,3vw,40px)/.98 "Barlow Condensed",sans-serif}
+.crew-mission-duration{color:#e1e5ec;font-size:12px;white-space:nowrap}
+.crew-mission-description{max-width:62ch;margin:13px 0 18px;color:#c5ccd1;font-size:13px;line-height:1.55}
+.crew-mission-facts,.crew-lobby-mission-facts{display:grid;gap:0;margin:0}
+.crew-mission-facts>div,.crew-lobby-mission-facts>div{display:grid;grid-template-columns:minmax(120px,.38fr) minmax(0,1fr);gap:14px;padding:11px 0;border-top:1px solid #34373e}
+.crew-mission-facts dt,.crew-lobby-mission-facts dt{display:flex;align-items:center;gap:6px;color:#aeb6c1;font-size:11px}
+.crew-mission-facts dd,.crew-lobby-mission-facts dd{margin:0;color:#e0e4e7;font-size:12px;line-height:1.5}
+.crew-mission-hazards dt,.crew-lobby-mission-facts>div:last-child dt{color:#e2c38d}
+.crew-mission-provenance{display:flex;align-items:flex-start;gap:9px;margin:16px 0 0;color:#c1c9cd;font-size:11px;line-height:1.5}
+.crew-mission-provenance svg{flex:none;margin-top:1px}
+.crew-mission-empty{display:grid;min-height:100%;align-content:center;justify-items:start}
+.crew-mission-empty p{color:#aeb6c1;font-size:13px}
+.crew-setup-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid #34373e}
+.crew-base-layout{display:grid;min-height:0;flex:1;grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);border:1px solid #34373e}
+.crew-base-map{display:flex;min-width:0;flex-direction:column;padding:18px;border-right:1px solid #34373e;background:#15191e}
+.crew-base-map .quest-sector-map{min-height:0;flex:1}
+.crew-base-map .quest-sector-frame{min-height:300px}
+.crew-base-map>p{margin:12px 0 7px;color:#aeb6c1;font-size:11px;line-height:1.45}
+.crew-base-coordinate{display:flex;align-items:center;gap:8px;padding-top:8px;color:#e6ecee;font-size:12px;font-variant-numeric:tabular-nums}
+.crew-base-details{display:flex;min-width:0;flex-direction:column;padding:clamp(20px,2.4vw,32px)}
+.crew-base-details h2{margin:10px 0 8px;font:600 29px/1 "Barlow Condensed",sans-serif}
+.crew-base-details>p{color:#c0c7cd;font-size:12px;line-height:1.5}
+.crew-base-provenance{display:grid;gap:4px;margin:14px 0;padding:12px 0;border-block:1px solid #34373e}
+.crew-base-provenance strong{font-size:12px}.crew-base-provenance span{color:#aeb6c1;font-size:10px}
+.crew-capacity-field{display:grid;gap:7px;margin-top:8px;color:#e2e5e7;font-size:12px;font-weight:600}
+.crew-capacity-field small{color:#aeb6c1;font-size:10px;font-weight:400;line-height:1.45}
+.crew-base-caution{display:flex;align-items:flex-start;gap:8px;margin-top:auto!important;padding-top:16px}
+.crew-base-caution svg{flex:none;margin-top:1px}
+
+/* The room and accepted mission remain distinct once joiners arrive. */
+.crew-lobby{min-height:0}
+.crew-lobby-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);align-items:stretch;border:1px solid #34373e;background:#121519}
+.crew-lobby-panel,.crew-mission-panel{min-width:0}
+.crew-lobby-panel{border-right:1px solid #34373e}
+.crew-lobby-top{padding:22px 26px}
+.crew-lobby-top p{margin:6px 0 0}
+.crew-lobby-roster{padding:24px 26px;border:0}
+.crew-lobby-roster .crew-section-heading h2,.crew-mission-panel .crew-section-heading h2{margin:0;font:600 27px/1 "Barlow Condensed",sans-serif}
+.crew-lobby-roster .crew-section-heading p,.crew-mission-panel .crew-section-heading p{margin:7px 0 14px;color:#adb6bf;font-size:11px;line-height:1.45}
+.crew-mission-panel{display:flex;flex-direction:column;padding:26px}
+.crew-mission-panel .crew-section-heading .eyebrow{display:block;margin-bottom:9px}
+.crew-mission-panel .crew-section-heading h2{font-size:31px}
+.crew-lobby-mission-facts{margin-top:12px}
+.crew-lobby-mission-facts>div{grid-template-columns:minmax(100px,.42fr) minmax(0,1fr);gap:10px;padding:9px 0}
+.crew-lobby-mission-facts dt{font-size:10px}
+.crew-lobby-mission-facts dd{font-size:11px}
+.crew-lobby-map{margin-top:18px;padding-top:16px;border-top:1px solid #34373e}
+.crew-lobby-map .quest-sector-top{margin-bottom:8px}
+.crew-lobby-map .quest-sector-frame{height:220px}
+.crew-mission-panel .crew-launch{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:18px;border-top:1px solid #34373e}
+.crew-mission-panel .crew-launch p{margin:0;color:#aeb6c1;font-size:11px}
+@media(max-width:1050px){.crew-mission-layout{grid-template-columns:repeat(2,minmax(0,1fr))}.crew-mission-option{padding:14px}.crew-mission-option h2{font-size:22px}.crew-lobby-grid{grid-template-columns:1fr}.crew-lobby-panel{border-right:0;border-bottom:1px solid #34373e}.crew-mission-panel{padding:24px}}
+@media(max-width:900px){.crew-setup-frame--mission{height:auto;min-height:0}.crew-mission-layout{grid-template-columns:1fr}.crew-mission-brief{min-height:280px;border-right:0;border-bottom:1px solid #34373e}.crew-mission-filters{grid-template-columns:minmax(150px,1.2fr) repeat(3,minmax(100px,1fr))}}
+@media(max-width:760px){.crew-page--setup{height:auto;min-height:100%;padding:14px 16px 22px}.crew-setup-frame{flex:none;padding:18px}.crew-setup-frame>.crew-setup-timeline{margin-bottom:20px}.crew-mission-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.crew-mission-search{grid-column:1/-1}.crew-base-layout{grid-template-columns:1fr}.crew-base-map{border-right:0;border-bottom:1px solid #34373e}.crew-base-map .quest-sector-frame{height:clamp(280px,65vw,430px)}.crew-lobby-grid{grid-template-columns:1fr}.crew-lobby-top{align-items:flex-start;flex-direction:row}.crew-mission-panel .crew-launch{align-items:flex-start;flex-direction:column}.crew-mission-panel .crew-launch>[data-slot="button"]{width:100%;justify-content:center}}
+@media(max-width:560px){.crew-setup-frame{padding:14px}.crew-setup-frame>.crew-setup-timeline{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}.crew-setup-frame .crew-setup-timeline li{font-size:9px}.crew-mission-grid{min-height:0;grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:minmax(190px,auto);overflow:visible}.crew-mission-option{min-height:190px;padding:18px}.crew-mission-pagination{gap:6px}.crew-mission-pagination>[data-slot="button"]{padding-inline:10px}.crew-mission-facts>div,.crew-lobby-mission-facts>div{grid-template-columns:1fr;gap:5px}.crew-setup-actions{align-items:stretch;flex-direction:column-reverse}.crew-setup-actions>[data-slot="button"]{width:100%;justify-content:center}.crew-lobby-top{padding:18px;flex-direction:column}.crew-lobby-code>strong{font-size:22px}.crew-lobby-roster{padding:20px}.crew-mission-panel{padding:20px}}
+
+/* Mission brief details follow the two-panel crew setup rhythm. */
+.crew-mission-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:0;background:transparent}
+.crew-mission-brief{display:flex;flex-direction:column;gap:0;padding:clamp(22px,2.2vw,34px)}
+.crew-mission-brief>.crew-setup-timeline{flex:none;width:100%;margin:0 0 clamp(34px,6vh,72px);padding:0 0 18px;border-bottom:1px solid #34373e}
+.crew-mission-empty{min-height:0;flex:1;align-content:center}
+.crew-mission-empty h1,.crew-mission-title{margin:0;font:600 clamp(34px,3.6vw,54px)/.98 "Barlow Condensed",sans-serif;letter-spacing:-.02em}
+.crew-mission-empty p{max-width:48ch;margin:12px 0 0;color:#c0c7cd;font-size:14px;line-height:1.55}
+.crew-mission-empty .crew-mission-empty-note{margin-top:30px;color:#aeb6c1;font-size:12px}
+.crew-mission-detail-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.crew-mission-detail-top .quest-tags{display:flex;flex-wrap:wrap;gap:8px}
+.crew-mission-detail-top .quest-tags span{border:1px solid #626871;padding:5px 9px;border-radius:999px;color:#e1e5ec;font-size:12px;text-transform:capitalize}
+.crew-mission-close{width:36px;height:36px;flex:none;border:1px solid #34373e;color:#c0c7cd}
+.crew-mission-title{margin-top:28px}
+.crew-mission-description{max-width:70ch;margin:13px 0 22px;color:#c5ccd1;font-size:15px;line-height:1.55}
+.crew-mission-detail-rule{height:1px;flex:none;background:#34373e;margin:0 0 28px}
+.crew-mission-detail-copy section+section{margin-top:26px;padding-top:24px;border-top:1px solid #34373e}
+.crew-mission-detail-copy h2,.crew-mission-requirements h2{margin:0 0 6px;font:600 clamp(27px,2.6vw,38px)/1 "Barlow Condensed",sans-serif}
+.crew-mission-detail-copy h3,.crew-mission-requirements h3{margin:24px 0 8px;font:500 14px/1.3 "DM Sans",sans-serif;color:#f1f1ef}
+.crew-mission-detail-copy p,.crew-mission-requirements p{margin:0;color:#bcc4cb;font-size:14px;line-height:1.55}
+.crew-mission-requirements{margin:0 0 28px;padding:22px;border:1px solid #34373e;background:#15171a}
+.crew-mission-requirements h2{margin-bottom:24px}
+.crew-mission-requirements dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border-block:1px solid #34373e}
+.crew-mission-requirements dl>div{display:grid;grid-template-columns:1fr;align-content:start;gap:8px;padding:13px 16px;border-right:1px solid #34373e}
+.crew-mission-requirements dl>div:first-child{padding-left:0}
+.crew-mission-requirements dl>div:last-child{padding-right:0;border-right:0}
+.crew-mission-requirements dt{display:flex;align-items:flex-start;gap:9px;color:#b7bec7;font-size:12px;line-height:1.45}
+.crew-mission-requirements dt svg{flex:none}
+.crew-mission-requirements dd{margin:0;color:#e6e8eb;font-size:13px;line-height:1.45;text-align:right;overflow-wrap:anywhere}
+.crew-mission-requirements h3{margin-top:24px}
+.crew-mission-requirement-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.crew-mission-provenance{max-width:75ch}
+.crew-mission-catalog{padding:16px}
+.crew-mission-actions{margin-top:auto;padding-top:16px}
+.crew-mission-actions [data-slot="button"]{min-height:40px}
+@media(max-width:1250px){.crew-mission-requirements{padding:18px}}
+@media(max-width:900px){.crew-mission-layout{grid-template-columns:1fr}.crew-mission-brief{min-height:560px;border-right:0;border-bottom:1px solid #34373e}}
+@media(max-width:760px){.crew-mission-brief{min-height:0}.crew-mission-brief>.crew-setup-timeline{margin-bottom:32px}.crew-mission-requirements dl{grid-template-columns:1fr}.crew-mission-requirements dl>div,.crew-mission-requirements dl>div:first-child,.crew-mission-requirements dl>div:last-child{grid-template-columns:minmax(0,1fr) auto;padding:12px 0;border-right:0;border-bottom:1px solid #34373e}.crew-mission-requirements dl>div:last-child{border-bottom:0}.crew-mission-requirement-notes{grid-template-columns:1fr;gap:8px}.crew-mission-actions{align-items:stretch;flex-direction:column-reverse}.crew-mission-actions>[data-slot="button"]{width:100%;justify-content:center}}
+
+/* Keep the mission workspace fixed to the viewport; only the selected brief scrolls. */
+.crew-page--setup:has(.crew-setup-frame--mission){display:flex;height:100%;min-height:0;flex-direction:column;overflow:hidden;box-sizing:border-box}
+.crew-setup-frame--mission{height:100%;min-height:0;flex:1;overflow:hidden}
+.crew-setup-frame--mission>.crew-setup-board{overflow:hidden}
+.crew-mission-layout{height:100%;overflow:hidden}
+.crew-mission-brief{overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#515761 transparent}
+.crew-mission-brief::-webkit-scrollbar{width:8px}
+.crew-mission-brief::-webkit-scrollbar-thumb{background:#515761;border:2px solid #15171a}
+.crew-mission-catalog{overflow:hidden}
+.crew-mission-filters{grid-template-columns:minmax(180px,1fr) repeat(2,minmax(120px,170px))}
+.crew-mission-filter{position:relative;min-width:0}
+.crew-mission-filter .shadcn-select-trigger{padding-right:12px}
+.crew-mission-filter.is-active .shadcn-select-trigger{padding-right:38px}
+.crew-mission-filter.is-active .shadcn-select-trigger>svg{display:none}
+.crew-mission-filter-clear{position:absolute;top:2px;right:2px;width:36px;height:36px;border:0;color:#c2c5cc}
+.crew-mission-filter-clear:hover{background:#2a2e34;color:#fff}
+.crew-mission-grid{min-height:0;grid-template-rows:repeat(2,minmax(0,1fr));border-radius:0}
+.crew-mission-option{border-radius:0!important;padding:clamp(12px,1.2vw,18px)}
+.crew-mission-option h2{margin-top:10px;font-size:clamp(20px,1.65vw,25px)}
+.crew-mission-option .quest-tile-footer svg{flex:none}
+.crew-mission-pagination{margin-top:10px}
+@media(max-width:900px){.crew-page--setup:has(.crew-setup-frame--mission){height:auto;min-height:100%;overflow:visible}.crew-setup-frame--mission{height:auto;min-height:0;overflow:visible}.crew-mission-layout{height:auto;overflow:visible}.crew-mission-brief{max-height:min(70dvh,680px);min-height:300px;border-right:0;border-bottom:1px solid #34373e}.crew-mission-catalog{overflow:visible}.crew-mission-grid{min-height:360px}}
+@media(max-width:760px){.crew-mission-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.crew-mission-search{grid-column:1/-1}}
+
+/* Keep mission selection on the same two-panel frame as details and character. */
+.crew-setup-frame--mission{box-sizing:border-box;min-height:0;height:100%;flex:1;padding:0;overflow:hidden}
+.crew-setup-frame--mission>.crew-setup-board{height:100%;min-height:0;overflow:hidden}
+.crew-setup-frame--mission .crew-mission-layout{grid-template-columns:repeat(2,minmax(0,1fr));height:100%;min-height:0;overflow:hidden}
+.crew-setup-frame--mission .crew-mission-brief{min-height:0;padding:clamp(24px,3vw,46px);border-right:1px solid #34373e;background:#191e24}
+.crew-setup-frame--mission .crew-mission-brief>.crew-setup-timeline{margin:0 0 0;padding:18px 0 0;border-top:1px solid #34373e;border-bottom:0}
+.crew-mission-default{display:flex;min-width:0;min-height:0;flex:1;flex-direction:column}
+.crew-mission-default .crew-mission-empty{flex:1;min-height:0;align-content:center}
+.crew-mission-default .crew-setup-timeline{flex:none;width:100%;margin-top:auto;padding-top:18px;border-top:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-catalog{min-height:0;padding:clamp(20px,2.2vw,34px);background:#111419}
+.crew-setup-frame--mission .crew-mission-catalog{overflow:hidden}
+.crew-setup-frame--mission .crew-mission-grid{flex:1;min-height:0;grid-template-rows:none;grid-auto-rows:minmax(132px,auto);align-content:start;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#515761 transparent}
+.crew-setup-frame--mission .crew-mission-option{padding:12px}
+.crew-setup-frame--mission .crew-mission-option h2{margin:8px 0 4px;font-size:clamp(18px,1.35vw,21px);line-height:1.02}
+.crew-setup-frame--mission .crew-mission-option p{-webkit-line-clamp:2;font-size:11px;line-height:1.35}
+.crew-setup-frame--mission .crew-mission-option .quest-tags{gap:5px}
+.crew-setup-frame--mission .crew-mission-option .quest-tags span{padding:3px 6px;font-size:9px}
+.crew-setup-frame--mission .crew-mission-option .quest-tile-footer{padding-top:8px;font-size:10px}
+.crew-setup-frame--mission .crew-mission-actions{margin-top:auto;justify-content:space-between}
+.crew-setup-frame--mission .crew-mission-default .crew-mission-empty{flex:none;align-content:start}
+.crew-setup-frame--mission .crew-mission-empty-note{margin-top:24px}
+.crew-setup-frame--mission .crew-mission-default .crew-setup-timeline{border-top:0;padding-top:0}
+.crew-setup-frame--mission .crew-mission-actions [data-slot="button"]{min-height:initial}
+.crew-mission-default{position:relative}
+.crew-mission-riffle{position:absolute;right:-8%;bottom:5%;z-index:2;width:92%;height:auto;opacity:.55;--hairline-plate:#191e24;pointer-events:auto;cursor:crosshair}
+.crew-mission-riffle:focus-visible{outline:2px solid #d7e2e3;outline-offset:4px}
+.crew-mission-riffle>div{width:100%}
+.crew-mission-empty>*:not(.crew-mission-riffle){position:relative;z-index:1}
+.crew-mission-empty .crew-mission-riffle{z-index:0}
+.crew-setup-frame--mission .crew-mission-catalog{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.crew-setup-frame--mission .crew-mission-actions{margin-top:0}
+.crew-setup-frame--mission .crew-mission-catalog{padding-bottom:clamp(20px,2vw,30px)}
+.crew-setup-frame--mission .crew-mission-tools{margin-bottom:12px}
+.crew-mission-default .crew-mission-empty{align-content:start}
+.crew-mission-intro{position:relative;z-index:1;max-width:100%}
+.crew-mission-intro>span{color:#aeb6c1;font-size:10px;letter-spacing:.12em}
+.crew-mission-intro h1{max-width:16ch;margin:24px 0 10px;font:600 clamp(35px,4vw,58px)/.98 "Barlow Condensed",sans-serif;letter-spacing:-.02em}
+.crew-mission-intro>p{max-width:34ch;margin:0;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-mission-intro>.crew-mission-empty-note{margin-top:30px;color:#aeb6c1;font-size:12px}
+.crew-mission-grid{background:#111419}
+.crew-mission-option{outline:.5px solid #3b3d43;outline-offset:-.5px}
+.crew-character-step-actions{border-top:0}
+.crew-setup-frame--mission .crew-mission-actions{border-top:0}
+.crew-setup-frame--mission .crew-mission-grid{gap:0;background:#111419}
+.crew-mission-filter-clear{border-radius:0}
+.crew-mission-filter-clear:hover,.crew-mission-filter-clear:focus-visible{background:#8f3038;color:#fff}
+.crew-mission-filter-clear:focus-visible{outline:2px solid #f3c5c8;outline-offset:1px}
+.crew-mission-filter .shadcn-select-trigger{justify-content:space-between;text-align:left}
+.crew-mission-filter .shadcn-select-trigger>:first-child{flex:1;margin-right:auto;text-align:left}
+.crew-mission-filter .shadcn-select-trigger>:last-child{flex:none;margin-left:auto}
+.crew-mission-actions{align-self:stretch;min-height:40px;padding-bottom:0}
+.crew-character-step-actions .crew-choice-back span{text-decoration:none;text-underline-offset:4px}
+.crew-character-step-actions .crew-choice-back:hover{background:transparent;color:#fff}
+.crew-character-step-actions .crew-choice-back:hover span,.crew-character-step-actions .crew-choice-back:focus-visible span{text-decoration:underline}
+.crew-mission-location-map{position:relative;isolation:isolate;width:100%;aspect-ratio:1/1;min-height:0;margin:20px 0 0;overflow:hidden;border:1px solid #34373e;background:#11151a}
+.crew-mission-location-map:before{position:absolute;z-index:1;inset:0;background:#91b3ca;mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;-webkit-mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;content:"";opacity:.28;pointer-events:none}
+.crew-mission-location-map:after{position:absolute;z-index:2;inset:0;background-image:linear-gradient(#dce7ee12 1px,transparent 1px),linear-gradient(90deg,#dce7ee12 1px,transparent 1px);background-size:12.5% 12.5%;content:"";pointer-events:none}
+.crew-mission-location-map>img{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:fill;filter:grayscale(1)}
+.crew-mission-location-map>span{position:absolute;z-index:3;display:grid;width:28px;height:28px;place-items:center;transform:translate(-50%,-50%);border:2px solid #111820;border-radius:50%;background:#f0dfac;color:#101316;box-shadow:0 0 0 4px #f0dfac44,0 2px 12px #0009}
+.crew-mission-location-map>small{position:absolute;z-index:4;right:8px;bottom:8px;padding:4px 6px;background:#0b0e13d9;color:#e3e6e8;font-size:9px;letter-spacing:.08em}
+.crew-mission-location-map:before{background:#91b3ca;mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;-webkit-mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;opacity:.28}
+
+/* Shared setup rhythm: matching insets, progress controls, and compact catalog. */
+:root{--crew-setup-inset:clamp(24px,2.2vw,36px)}
+.crew-details-aside,.crew-character-aside,.crew-character-controls,
+.crew-setup-frame--mission .crew-mission-brief,.crew-setup-frame--mission .crew-mission-catalog,
+.crew-base-map,.crew-base-details,.crew-lobby-top,.crew-lobby-roster,.crew-mission-panel{padding:var(--crew-setup-inset)}
+.crew-setup-frame--mission .crew-mission-catalog{padding-bottom:var(--crew-setup-inset)}
+.crew-setup-frame--mission .crew-mission-grid{align-content:start;align-items:stretch;grid-auto-rows:minmax(132px,132px);background:transparent}
+.crew-setup-frame--mission .crew-mission-catalog{background:#111419}
+.crew-setup-frame--mission .crew-mission-option{background:#111419}
+.crew-setup-frame--mission .crew-mission-option:hover,.crew-setup-frame--mission .crew-mission-option:focus-visible,
+.crew-setup-frame--mission .crew-mission-option[aria-pressed="true"]{background:#24272c}
+.crew-setup-frame--mission .crew-mission-requirements{margin-bottom:24px}
+.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-requirement-notes{margin-top:24px;gap:22px}
+.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-requirement-notes h3{margin:0 0 7px}
+.crew-setup-frame--mission .crew-mission-provenance{max-width:46ch;margin-top:24px}
+.crew-setup-frame--mission .crew-mission-intro{pointer-events:none}
+.crew-setup-frame--mission .crew-mission-riffle{z-index:0;pointer-events:auto}
+.crew-setup-frame--mission .crew-mission-empty>*:not(.crew-mission-riffle){z-index:1}
+.crew-setup-frame--mission .crew-mission-default .crew-setup-timeline{border-top:0;padding-top:0}
+.crew-setup-frame--mission .crew-mission-actions{margin-top:0;padding-top:0;border-top:0}
+.crew-setup-frame--mission .crew-choice-back{background:transparent}
+.crew-setup-frame--mission .crew-choice-back:hover,.crew-setup-frame--mission .crew-choice-back:focus-visible{background:transparent}
+.crew-setup-frame--mission .crew-mission-filter .shadcn-select-trigger{justify-content:space-between;text-align:left}
+.crew-setup-frame--mission .crew-mission-filter .shadcn-select-trigger [data-slot="select-value"]{flex:1;text-align:left}
+.crew-setup-frame--mission .crew-mission-filter .shadcn-select-trigger>svg{flex:none;margin-left:auto}
+.crew-setup-frame--mission .crew-mission-filter.is-active .shadcn-select-trigger>svg{visibility:hidden}
+.crew-setup-frame--mission .crew-mission-filter-clear{z-index:2;top:3px;right:3px;width:34px;height:34px;border-radius:0}
+.crew-setup-frame--mission .crew-mission-filter-clear:hover,.crew-setup-frame--mission .crew-mission-filter-clear:focus-visible{background:#8f3038;color:#fff}
+.crew-setup-timeline li{min-width:0}
+.crew-setup-timeline li>button{position:relative;z-index:1;display:flex;min-width:0;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer}
+.crew-setup-timeline li>button:disabled{cursor:default;opacity:.58}
+.crew-setup-timeline li>button:not(:disabled):hover{color:#fff}
+.crew-setup-timeline li>button>span:first-child{display:grid;width:27px;height:27px;place-items:center;border:1px solid #56616a;border-radius:50%;background:#191e24;color:#aeb6c1;font:10px/1 "DM Sans",sans-serif}
+.crew-setup-timeline li[aria-current="step"]>button>span:first-child{border-color:#e1e5ec;background:#e1e5ec;color:#111419}
+.crew-setup-timeline li>button>span:last-child{white-space:nowrap}
+.crew-character-controls>.crew-character-step-actions{margin-inline:calc(-1 * var(--crew-setup-inset));padding-inline:var(--crew-setup-inset)}
+
+/* Keep the create flow on one measured two-panel frame across all steps. */
+.crew-page--setup{height:100%;min-height:0;max-width:none;padding:16px 24px 18px}
+.crew-page--setup .crew-setup-frame--mission{min-height:0;height:100%;flex:1}
+.crew-details-step,.crew-character-step{grid-template-columns:repeat(2,minmax(0,1fr))}
+.crew-details-aside,.crew-character-aside,.crew-setup-frame--mission .crew-mission-brief{padding:var(--crew-setup-inset)}
+.crew-character-aside .crew-setup-timeline,.crew-details-aside .crew-setup-timeline,.crew-mission-default .crew-setup-timeline{width:100%;margin-top:auto;padding-top:18px;padding-bottom:0}
+.crew-details-aside .crew-setup-timeline--create,.crew-character-aside .crew-setup-timeline--create,.crew-mission-default .crew-setup-timeline--create{grid-template-columns:repeat(5,minmax(0,1fr))}
+.crew-character-controls{padding:var(--crew-setup-inset)}
+.crew-character-controls>.crew-character-step-actions,.crew-setup-frame--mission .crew-mission-actions{min-height:40px;margin-top:auto;padding-top:16px;padding-bottom:0;border-top:0}
+.crew-character-controls>.crew-character-step-actions{margin-inline:calc(-1 * var(--crew-setup-inset));padding-inline:var(--crew-setup-inset)}
+.crew-setup-frame--mission .crew-mission-catalog{padding:var(--crew-setup-inset)}
+.crew-setup-frame--mission .crew-mission-actions [data-slot="button"],.crew-character-controls>.crew-character-step-actions [data-slot="button"]{min-height:40px}
+@media(max-width:900px){
+  .crew-page--setup{height:auto;min-height:100%;padding:16px 24px 18px}
+  .crew-page--setup .crew-setup-frame--mission{height:auto;min-height:0}
+}
+@media(max-width:650px){
+  .crew-page--setup{padding:14px 16px 22px}
+  .crew-character-controls>.crew-character-step-actions{margin-inline:-20px;padding-inline:20px}
+}
+@media(max-width:900px){
+  .crew-details-aside,.crew-character-aside,.crew-character-controls,
+  .crew-setup-frame--mission .crew-mission-brief,.crew-setup-frame--mission .crew-mission-catalog,
+  .crew-base-map,.crew-base-details,.crew-lobby-top,.crew-lobby-roster,.crew-mission-panel{padding:clamp(20px,4vw,30px)}
+  .crew-setup-frame--mission .crew-mission-grid{grid-auto-rows:minmax(132px,132px)}
+}
+@media(max-width:650px){
+  .crew-details-aside,.crew-character-aside,.crew-character-controls,
+  .crew-setup-frame--mission .crew-mission-brief,.crew-setup-frame--mission .crew-mission-catalog,
+  .crew-base-map,.crew-base-details,.crew-lobby-top,.crew-lobby-roster,.crew-mission-panel{padding:20px}
+  .crew-setup-frame--mission .crew-mission-grid{grid-template-columns:1fr;grid-auto-rows:minmax(132px,132px)}
+  .crew-character-controls>.crew-character-step-actions{margin-inline:-20px;padding-inline:20px}
+}
+
+/* Base placement uses the same equal two-panel frame as the other setup steps. */
+.crew-page--setup:not(:has(.crew-setup-frame--mission)){display:flex;height:100%;min-height:0;flex-direction:column;overflow:hidden;box-sizing:border-box}
+.crew-base-step{display:grid;flex:1;width:100%;min-width:0;min-height:0;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #34373e;background:#111419}
+.crew-base-aside{display:grid;min-width:0;min-height:0;grid-template-rows:auto minmax(0,1fr) auto;gap:10px;overflow:hidden;padding:var(--crew-setup-inset);border-right:1px solid #34373e;background:#191e24}
+.crew-base-intro .eyebrow{color:#aeb6c1}
+.crew-base-intro p{max-width:34ch;margin-bottom:0;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-base-map{display:grid;min-width:0;min-height:0;grid-template-rows:minmax(0,1fr) auto;gap:10px;align-content:center;justify-items:center;padding:0;border:0;background:transparent}
+.crew-base-map .quest-sector-map{width:100%;height:100%;min-height:0;align-items:center;justify-content:center;overflow:visible;border:0;background:transparent}
+.crew-base-map .quest-sector-frame{flex:none;width:min(100%,560px,52dvh);aspect-ratio:1;min-height:0;background-size:100% 100%}
+.crew-base-map-meta{display:flex;width:min(100%,560px);align-items:center;justify-content:space-between;gap:14px}
+.crew-base-map-meta>p:first-child{max-width:40ch;margin:0;color:#aeb6c1;font-size:11px;line-height:1.45}
+.crew-base-coordinate{display:flex;flex:none;align-items:center;gap:7px;margin:0;padding:0;color:#e6ecee;font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.crew-base-coordinate svg{color:#c4ccd2}
+.crew-base-aside>.crew-setup-timeline{width:100%;margin:0;padding:18px 0 0}
+.crew-base-aside>.crew-setup-timeline--create{grid-template-columns:repeat(5,minmax(0,1fr))}
+.crew-base-aside .crew-setup-timeline li{font-size:10px}
+.crew-base-controls{display:flex;min-width:0;min-height:0;flex-direction:column;overflow-y:auto;padding:var(--crew-setup-inset)}
+.crew-base-mission>p{max-width:60ch;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-base-location{display:grid;gap:0;margin:20px 0 0;border-block:1px solid #34373e}
+.crew-base-location>div{display:grid;grid-template-columns:minmax(110px,.65fr) minmax(0,1fr);gap:12px;padding:11px 0;border-bottom:1px solid #34373e}
+.crew-base-location>div:last-child{border-bottom:0}
+.crew-base-location dt{color:#aeb6c1;font-size:11px}
+.crew-base-location dd{margin:0;color:#edf0f1;font-size:11px;text-align:right}
+.crew-base-capacity{min-width:0;margin:28px 0 0;padding:0;border:0}
+.crew-base-capacity legend{padding:0;font:600 26px/1 "Barlow Condensed",sans-serif}
+.crew-base-capacity>p{margin:8px 0 14px;color:#aeb6c1;font-size:12px;line-height:1.45}
+.crew-base-capacity-options{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid #3a4048}
+.crew-base-capacity-option{position:relative;display:flex;min-width:0;min-height:92px;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:9px 4px;border-right:1px solid #3a4048;background:#171b20;text-align:center;cursor:pointer;transition:background-color .16s ease,border-color .16s ease}
+.crew-base-capacity-option:last-child{border-right:0}
+.crew-base-capacity-option:hover{background:#22272d}
+.crew-base-capacity-option[data-selected="true"]{background:#242a31;box-shadow:inset 0 0 0 1px #dce2e8}
+.crew-base-capacity-option input{position:absolute;width:1px;height:1px;opacity:0}
+.crew-base-capacity-option:has(input:focus-visible){outline:2px solid #e1e5ec;outline-offset:-3px;z-index:1}
+.crew-base-capacity-number{font:600 24px/1 "Barlow Condensed",sans-serif}
+.crew-base-capacity-unit{color:#b9c1c8;font-size:9px;line-height:1.2}
+.crew-base-capacity-recommended{color:#e8d9aa;font-size:8px;line-height:1.2}
+.crew-base-caution{display:flex;align-items:flex-start;gap:8px;margin:22px 0 0;color:#bfc6cd;font-size:11px;line-height:1.5}
+.crew-base-caution svg{flex:none;margin-top:1px;color:#d3c28f}
+.crew-base-actions{min-height:40px;margin-top:auto;padding-top:16px;padding-bottom:0;border-top:0;background:#111419}
+.crew-base-actions [data-slot="button"]{min-height:40px}
+@media(max-width:900px){
+  .crew-page--setup:not(:has(.crew-setup-frame--mission)){height:auto;min-height:100%;overflow:visible}
+  .crew-base-step{flex:none;grid-template-columns:1fr}
+  .crew-base-aside{min-height:620px;border-right:0;border-bottom:1px solid #34373e}
+  .crew-base-map .quest-sector-frame{width:min(100%,560px,62vw,56dvh)}
+  .crew-base-controls{min-height:500px;overflow:visible}
+}
+@media(max-width:650px){
+  .crew-base-aside,.crew-base-controls{padding:20px}
+  .crew-base-aside{min-height:520px}
+  .crew-base-map .quest-sector-frame{width:min(100%,74vw,44dvh)}
+  .crew-base-map-meta{align-items:flex-start;flex-direction:column;gap:8px}
+  .crew-base-location>div{grid-template-columns:minmax(90px,.6fr) minmax(0,1fr)}
+  .crew-base-capacity-option{min-height:82px;padding-inline:2px}
+  .crew-base-capacity-unit{font-size:8px}
+  .crew-base-actions{align-items:stretch;flex-direction:column-reverse;gap:10px;padding-top:16px}
+  .crew-base-actions>[data-slot="button"]{width:100%;justify-content:center}
+  .crew-base-actions .crew-choice-back{align-self:stretch}
+}
+@media(max-width:900px){
+  .crew-setup-frame--mission{height:auto;min-height:0;overflow:visible}
+  .crew-setup-frame--mission>.crew-setup-board{height:auto;overflow:visible}
+  .crew-setup-frame--mission .crew-mission-layout{height:auto;overflow:visible;grid-template-columns:1fr}
+  .crew-setup-frame--mission .crew-mission-brief{min-height:360px;max-height:min(70dvh,680px);border-right:0;border-bottom:1px solid #34373e}
+  .crew-setup-frame--mission .crew-mission-catalog{display:flex;overflow:visible}
+  .crew-setup-frame--mission .crew-mission-grid{flex:none;overflow:visible;grid-auto-rows:minmax(132px,auto)}
+}
+
+/* The Base step shares the setup frame's padding and timeline alignment.
+   Keep the sector square, with the same north-up bounds as Scanner. */
+.crew-base-aside{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:10px;background:#191e24}
+.crew-base-map{container-type:size;position:relative;display:grid;min-width:0;min-height:0;place-items:center;overflow:hidden;padding:0;border:0;background:transparent}
+.crew-base-map .crew-base-sector-map{position:relative;display:flex;width:100%;height:100%;min-width:0;min-height:0;align-items:center;justify-content:center;overflow:hidden;border:0;background:transparent}
+.crew-base-map .crew-base-sector-map .quest-sector-top{display:none}
+.crew-base-map .crew-base-sector-map .quest-sector-frame{position:relative;isolation:isolate;flex:none;width:min(100%,560px,100cqh);height:auto;min-height:0;aspect-ratio:1;overflow:hidden;background-size:100% 100%;background-position:center;background-repeat:no-repeat}
+.crew-base-map .crew-base-sector-map.jezero .quest-sector-frame{background-image:none;background-color:#171c21}
+.crew-base-map .crew-base-sector-map.jezero .quest-sector-frame::before{position:absolute;z-index:0;inset:0;background-image:url('/data/jezero/optical.webp');background-size:100% 100%;background-position:center;background-repeat:no-repeat;content:"";filter:grayscale(1);pointer-events:none}
+.crew-base-map .crew-base-sector-map.jezero .quest-sector-frame .quest-sector-slope-overlay{position:absolute;z-index:1;inset:0;background:#91b3ca;mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;-webkit-mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;opacity:.58;pointer-events:none}
+.crew-base-map .crew-base-sector-map .quest-sector-frame::after{position:absolute;z-index:2;inset:0;background-image:linear-gradient(#dce7ee12 1px,transparent 1px),linear-gradient(90deg,#dce7ee12 1px,transparent 1px);background-size:12.5% 12.5%;content:"";pointer-events:none}
+.crew-base-map .quest-sector-hit{position:absolute;z-index:3;inset:0;width:100%;height:100%;border:0;padding:0;background:transparent;cursor:crosshair}
+.crew-base-map .quest-sector-pin{position:absolute;z-index:6;display:grid;place-items:center;transform:translate(-50%,-50%);cursor:pointer}
+.crew-base-map .quest-sector-axis{position:absolute;z-index:5;right:8px;bottom:8px;left:8px;display:flex;justify-content:space-between;gap:8px;padding:5px 7px;background:#10151bd9;color:#f0f2f3;font-size:10px;pointer-events:none}
+.crew-base-map .quest-sector-pin.mission-focus{width:20px;height:20px;padding:0;border:2px solid #111820;border-radius:50%;background:#f4dda0;color:#101316;box-shadow:0 0 0 4px #f4dda066,0 0 0 6px #11182099,0 2px 8px #000b}
+.crew-base-map .quest-sector-pin.mission-focus svg{display:block;width:10px;height:10px;flex:none}
+.crew-base-map .quest-sector-pin.mission-focus:focus-visible{outline:2px solid #f5f3ed;outline-offset:4px}
+.crew-base-map .quest-sector-pin.selected{width:24px;height:24px;padding:0;border:2px solid #10161b;border-radius:50%;background:#dce5ec;color:#111820;box-shadow:0 0 0 4px #dce5ec44,0 2px 12px #0009}
+.crew-base-map-meta{position:relative;z-index:3;display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px 18px;pointer-events:none}
+.crew-base-map-meta>p:first-child{grid-column:1;max-width:42ch;margin:0;color:#aeb6c1;font-size:10px;line-height:1.4}
+.crew-base-map-meta .crew-base-hazard-legend{grid-column:1;display:flex;align-items:center;gap:7px;max-width:42ch;margin:0;color:#d9dfe3;font-size:10px;line-height:1.4}
+.crew-base-hazard-legend>span{width:10px;height:10px;flex:none;border:1px solid #9aa6b1;background:transparent}
+.crew-base-hazard-legend.is-observed>span{border-color:#e4b658;background:#e4b65888}
+.crew-base-map-meta .crew-base-coordinate{grid-column:2;grid-row:1 / span 2;align-self:end;padding:8px 10px;background:#10151bd9;color:#f0f2f3;font-size:12px}
+.crew-base-aside>.crew-setup-timeline{background:transparent}
+@media(max-width:900px){
+  .crew-base-aside{min-height:620px}
+  .crew-base-map .crew-base-sector-map .quest-sector-frame{width:min(100%,560px,100cqh)}
+}
+@media(max-width:650px){
+  .crew-base-aside{min-height:560px}
+  .crew-base-map-meta{grid-template-columns:1fr;gap:6px}
+  .crew-base-map-meta>p:first-child,.crew-base-map-meta .crew-base-hazard-legend{grid-column:1;max-width:36ch}
+  .crew-base-map-meta .crew-base-coordinate{grid-column:1;grid-row:auto;justify-self:start}
+}
+
+/* Keep the introductory type roles identical across the setup steps. */
+:root{
+  --crew-step-heading-size:clamp(35px,4vw,58px);
+  --crew-step-eyebrow-size:10px;
+  --crew-step-eyebrow-tracking:.12em;
+}
+.crew-details-aside>div:first-child>span,
+.crew-character-intro>.eyebrow,
+.crew-mission-intro>span,
+.crew-base-intro>.eyebrow{
+  color:#aeb6c1;
+  font:400 var(--crew-step-eyebrow-size)/1.4 "DM Sans",sans-serif;
+  letter-spacing:var(--crew-step-eyebrow-tracking);
+}
+.crew-details-aside h2,
+.crew-character-intro h1,
+.crew-mission-intro h1,
+.crew-base-mission h1{
+  margin-top:24px;
+  margin-bottom:10px;
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:var(--crew-step-heading-size);
+  font-weight:600;
+  line-height:.98;
+  letter-spacing:-.02em;
+}
+@media(max-width:650px){
+  :root{--crew-step-heading-size:clamp(32px,8vw,38px)}
+  .crew-details-aside h2,
+  .crew-character-intro h1,
+  .crew-mission-intro h1,
+  .crew-base-mission h1{margin-top:16px;margin-bottom:8px}
+}
+
+
+/* Base step: match the shared two-panel setup frame and keep each panel's
+   padding, timeline, and action row aligned with Details and Character. */
+.crew-base-step{grid-template-columns:repeat(2,minmax(0,1fr));height:100%;min-height:0}
+.crew-base-aside{grid-template-rows:auto auto auto minmax(0,1fr) auto;gap:clamp(10px,1.2vh,16px);padding:var(--crew-setup-inset);background:#191e24}
+.crew-base-mission h1{max-width:16ch;margin:16px 0 8px;font:600 var(--crew-step-heading-size)/.98 "Barlow Condensed",sans-serif;letter-spacing:-.02em}
+.crew-base-mission>p{margin:0;color:#c0c7cd;font-size:13px;line-height:1.55}
+.crew-base-region{display:grid;gap:4px;margin-top:9px!important;padding-top:8px;border-top:1px solid #34373e}.crew-base-region>div{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.crew-base-region>small{color:#9da8b0;font-size:10px;line-height:1.35}
+.crew-base-region span{color:#aeb6c1;font-size:11px}
+.crew-base-region strong{font-size:11px;font-weight:500;text-align:right}
+.crew-base-capacity{margin:0}
+.crew-base-capacity legend{font:600 25px/1 "Barlow Condensed",sans-serif}
+.crew-base-capacity>p{margin:6px 0 10px}
+.crew-base-capacity-option{min-height:74px}
+.crew-base-capacity-recommended{position:absolute;top:8px;right:8px;color:#e8d9aa;line-height:0;pointer-events:none}
+.crew-base-scenario-summary{min-width:0;align-self:stretch}
+.crew-base-scenario-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.crew-base-scenario-head--hazards{justify-content:flex-start;gap:7px}
+.crew-base-scenario-head--hazards svg{flex:none;color:#bfc6cc}
+.crew-base-scenario-head .eyebrow{color:#aeb6c1;font-size:10px;letter-spacing:.12em}
+.crew-base-scenario-summary>p:not(.crew-base-caution){margin:5px 0 8px;color:#aeb6c1;font-size:10px;line-height:1.4}
+.crew-base-hazard-list{display:flex;flex-wrap:wrap;gap:5px}
+.crew-base-hazard-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 6px;border:1px solid #40464d;color:#d4dbe0;font-size:9px;line-height:1.2}
+.crew-base-hazard-chip svg{flex:none;color:currentColor}
+.crew-base-hazard-chip--heat svg{color:#f0a060}.crew-base-hazard-chip--dust svg{color:#e4cb85}.crew-base-hazard-chip--chemical svg{color:#8cc5a9}.crew-base-hazard-chip--radiation svg{color:#d99bc1}
+.crew-base-caution{margin:8px 0 0;padding:0;font-size:10px;line-height:1.35}
+.crew-base-aside>.crew-setup-timeline{margin:0;padding-top:14px}
+.crew-base-aside>.crew-setup-timeline--create{grid-template-columns:repeat(5,minmax(0,1fr))}
+.crew-base-controls{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:0;overflow:hidden;padding:var(--crew-setup-inset);background:#111419}
+.crew-base-map{container-type:size;min-height:0;overflow:hidden}
+.crew-base-map .crew-base-sector-map .quest-sector-frame{width:min(100%,100cqh,100cqw);height:min(100cqh,100cqw);max-width:100%;aspect-ratio:1}
+.crew-base-map-meta{grid-template-columns:minmax(0,1fr) auto;align-self:end;padding-top:10px}
+.crew-base-map-meta>p:first-child{grid-column:1;max-width:44ch}
+.crew-base-map-meta .crew-base-hazard-legend{grid-column:1;display:flex;flex-wrap:wrap;gap:6px 10px;max-width:44ch}
+.crew-base-hazard-legend>span{display:inline-flex;width:auto;height:auto;align-items:center;gap:5px;border:0;background:transparent;font-size:9px;white-space:nowrap}
+.crew-base-legend-symbol{width:8px;height:8px;border:1px solid #c4ccd2}
+.crew-base-legend-symbol--mission{border-radius:50%;background:#f0dfac;border-color:#f0dfac}
+.crew-base-legend-symbol--base{border-radius:50%;background:#dce5ec;border-color:#dce5ec}
+.crew-base-legend-symbol--recommended{border-style:dashed;transform:rotate(45deg)}
+.crew-base-legend-symbol--hazard{border-color:#d3a36b;background:#d3a36b44}
+.crew-base-legend-slope{width:12px;height:10px;flex:none;border:1px solid #91b3ca;background:linear-gradient(90deg,#91b3ca 45%,transparent 45%),linear-gradient(#91b3ca 45%,transparent 45%);background-size:6px 5px}
+.crew-base-map-meta .crew-base-coordinate{grid-column:2;grid-row:1 / span 2;align-self:center;padding:8px 10px;border:1px solid #34373e;background:transparent}
+.crew-base-aside>.crew-base-map-meta{position:static;z-index:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;align-self:start;gap:6px 12px;padding:0;pointer-events:auto}
+.crew-base-aside>.crew-base-map-meta>p:first-child{grid-column:1;grid-row:1;max-width:40ch;font-size:10px}
+.crew-base-aside>.crew-base-map-meta .crew-base-hazard-legend{grid-column:1;grid-row:2;gap:5px 9px;max-width:40ch}
+.crew-base-aside>.crew-base-map-meta .crew-base-coordinate{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:end;max-width:100%;padding:7px 9px;border:1px solid #34373e;background:#111419;font-size:11px}
+.crew-base-overlap-warning{grid-column:1/-1;display:flex;align-items:flex-start;gap:7px;margin:7px 0 0;color:#f0c178;font-size:10px;line-height:1.4}
+.crew-base-overlap-warning svg{flex:none;margin-top:1px}
+.crew-base-actions{min-height:40px;margin:0 calc(-1 * var(--crew-setup-inset));padding:16px var(--crew-setup-inset) 0;border-top:0;background:#111419}
+.crew-base-actions .crew-choice-back{align-self:flex-start;padding-inline:0}
+.crew-base-actions .crew-choice-back:hover{background:transparent}
+.crew-base-actions .crew-choice-back:hover span,.crew-base-actions .crew-choice-back:focus-visible span{text-decoration:underline;text-underline-offset:4px}
+.quest-sector-hazard{position:absolute;z-index:4;width:var(--hazard-width);height:var(--hazard-height);display:grid;place-items:center;padding:0;border:1px dashed currentColor;border-radius:50%;transform:translate(-50%,-50%);opacity:.82;cursor:crosshair}
+.crew-base-map .quest-sector-hazard:focus-visible,.crew-base-map .quest-sector-hazard:hover{opacity:1;outline:1px solid currentColor;outline-offset:2px}
+.quest-sector-hazard--heat{color:#f0a060;background:#f0a06020}.quest-sector-hazard--dust{color:#e4cb85;background:#e4cb8520}.quest-sector-hazard--chemical{color:#8cc5a9;background:#8cc5a920}.quest-sector-hazard--radiation{color:#d99bc1;background:#d99bc120}
+.crew-base-map .quest-sector-recommendation{position:absolute;z-index:4;display:grid;width:var(--suggested-area-size,23px);height:auto;aspect-ratio:1;place-items:center;padding:0;border:1px dashed #f1f3f2;border-radius:50%;background:#f1f3f210;color:#f1f3f2;transform:translate(-50%,-50%);cursor:pointer}
+.crew-base-map .quest-sector-recommendation:hover,.crew-base-map .quest-sector-recommendation:focus-visible{border-style:solid;background:#e5e9ec;color:#111419}
+@media(max-width:900px){
+ .crew-base-step{height:auto;grid-template-columns:1fr}
+ .crew-base-aside{min-height:0;grid-template-rows:repeat(5,auto);border-right:0;border-bottom:1px solid #34373e}
+ .crew-base-controls{min-height:580px;overflow:visible}
+ .crew-base-map{min-height:420px}
+ .crew-base-map .crew-base-sector-map .quest-sector-frame{width:min(100%,100cqh,100cqw);height:min(100cqh,100cqw)}
+}
+@media(max-width:650px){
+ .crew-base-aside,.crew-base-controls{padding:20px}
+ .crew-base-map{min-height:300px}
+ .crew-base-map-meta{grid-template-columns:1fr;gap:6px}
+ .crew-base-aside>.crew-base-map-meta{grid-template-columns:minmax(0,1fr) auto}
+ .crew-base-aside>.crew-base-map-meta>p:first-child{grid-column:1;grid-row:1}
+ .crew-base-aside>.crew-base-map-meta .crew-base-hazard-legend{grid-column:1;grid-row:2}
+ .crew-base-aside>.crew-base-map-meta .crew-base-coordinate{grid-column:2;grid-row:1 / span 2;justify-self:end}
+ .crew-base-map-meta .crew-base-coordinate{grid-column:1;grid-row:auto;justify-self:start}
+ .crew-base-actions{margin-inline:-20px;padding-inline:20px}
+ .crew-base-actions{align-items:stretch;flex-direction:column-reverse;gap:10px}
+ .crew-base-actions>[data-slot="button"]{width:100%;justify-content:center}
+ .crew-base-actions .crew-choice-back{align-self:stretch}
+}
+
+.crew-base-legend-hazard{color:#d4dbe0}
+.crew-base-legend-hazard.crew-base-hazard-chip--heat{color:#f0a060}
+.crew-base-legend-hazard.crew-base-hazard-chip--dust{color:#e4cb85}
+.crew-base-legend-hazard.crew-base-hazard-chip--chemical{color:#8cc5a9}
+.crew-base-legend-hazard.crew-base-hazard-chip--radiation{color:#d99bc1}
+.quest-sector-hazard svg{filter:drop-shadow(0 1px 2px #000c)}
+
+/* Keep the base map key in the details panel and leave hazard names off the raster. */
+.crew-base-aside>.crew-base-map-meta{grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:7px 12px}
+.crew-base-aside>.crew-base-map-meta>p:first-child{max-width:38ch}
+.crew-base-aside>.crew-base-map-meta .crew-base-hazard-legend{gap:5px 9px}
+.crew-base-aside>.crew-base-map-meta .crew-base-coordinate{align-self:start;white-space:normal;text-align:right}
+.crew-base-aside .crew-base-scenario-summary{align-self:end}
+.crew-base-hazard-empty{margin:5px 0;color:#b7c0c6;font-size:10px;line-height:1.4}
+
+/* Crew map refinements: cell intensity, distinct candidate rings, precise pins, and a compact point label. */
+.crew-base-map .quest-sector-slope-grid{position:absolute;z-index:1;inset:0;pointer-events:none}
+.crew-base-map .quest-sector-slope-cell{position:absolute;box-sizing:border-box;width:calc(100% / 32);height:calc(100% / 32);border:1px solid #b8e0f34d;background:#72b6dd;mix-blend-mode:screen}
+.crew-base-map .quest-sector-slope-clusters{position:absolute;z-index:4;inset:0;pointer-events:none}
+.crew-base-map .quest-sector-slope-cluster-marker{position:absolute;display:grid;width:36px;height:36px;place-items:center;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;color:#91b3ca}
+.crew-base-map .quest-sector-slope-cluster-marker svg{display:block;width:15px;height:15px;filter:drop-shadow(0 1px 2px #000);stroke-width:2}
+.crew-base-map .quest-sector-hazard-grid{position:absolute;z-index:3;inset:0;display:grid;grid-template-columns:repeat(32,1fr);grid-template-rows:repeat(32,1fr);pointer-events:none}
+.crew-base-map .quest-sector-hazard-cell{position:absolute;width:calc(100% / 32);height:calc(100% / 32);mix-blend-mode:screen}
+.quest-sector-hazard-cell--heat{background:#f0a060}.quest-sector-hazard-cell--dust{background:#e4cb85}.quest-sector-hazard-cell--chemical{background:#8cc5a9}.quest-sector-hazard-cell--radiation{background:#d99bc1}
+.crew-base-map .quest-sector-hazard-target{position:absolute;z-index:4;width:36px;height:36px;padding:0;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;cursor:crosshair}
+.crew-base-map .quest-sector-hazard-target:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.crew-base-map .quest-sector-hazard-target svg{filter:drop-shadow(0 1px 2px #000);stroke-width:2}
+.crew-base-map .quest-sector-hazard-target--heat{color:#f0a060}.crew-base-map .quest-sector-hazard-target--dust{color:#e4cb85}.crew-base-map .quest-sector-hazard-target--chemical{color:#8cc5a9}.crew-base-map .quest-sector-hazard-target--radiation{color:#d99bc1}
+.crew-base-map .quest-sector-pin.mission-focus{z-index:6;width:14px;height:14px;border-width:1.5px;box-shadow:0 0 0 2px #f4dda066,0 0 0 4px #11182099,0 1px 4px #000b}
+.crew-base-map .quest-sector-pin.mission-focus svg{width:7px;height:7px}
+.crew-base-map .quest-sector-pin.selected{z-index:7;width:14px;height:14px;border-width:1.5px;box-shadow:0 0 0 2px #dce5ec44,0 1px 5px #0009}
+.crew-base-map .quest-sector-pin.selected svg{width:8px;height:8px}
+.crew-base-map .quest-sector-recommendation{z-index:5}
+.crew-base-map .quest-sector-base-label{position:absolute;z-index:8;right:8px;bottom:8px;display:grid;gap:2px;max-width:min(70%,250px);padding:5px 8px;border:1px solid #34373e;background:#10151bdf;color:#f0f2f3;font-size:9px;line-height:1.25;pointer-events:none}
+.crew-base-map .quest-sector-base-label strong{font-size:10px;font-weight:600}
+.crew-base-map .quest-sector-axis{display:none}
+.crew-base-map-meta .crew-base-coordinate{display:none}
+.crew-base-aside>.crew-base-map-meta{grid-template-columns:minmax(0,1fr);gap:5px}
+.crew-base-aside>.crew-base-map-meta>p:first-child,.crew-base-aside>.crew-base-map-meta .crew-base-hazard-legend{grid-column:1}
+.crew-setup-frame--mission .crew-mission-requirements{margin:24px 0 0;padding:14px 0 0;border:0;border-top:1px solid #34373e;background:transparent}
+.crew-setup-frame--mission .crew-mission-requirements dl{border:0}
+.crew-setup-frame--mission .crew-mission-requirements dl>div{padding:8px 12px;border-color:#34373e}
+.crew-setup-frame--mission .crew-mission-requirements dl>div:first-child{padding-left:0}
+.crew-setup-frame--mission .crew-mission-requirements dl>div:last-child{padding-right:0}
+.crew-mission-location-map>span{width:14px;height:14px;border-width:1px;box-shadow:0 0 0 2px #f0dfac44,0 1px 5px #0009}
+.crew-mission-location-map>span svg{width:8px;height:8px}
+@media(max-width:650px){
+ .crew-base-aside>.crew-base-map-meta{grid-template-columns:minmax(0,1fr) auto;gap:7px 8px}
+ .crew-base-aside>.crew-base-map-meta .crew-base-coordinate{grid-column:2;grid-row:1 / span 2;max-width:112px}
+}
+
+/* Fit mission context, placement guidance, scenario caveat, and timeline without collision. */
+.crew-base-aside{gap:clamp(7px,.8vh,12px)}
+.crew-base-mission h1{margin:16px 0 8px}
+.crew-base-capacity-option{min-height:64px}
+.crew-base-scenario-summary>p:not(.crew-base-caution){margin:3px 0 4px}
+.crew-base-caution{margin-top:4px}
+.crew-base-hazard-chip{padding:2px 5px}
+.crew-base-map .quest-sector-hazard-target{min-height:0}
+.crew-base-map .quest-sector-pin.mission-focus,.crew-base-map .quest-sector-pin.selected{min-height:0;padding:0;border-radius:50%}
+.crew-base-map .quest-sector-recommendation{min-height:0;padding:0;border-radius:50%}
+.crew-base-legend-intensity{display:inline-block;width:36px;height:7px;border:1px solid #73685b;background:linear-gradient(90deg,#e4cb8514,#e4cb85b8)}
+
+/* Compact Base configuration into a placement and hazards pair beneath capacity. */
+.crew-base-aside{position:relative;display:grid;grid-template-rows:minmax(0,1fr) auto;justify-content:stretch}
+.crew-base-aside-content{display:flex;min-height:0;flex-direction:column;gap:clamp(7px,.8vh,12px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#48515a #191e24}
+.crew-base-planning{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(176px,auto);align-items:stretch;align-self:stretch;flex:none;gap:16px;min-width:0}
+.crew-base-aside .crew-base-planning .crew-base-map-meta,
+.crew-base-aside .crew-base-planning .crew-base-scenario-summary{display:flex;min-width:0;min-height:176px;flex-direction:column;align-items:flex-start;align-self:stretch;gap:9px;margin:0;padding:16px;border:1px solid #34373e;background:#151a20}
+.crew-base-panel-title{display:grid;gap:6px}
+.crew-base-panel-title>span{color:#aeb6c1;font-size:10px;letter-spacing:.12em}
+.crew-base-panel-title>strong{font:600 23px/1.05 "Barlow Condensed",sans-serif;color:#f0f2f3}
+.crew-base-aside .crew-base-planning .crew-base-map-meta>p:first-of-type{max-width:36ch;color:#c0c7cd;font-size:12px;line-height:1.6}
+.crew-base-aside .crew-base-planning .crew-base-hazard-legend{display:flex;flex-wrap:wrap;gap:8px 12px;max-width:none;font-size:10px}
+.crew-base-aside .crew-base-planning .crew-base-scenario-head .eyebrow{color:#d8dde1;font-size:10px;letter-spacing:.12em}
+.crew-base-aside .crew-base-planning .crew-base-scenario-summary>p:not(.crew-base-caution){margin:0;color:#bfc7cd;font-size:10px;line-height:1.45}
+.crew-base-aside .crew-base-planning .crew-base-caution{margin:0;font-size:9px;line-height:1.4}
+.crew-base-terrain-summary{display:grid;width:100%;gap:5px;margin-top:auto}
+.crew-base-terrain-summary .crew-base-scenario-head{display:flex;align-items:center;justify-content:flex-start;gap:6px}
+.crew-base-terrain-summary .crew-base-scenario-head>svg{flex:none;color:#91b3ca}
+.crew-base-terrain-summary>p{margin:0;color:#bfc7cd;font-size:10px;line-height:1.45}
+.crew-base-aside .crew-base-planning .crew-base-overlap-warning{margin:0;font-size:9px;line-height:1.4}
+.crew-base-aside .crew-base-planning .crew-base-hazard-chip{padding:3px 5px;font-size:9px}
+.crew-base-hazard-chip--slope svg,.crew-base-legend-hazard.crew-base-hazard-chip--slope{color:#91b3ca}
+.crew-base-hazard-chip--rockfall svg,.crew-base-legend-hazard.crew-base-hazard-chip--rockfall{color:#d58b73}
+.crew-base-hazard-chip--storm svg,.crew-base-legend-hazard.crew-base-hazard-chip--storm{color:#b7a2e6}
+.quest-sector-hazard--slope{color:#91b3ca;background:#91b3ca20}.quest-sector-hazard--rockfall{color:#d58b73;background:#d58b7320}.quest-sector-hazard--storm{color:#b7a2e6;background:#b7a2e620}
+.quest-sector-hazard-cell--slope{background:#91b3ca}.quest-sector-hazard-cell--rockfall{background:#d58b73}.quest-sector-hazard-cell--storm{background:#b7a2e6}
+.crew-base-map .quest-sector-hazard-target--slope{color:#91b3ca}.crew-base-map .quest-sector-hazard-target--rockfall{color:#d58b73}.crew-base-map .quest-sector-hazard-target--storm{color:#b7a2e6}
+.quest-sector-hazard-trajectories{position:absolute;z-index:4;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.quest-sector-hazard-trajectory{fill:none;stroke-width:8;stroke-linecap:round;stroke-dasharray:20 24;opacity:.9}
+.quest-sector-hazard-trajectory--dust{stroke:#e4cb85}.quest-sector-hazard-trajectory--storm{stroke:#b7a2e6}
+.quest-sector-hazard-marker--dust path{fill:#e4cb85}.quest-sector-hazard-marker--storm path{fill:#b7a2e6}
+.crew-setup-frame--mission .crew-mission-hazard-chip--slope svg{color:#91b3ca}
+.crew-setup-frame--mission .crew-mission-hazard-chip--rockfall svg{color:#d58b73}
+.crew-setup-frame--mission .crew-mission-hazard-chip--storm svg{color:#b7a2e6}
+.crew-base-aside>.crew-setup-timeline{position:static;align-self:stretch;margin:0;padding:9px 0 0;flex:none}
+@media(max-width:900px){.crew-base-aside{display:flex;flex-direction:column}.crew-base-aside-content{min-height:0;flex:none;overflow:visible}.crew-base-aside>.crew-setup-timeline{width:100%;margin-top:auto}.crew-base-planning{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.crew-base-planning{grid-template-columns:1fr}.crew-base-aside .crew-base-planning .crew-base-map-meta,.crew-base-aside .crew-base-planning .crew-base-scenario-summary{padding:14px}}
+
+/* Mission brief reading order: summary, visible terrain map, then scannable facts. */
+.crew-setup-frame--mission .crew-mission-location-map{display:block;flex:none;align-self:flex-start;width:min(100%,clamp(190px,30vh,260px));height:auto;aspect-ratio:1/1;margin:0 0 22px;background:#11151a}
+.crew-setup-frame--mission .crew-mission-location-map>img{display:block;object-fit:fill}
+.crew-setup-frame--mission .crew-mission-location-map>small{right:0;bottom:0;padding:6px 8px;background:#10151be8;font-size:9px;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.crew-setup-frame--mission .crew-mission-detail-copy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+.crew-setup-frame--mission .crew-mission-detail-copy>section,.crew-setup-frame--mission .crew-mission-requirement-notes>section{min-width:0;margin:0;padding:14px 0 0;border-top:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-objective,.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-requirement-notes,.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-outcomes{grid-column:1/-1}
+.crew-setup-frame--mission .crew-mission-detail-copy h2,.crew-setup-frame--mission .crew-mission-detail-copy h3{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;line-height:1.35;color:#f1f1ef}
+.crew-setup-frame--mission .crew-mission-detail-copy h2 svg,.crew-setup-frame--mission .crew-mission-detail-copy h3 svg{flex:none;color:#d5c18b}
+.crew-setup-frame--mission .crew-mission-detail-copy p{max-width:68ch;margin:0;color:#c0c7cd;font-size:12px;line-height:1.55}
+.crew-setup-frame--mission .crew-mission-requirement-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.crew-setup-frame--mission .crew-mission-outcomes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.crew-setup-frame--mission .crew-mission-outcomes-grid h3{margin-top:4px}
+@media(max-width:760px){.crew-setup-frame--mission .crew-mission-location-map{width:min(100%,clamp(190px,48vw,260px))}.crew-setup-frame--mission .crew-mission-detail-copy{grid-template-columns:1fr;gap:14px}.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-objective,.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-requirement-notes,.crew-setup-frame--mission .crew-mission-detail-copy .crew-mission-outcomes{grid-column:1}.crew-setup-frame--mission .crew-mission-requirement-notes,.crew-setup-frame--mission .crew-mission-outcomes-grid{grid-template-columns:1fr;gap:14px}}
+
+/* Mission brief visual pass: larger map, restrained fact grid, and consistent heading scale. */
+.crew-setup-frame--mission .crew-mission-location-map{width:min(100%,clamp(320px,54vh,440px));margin-bottom:26px}
+.crew-setup-frame--mission .crew-mission-detail-copy{gap:22px 28px}
+.crew-setup-frame--mission .crew-mission-detail-copy>section,.crew-setup-frame--mission .crew-mission-requirement-notes>section{padding-top:18px}
+.crew-setup-frame--mission .crew-mission-detail-copy h2{margin-bottom:10px;font:600 25px/1 "Barlow Condensed",sans-serif;letter-spacing:-.015em}
+.crew-setup-frame--mission .crew-mission-detail-copy h3{margin-bottom:9px;font:600 16px/1.2 "Barlow Condensed",sans-serif;letter-spacing:0}
+.crew-setup-frame--mission .crew-mission-detail-copy p{font-size:13px;line-height:1.6}
+.crew-setup-frame--mission .crew-mission-requirements{margin-top:26px;padding-top:16px}
+.crew-setup-frame--mission .crew-mission-requirements dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+.crew-setup-frame--mission .crew-mission-requirements dl>div{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:9px 16px}
+.crew-setup-frame--mission .crew-mission-requirements dt{align-items:center;font-size:12px}
+.crew-setup-frame--mission .crew-mission-requirements dd{font-size:15px}
+@media(max-width:760px){.crew-setup-frame--mission .crew-mission-location-map{width:min(100%,clamp(280px,72vw,360px))}.crew-setup-frame--mission .crew-mission-requirements dl{grid-template-columns:1fr}.crew-setup-frame--mission .crew-mission-requirements dl>div{grid-template-columns:minmax(0,1fr) auto;padding:10px 0}}
+
+/* Keep mission map, field kit, crew load, and this crew's hazards in one glance. */
+.crew-setup-frame--mission .crew-mission-location-layout{display:grid;grid-template-columns:minmax(0,min(48%,420px)) minmax(0,1fr);align-items:stretch;gap:clamp(20px,2.4vw,34px);margin:24px 0 30px}
+.crew-setup-frame--mission .crew-mission-location-layout .crew-mission-location-map{width:100%;height:auto;aspect-ratio:1;margin:0;align-self:start}
+.crew-setup-frame--mission .crew-mission-field-context{display:flex;min-width:0;flex-direction:column;gap:20px}
+.crew-setup-frame--mission .crew-mission-context-section{min-width:0;padding-top:15px;border-top:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-context-section h3{display:flex;align-items:center;gap:8px;margin:0 0 9px;font:600 18px/1.2 "Barlow Condensed",sans-serif;color:#f1f1ef}
+.crew-setup-frame--mission .crew-mission-context-section h3 svg{flex:none;color:#d5c18b}
+.crew-setup-frame--mission .crew-mission-context-section>p,.crew-setup-frame--mission .crew-mission-hazard-empty{margin:0;color:#c0c7cd;font-size:12px;line-height:1.55}
+.crew-setup-frame--mission .crew-mission-hazard-list{display:flex;flex-wrap:wrap;gap:7px}
+.crew-setup-frame--mission .crew-mission-hazard-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #40464d;color:#dce1e5;font-size:11px;line-height:1.2}
+.crew-setup-frame--mission .crew-mission-hazard-chip svg{flex:none}
+.crew-setup-frame--mission .crew-mission-hazard-chip--heat svg{color:#f0a060}
+.crew-setup-frame--mission .crew-mission-hazard-chip--dust svg{color:#e4cb85}
+.crew-setup-frame--mission .crew-mission-hazard-chip--chemical svg{color:#8cc5a9}
+.crew-setup-frame--mission .crew-mission-hazard-chip--radiation svg{color:#d99bc1}
+.crew-setup-frame--mission .crew-mission-hazard-caption{margin:9px 0 0;color:#aeb6c1;font-size:10px;line-height:1.45}
+.crew-setup-frame--mission .crew-mission-context-section .crew-mission-hazard-note{display:grid;gap:3px;margin-top:12px;padding-top:10px;border-top:1px solid #34373e;color:#aeb6c1;font-size:11px;line-height:1.5}
+.crew-setup-frame--mission .crew-mission-hazard-note strong{color:#dce1e5;font-size:10px;letter-spacing:.04em;text-transform:uppercase}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements{margin:0;padding:14px 0 0;border:0;border-top:1px solid #34373e;background:transparent}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dl{grid-template-columns:repeat(2,minmax(0,1fr));margin:0;border:0}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dl>div{grid-template-columns:1fr;align-content:start;gap:7px;padding:4px 12px;border-right:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dl>div:first-child{padding-left:0}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dl>div:last-child{padding-right:0;border-right:0}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dt{align-items:center;gap:7px;font-size:11px}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dt svg{color:#c0c7cd}
+.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements dd{font-size:14px;text-align:left}
+.crew-setup-frame--mission .crew-mission-detail-copy{margin-top:0}
+.crew-setup-frame--mission .crew-mission-brief .crew-mission-context-section h3 svg,.crew-setup-frame--mission .crew-mission-brief .crew-mission-detail-copy h2 svg,.crew-setup-frame--mission .crew-mission-brief .crew-mission-detail-copy h3 svg,.crew-setup-frame--mission .crew-mission-brief .crew-mission-hazard-chip svg{color:#bfc6cc}
+.crew-setup-frame--mission .crew-mission-brief .crew-mission-hazard-caption{margin-top:12px}
+@media(max-width:760px){.crew-setup-frame--mission .crew-mission-location-layout{grid-template-columns:1fr;gap:22px}.crew-setup-frame--mission .crew-mission-location-layout .crew-mission-location-map{width:min(100%,clamp(280px,72vw,360px))}.crew-setup-frame--mission .crew-mission-field-context{gap:16px}.crew-setup-frame--mission .crew-mission-field-context .crew-mission-requirements{margin-top:2px}}
+
+/* Selected mission brief: objective leads the facts, while the map owns its own column. */
+.crew-setup-frame--mission .crew-mission-detail-top{min-height:24px;gap:8px}
+.crew-setup-frame--mission .crew-mission-detail-top>.eyebrow{color:#aeb6c1;font-size:9px;letter-spacing:.14em}
+.crew-setup-frame--mission .crew-mission-close{width:30px;height:30px}
+.crew-setup-frame--mission .crew-mission-title{margin-top:6px;font-size:clamp(30px,2.6vw,38px);line-height:1;text-wrap:balance}
+.crew-setup-frame--mission .crew-mission-description{max-width:72ch;margin:6px 0 0;font-size:11px;line-height:1.4}
+.crew-setup-frame--mission .crew-mission-location-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start;gap:14px;margin:14px 0 0;padding:0;border:0}
+.crew-setup-frame--mission .crew-mission-map-column{display:grid;align-content:start;gap:8px;min-width:0}
+.crew-setup-frame--mission .crew-mission-location-layout .crew-mission-location-map{width:100%;max-width:260px;margin:0;justify-self:start}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements{margin:0;padding:0;border:0;background:transparent}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:0;border:0}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dl>div{grid-template-columns:1fr;gap:2px;padding:0 7px 0 0;border:0}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dl>div+div{padding:0 0 0 7px;border-left:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dt{align-items:center;gap:4px;color:#9faab3;font-size:8px;letter-spacing:.06em;text-transform:uppercase}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dt svg{width:12px;height:12px;color:#bfc6cc}
+.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dd{font-size:10px;line-height:1.35;text-align:left}
+.crew-setup-frame--mission .crew-mission-field-context{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:8px;min-width:0}
+.crew-setup-frame--mission .crew-mission-context-section{min-width:0;margin:0;padding:8px 0 0;border-top:1px solid #34373e}
+.crew-setup-frame--mission .crew-mission-context-section+.crew-mission-context-section{margin:0}
+.crew-setup-frame--mission .crew-mission-context-section h3,.crew-setup-frame--mission .crew-mission-objective-summary h2{display:flex;align-items:center;gap:6px;margin:0 0 4px;color:#9faab3;font:600 8px/1.3 "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.crew-setup-frame--mission .crew-mission-context-section h3 svg,.crew-setup-frame--mission .crew-mission-objective-summary h2 svg{width:12px;height:12px;flex:none;color:#bfc6cc}
+.crew-setup-frame--mission .crew-mission-context-section>p{margin:0;color:#e0e4e7;font-size:10px;line-height:1.38}
+.crew-setup-frame--mission .crew-mission-objective-summary{display:grid;gap:0;margin-bottom:0;padding-top:0;border-top:0}
+.crew-setup-frame--mission .crew-mission-objective-summary p{margin:0;color:#e0e4e7;font-size:10px;line-height:1.38}
+.crew-setup-frame--mission .crew-mission-context-section:last-child{grid-column:auto}
+@media(min-width:901px){.crew-setup-frame--mission .crew-mission-brief-content{overflow:visible}}
+@media(max-height:760px) and (min-width:901px){.crew-setup-frame--mission .crew-mission-brief-content{overflow-y:auto}}
+@media(max-width:900px){.crew-setup-frame--mission .crew-mission-brief-content{overflow:visible}.crew-setup-frame--mission .crew-mission-location-layout{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:14px}.crew-setup-frame--mission .crew-mission-location-layout .crew-mission-location-map{width:min(100%,300px);max-width:100%}}
+@media(max-width:560px){.crew-setup-frame--mission .crew-mission-field-context{grid-template-columns:minmax(0,1fr)}.crew-setup-frame--mission .crew-mission-objective-summary,.crew-setup-frame--mission .crew-mission-context-section:last-child{grid-column:auto}.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dl>div{grid-template-columns:minmax(0,1fr) auto;align-items:center}.crew-setup-frame--mission .crew-mission-map-column .crew-mission-requirements dd{text-align:right}}
+
+/* Formation-first crew room and persistent room editing. */
+.project-content:has(.crew-lobby){display:flex;height:0;min-height:0;flex-direction:column;overflow:hidden}
+.crew-page:has(.crew-lobby){display:flex;height:100%;min-height:0;max-width:none;flex-direction:column;box-sizing:border-box;padding:16px 24px 18px}
+.project-content main.crew-page:has(.crew-lobby){flex:1;height:auto}
+.crew-lobby{display:grid;min-height:0;flex:1;grid-template-rows:minmax(0,1fr);border:1px solid #34373e;background:#111419}
+.crew-lobby-code{display:grid;grid-template-columns:auto auto;align-items:center;gap:0 9px}
+.crew-lobby-code>span{grid-column:1;color:#aeb6c1;font-size:8px;letter-spacing:.15em}
+.crew-lobby-code>strong{grid-column:1;grid-row:2;font:600 22px/1.2 "DM Sans",sans-serif;letter-spacing:.14em}
+.crew-lobby-code>[data-slot="button"]{grid-column:2;grid-row:1/span 2}
+.crew-lobby-grid{display:grid;min-height:0;grid-template-columns:repeat(2,minmax(0,1fr));border:0;background:#111419}
+.crew-lobby-panel{display:grid;min-width:0;min-height:0;grid-template-rows:auto minmax(0,1fr);padding:clamp(18px,2vw,28px);border-right:1px solid #34373e}
+.crew-lobby-panel-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 0 16px;border-bottom:1px solid #34373e}
+.crew-lobby-panel-header h1{margin:3px 0 2px;font:600 clamp(25px,2vw,34px)/1 "Barlow Condensed",sans-serif;letter-spacing:-.02em}
+.crew-lobby-panel-header p{margin:0;color:#aeb6c1;font-size:11px}
+.crew-lobby-panel-header .eyebrow{font-size:9px}
+.crew-lobby-code{display:grid;grid-template-columns:auto auto;align-items:center;gap:0 9px;flex:none}
+.crew-lobby-code>span{grid-column:1;color:#aeb6c1;font-size:8px;letter-spacing:.15em}
+.crew-lobby-code>strong{grid-column:1;grid-row:2;font:600 22px/1.2 "DM Sans",sans-serif;letter-spacing:.14em}
+.crew-lobby-code>[data-slot="button"]{grid-column:2;grid-row:1/span 2}
+.crew-lobby-panel .lobby-stage{height:100%;min-height:220px;margin:0;border:0;border-bottom:1px solid #34373e;background:radial-gradient(ellipse at 50% 85%,#24313a 0,#182129 39%,#13191f 76%);container-type:inline-size}
+.crew-lobby-panel .lobby-stage canvas{display:block!important;width:100%!important;height:100%!important}
+.crew-lobby-panel .lobby-stage-labels strong{font-size:clamp(8px,1.4cqw,12px);overflow-wrap:normal;-webkit-line-clamp:3}
+.crew-lobby-panel .lobby-stage-labels small{font-size:clamp(8px,1.1cqw,9px);white-space:normal;overflow-wrap:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.crew-lobby-panel .lobby-stage-labels span{font-size:clamp(8px,1.2cqw,10px)}
+.crew-lobby-rail{display:grid;min-width:0;min-height:0;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.crew-lobby-mission{min-height:0;overflow:auto;padding:clamp(18px,1.8vw,26px);scrollbar-color:#48515a #111419;scrollbar-width:thin}
+.crew-lobby-mission>.eyebrow{font-size:9px}
+.crew-lobby-mission h2{margin:5px 0 7px;font:600 clamp(23px,1.9vw,31px)/1.02 "Barlow Condensed",sans-serif}
+.crew-lobby-mission-description{margin:0;color:#bac2c8;font-size:11px;line-height:1.5}
+.crew-lobby-rail-fact{display:grid;gap:6px;margin-top:16px;padding-top:12px;border-top:1px solid #34373e}
+.crew-lobby-rail-fact>strong{color:#9faab3;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.crew-lobby-rail-fact>p{margin:0;color:#e0e4e7;font-size:11px;line-height:1.45}
+.crew-lobby-hazards{display:flex;flex-wrap:wrap;gap:5px}
+.crew-lobby-hazards .crew-base-hazard-chip{padding:4px 6px;font-size:9px}
+.crew-lobby-map-wrap{margin-top:14px;padding:12px 0 0;border-top:1px solid #34373e}
+.crew-lobby-map{margin:0;padding:0;border:0}
+.crew-lobby-map .crew-base-sector-map{position:relative;display:flex;width:100%;min-width:0;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;border:0;background:transparent}
+.crew-lobby-map .quest-sector-top{display:none}
+.crew-lobby-map .crew-base-sector-map .quest-sector-frame{position:relative;isolation:isolate;flex:none;width:min(100%,240px);height:auto;min-height:0;aspect-ratio:1;overflow:hidden;background:#171c21}
+.crew-lobby-map .crew-base-sector-map{align-items:flex-start}
+.crew-lobby-map .crew-base-sector-map.jezero .quest-sector-frame{background-image:none}
+.crew-lobby-map .crew-base-sector-map.jezero .quest-sector-frame::before{position:absolute;z-index:0;inset:0;background:url('/data/jezero/optical.webp') center / 100% 100% no-repeat;content:"";filter:grayscale(1);pointer-events:none}
+.crew-lobby-map .crew-base-sector-map .quest-sector-frame .quest-sector-slope-overlay{position:absolute;z-index:1;inset:0;background:#91b3ca;mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;-webkit-mask:url('/data/jezero/slope.webp') center / 100% 100% no-repeat;opacity:.58;pointer-events:none}
+.crew-lobby-map .quest-sector-slope-grid{position:absolute;z-index:1;inset:0;pointer-events:none}
+.crew-lobby-map .quest-sector-slope-cell{position:absolute;box-sizing:border-box;width:calc(100% / 32);height:calc(100% / 32);border:1px solid #b8e0f34d;background:#72b6dd;mix-blend-mode:screen}
+.crew-lobby-map .quest-sector-slope-clusters{position:absolute;z-index:5;inset:0;pointer-events:none}
+.crew-lobby-map .quest-sector-slope-cluster-marker{position:absolute;display:grid;width:36px;height:36px;place-items:center;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;color:#91b3ca}
+.crew-lobby-map .quest-sector-slope-cluster-marker svg{display:block;width:12px;height:12px;filter:drop-shadow(0 1px 2px #000);stroke-width:2}
+.crew-lobby-map .crew-base-sector-map .quest-sector-frame::after{position:absolute;z-index:2;inset:0;background-image:linear-gradient(#dce7ee12 1px,transparent 1px),linear-gradient(90deg,#dce7ee12 1px,transparent 1px);background-size:12.5% 12.5%;content:"";pointer-events:none}
+.crew-lobby-map .quest-sector-hazard-target{position:absolute;z-index:4;display:grid;width:28px;height:28px;place-items:center;padding:0;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;color:#e1e7eb}
+.crew-lobby-map .quest-sector-hazard-target svg{filter:drop-shadow(0 1px 3px #000);stroke-width:2.25}
+.crew-lobby-map .quest-sector-hazard-target--heat{color:#f0a060}.crew-lobby-map .quest-sector-hazard-target--dust{color:#e4cb85}.crew-lobby-map .quest-sector-hazard-target--chemical{color:#8cc5a9}.crew-lobby-map .quest-sector-hazard-target--radiation{color:#d99bc1}.crew-lobby-map .quest-sector-hazard-target--rockfall{color:#d58b73}.crew-lobby-map .quest-sector-hazard-target--storm{color:#b7a2e6}
+.crew-lobby-map-heading{margin:0 0 7px;color:#c1c9ce;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.crew-lobby-map .quest-sector-pin{position:absolute;z-index:6;display:grid;width:14px;height:14px;place-items:center;padding:0;transform:translate(-50%,-50%);border-radius:50%}
+.crew-lobby-map .quest-sector-pin.mission-focus{border:1px solid #111820;background:#f4dda0;color:#101316;box-shadow:0 0 0 2px #f4dda066,0 1px 4px #000b}
+.crew-lobby-map .quest-sector-pin.selected{z-index:7;border:1px solid #10161b;background:#dce5ec;color:#111820;box-shadow:0 0 0 2px #dce5ec44,0 1px 4px #0009}
+.crew-lobby-map .quest-sector-pin svg{width:8px;height:8px}
+.crew-lobby-map .quest-sector-base-label{position:absolute;z-index:8;right:5px;bottom:5px;display:grid;gap:1px;max-width:70%;padding:4px 6px;border:1px solid #34373e;background:#10151bdf;color:#f0f2f3;font-size:8px;line-height:1.2;pointer-events:none}
+.crew-lobby-map .quest-sector-base-label strong{font-size:8px;font-weight:600}
+.crew-lobby-rail-footer{display:flex;min-height:64px;align-items:center;justify-content:flex-end;gap:16px;padding:10px clamp(18px,1.8vw,26px);border-top:1px solid #34373e;background:#191e24}
+.crew-lobby-footer-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
+.crew-host-setup-step .crew-setup-timeline{margin-top:auto}
+.crew-host-setup-step .crew-entry-form{max-width:none}
+.crew-host-setup-step .crew-entry-form>.crew-character-step-actions{width:100%;margin-top:16px}
+.crew-mission-editor-timeline{margin-top:0;padding-top:12px;border-top:1px solid #34373e}
+.crew-host-setup-step .crew-mission-catalog{display:flex;flex-direction:column}
+.crew-host-setup-step .crew-mission-catalog>.crew-mission-editor-timeline{margin-top:auto}
+
+/* Keep mission progress in the brief panel while its details scroll independently. */
+.crew-setup-frame--mission .crew-mission-brief{display:flex;min-height:0;flex-direction:column;overflow:hidden}
+.crew-mission-brief-content{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#515761 transparent}
+.crew-mission-brief-content::-webkit-scrollbar{width:8px}
+.crew-mission-brief-content::-webkit-scrollbar-thumb{background:#515761;border:2px solid #191e24}
+.crew-setup-frame--mission .crew-mission-editor-timeline{flex:none;margin-top:0;padding-top:12px;border-top:1px solid #34373e}
+.crew-base-capacity-option[data-disabled="true"]{opacity:.42;cursor:not-allowed}
+@media(max-width:900px){.project-content:has(.crew-lobby){display:block;height:auto;overflow-y:auto}.project-content main.crew-page:has(.crew-lobby){height:auto;min-height:100%}.crew-page:has(.crew-lobby){height:auto;min-height:100%;overflow:visible;padding:16px 24px 18px}.crew-lobby{flex:none}.crew-lobby-grid{grid-template-columns:1fr}.crew-lobby-panel{min-height:560px;grid-template-rows:auto auto;border-right:0;border-bottom:1px solid #34373e}.crew-lobby-panel .lobby-stage{height:clamp(260px,44dvh,400px);min-height:260px}.crew-lobby-rail{grid-template-rows:auto auto;overflow:visible}.crew-lobby-mission{overflow:visible}.crew-lobby-map .quest-sector-frame{width:min(100%,300px)}.crew-lobby-rail-footer{position:sticky;bottom:0;z-index:5}}
+@media(max-width:650px){.crew-page:has(.crew-lobby){padding:14px 16px 22px}}
+@media(max-width:560px){.crew-lobby-panel-header{align-items:flex-start;gap:12px}.crew-lobby-panel-header h1{font-size:26px}.crew-lobby-code>strong{font-size:18px}.crew-lobby-panel{min-height:470px;padding:16px}.crew-lobby-rail-footer{align-items:stretch;flex-direction:column;padding:12px 14px}.crew-lobby-footer-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.crew-lobby-footer-actions>[data-slot="button"],.crew-lobby-footer-actions .crew-enter{justify-content:center}.crew-lobby-map .quest-sector-frame{width:min(100%,260px)}}
+
+/* The squad owns the full left panel; room context and progress sit over the stage. */
+.crew-lobby-panel{position:relative;display:block;min-height:0;overflow:hidden;padding:0;border-right:1px solid #34373e}
+.crew-lobby-panel-header{position:absolute;z-index:4;inset:0 0 auto;align-items:center;padding:clamp(18px,2vw,28px);border:0;background:linear-gradient(180deg,#111419f2 0%,#111419c7 70%,transparent 100%)}
+.crew-lobby-panel .lobby-stage{position:absolute;z-index:0;inset:0;height:auto;min-height:0;margin:0;border:0;background:radial-gradient(ellipse at 50% 66%,#24313a 0,#182129 39%,#13191f 76%)}
+.crew-lobby-panel .lobby-stage-labels{bottom:clamp(220px,24vh,300px)}
+.crew-lobby-panel-timeline{position:absolute;z-index:4;inset:auto 0 0;padding:0 var(--crew-setup-inset) var(--crew-setup-inset);background:linear-gradient(0deg,#111419f2 0%,#111419d1 72%,transparent 100%)}
+.crew-lobby-panel-timeline .crew-setup-timeline{width:100%;margin:0;padding:9px 0 0;border-top:0}
+@media(max-width:900px){.crew-lobby-panel{min-height:clamp(560px,72dvh,820px);grid-template-rows:none;border-right:0;border-bottom:1px solid #34373e}.crew-lobby-panel .lobby-stage{height:auto;min-height:0}.crew-lobby-panel-timeline{padding-bottom:18px}}
+@media(max-width:560px){.crew-lobby-panel{min-height:clamp(540px,74dvh,760px);padding:0}.crew-lobby-panel-header{align-items:flex-start;gap:12px;padding:16px}.crew-lobby-panel-header h1{font-size:26px}.crew-lobby-code>strong{font-size:18px}.crew-lobby-panel-timeline{padding:0 16px 22px}.crew-lobby-panel-timeline .crew-setup-timeline{gap:2px;padding:9px 0 0}.crew-lobby-panel-timeline .crew-setup-timeline li{font-size:9px}.crew-lobby-panel .lobby-stage-labels{bottom:clamp(150px,22vh,220px)}}
+
+/* Later desktop rhythm rules must not restore a two-column Character step on mobile. */
+@media(max-width:900px){
+  .crew-details-step,.crew-character-step{grid-template-columns:minmax(0,1fr)}
+  .crew-character-aside{width:100%;box-sizing:border-box}
+  .crew-character-aside .crew-setup-timeline--create{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .crew-character-aside .crew-setup-timeline--join{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .crew-character-controls{width:100%;box-sizing:border-box}
+}
+
+/* Keep roster captions in a clear single-line stack below the models. */
+.crew-lobby-panel .lobby-stage-labels{bottom:clamp(130px,16vh,200px);z-index:3}
+.crew-lobby-panel .lobby-stage-labels>div{gap:3px;width:auto;padding:7px 8px;border:1px solid #ffffff12;border-radius:5px;background:#111820d9;backdrop-filter:blur(5px)}
+.crew-lobby-panel .lobby-stage-labels strong,.crew-lobby-panel .lobby-stage-labels small,.crew-lobby-panel .lobby-stage-labels span{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal;-webkit-line-clamp:unset}
+.crew-lobby-panel .lobby-stage-labels strong{min-height:0;line-height:1.2}
+.crew-lobby-panel .lobby-stage-labels .lobby-stage-status{display:flex;align-items:center;justify-content:center;gap:4px}
+.lobby-stage-status i{width:6px;height:6px;flex:none;border-radius:50%;background:#d8b963;box-shadow:0 0 6px #d8b96366}
+.lobby-stage-status.is-ready i{background:#68c995;box-shadow:0 0 7px #68c99588}
+@media(max-width:560px){.crew-lobby-panel .lobby-stage-labels{bottom:clamp(100px,15vh,145px)}.crew-lobby-panel .lobby-stage-labels>div{padding:5px 4px}}
+
+/* Pair the terrain map with the concise mission context it helps explain. */
+.crew-lobby-context-layout{display:grid;grid-template-columns:minmax(200px,.9fr) minmax(0,1.1fr);gap:clamp(14px,1.5vw,20px);align-items:start;margin-top:16px;padding-top:14px;border-top:1px solid #34373e}
+.crew-lobby-map-wrap{min-width:0;margin:0;padding:0;border:0}
+.crew-lobby-map .crew-base-sector-map .quest-sector-frame{width:min(100%,260px)}
+.crew-lobby-context-facts{display:grid;gap:12px;min-width:0}
+.crew-lobby-context-facts .crew-lobby-rail-fact{margin:0;padding-top:10px}
+.crew-lobby-context-facts .crew-lobby-rail-fact:first-child{padding-top:0;border-top:0}
+.crew-lobby-map-hazards{margin-top:10px;padding-top:0;border-top:0}
+.crew-base-terrain-summary{margin-top:0}
+@media(max-width:560px){.crew-lobby-context-layout{grid-template-columns:minmax(0,1fr);gap:16px}.crew-lobby-map .crew-base-sector-map .quest-sector-frame{width:min(100%,300px)}}
+
+/* Keep lobby navigation and the primary action in the right-hand step panel. */
+.crew-lobby{grid-template-rows:minmax(0,1fr)}
+.crew-lobby-rail{grid-template-rows:minmax(0,1fr) auto}
+.crew-lobby-footer{display:flex;min-height:40px;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding:16px 36px 36px;border-top:0;background:#111419}
+.crew-lobby-footer-back{display:flex;align-items:center;gap:8px}
+.crew-lobby-footer-back>[data-slot="button"]{gap:7px;color:#c1c9ce}
+.crew-lobby-footer-back .crew-lobby-back-link[data-slot="button"]{min-height:40px;padding:0;border:0;background:transparent;color:#c1c9ce;box-shadow:none}
+.crew-lobby-footer-back .crew-lobby-back-link[data-slot="button"]:hover,.crew-lobby-footer-back .crew-lobby-back-link[data-slot="button"]:focus-visible{background:transparent;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.crew-lobby-footer-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
+.crew-lobby-footer-actions>[data-slot="button"]{min-height:40px}
+@media(max-width:900px){.crew-lobby{grid-template-rows:auto}.crew-lobby-rail{grid-template-rows:auto auto}.crew-lobby-footer{padding:16px clamp(18px,1.8vw,26px) 18px}}
+@media(max-width:560px){.crew-lobby-footer{align-items:stretch;flex-direction:column-reverse;gap:10px;padding:16px 14px 22px}.crew-lobby-footer-back{justify-content:flex-start}.crew-lobby-footer-actions{display:grid;grid-template-columns:1fr}.crew-lobby-footer-actions>[data-slot="button"],.crew-lobby-footer-actions .crew-enter{justify-content:center}}
+
+/* Let the empty mission artwork use the brief's available height instead of
+   anchoring to the short title block (which clips the canvas and overflows). */
+.crew-mission-brief-content:has(.crew-mission-default){display:flex;flex-direction:column}
+.crew-setup-frame--mission .crew-mission-default{flex:1;min-height:0}
+.crew-setup-frame--mission .crew-mission-riffle{right:0;width:92%;max-width:100%}

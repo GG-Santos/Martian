@@ -1,0 +1,68 @@
+import { expect, test } from "@playwright/test";
+
+test("two browsers form a crew, choose a base, and launch together", async ({ browser }) => {
+  const host = await browser.newPage();
+  const guest = await browser.newPage();
+  await host.goto("/crew");
+  await host.getByRole("button", { name: "Create a crew" }).click();
+  await host.getByLabel("Crew name").fill("Survey Crew");
+  await host.getByLabel("Your name").fill("Alex");
+  await host.getByRole("button", { name: "Continue to mission" }).click();
+  await host.getByRole("region", { name: "Mission selection" }).getByRole("button", { name: /Bundled objective/ }).first().click();
+  await host.getByRole("button", { name: "Accept mission" }).click();
+  await host.getByRole("radio", { name: /^2 astronauts/ }).check();
+  await host.getByRole("button", { name: /Suggested base area:/ }).first().click();
+  await host.getByRole("button", { name: "Continue to character" }).click();
+  await host.getByRole("button", { name: "Create room" }).click();
+  const code = (await host.getByTestId("room-code").innerText()).trim();
+  expect(code).toMatch(/^[A-Z0-9]{6}$/);
+  await expect(host.getByText("Survey Crew")).toBeVisible();
+
+  await guest.goto("/crew");
+  await guest.getByRole("button", { name: "Join a crew" }).click();
+  await guest.getByLabel("Room code").fill(code);
+  await guest.getByLabel("Your name").fill("Sam");
+  await guest.getByRole("button", { name: "Continue to character" }).click();
+  await guest.getByRole("button", { name: "Join crew" }).click();
+  await expect(host.locator(".crew-lobby-panel").getByText("Sam", { exact: true })).toBeVisible();
+  await expect(guest.locator(".crew-lobby-panel").getByText("Alex", { exact: true })).toBeVisible();
+
+  await guest.getByRole("button", { name: "Ready" }).click();
+  await expect(host.locator(".crew-lobby-panel").getByText("Sam", { exact: true })).toBeVisible();
+  await host.getByRole("button", { name: "Launch expedition" }).click();
+  await expect(host).toHaveURL(/\/scanner$/);
+  await expect(guest).toHaveURL(/\/scanner$/);
+  await expect(host.getByRole("button", { name: /^Alex · you/ })).toBeVisible();
+  await expect(host.getByRole("button", { name: /^Sam / })).toBeVisible();
+  await expect(guest.getByRole("button", { name: /^Alex / })).toBeVisible();
+  await expect(guest.getByRole("button", { name: /^Sam · you/ })).toBeVisible();
+
+  const hostScenario = host.getByRole("region", { name: "Dust scenario" });
+  const guestScenario = guest.getByRole("region", { name: "Dust scenario" });
+  await hostScenario.getByRole("combobox", { name: "Dust scenario" }).selectOption("modeled-high-v1");
+  await expect(guestScenario.getByRole("combobox", { name: "Dust scenario" })).toHaveValue("modeled-high-v1");
+  await guestScenario.getByRole("button", { name: "Step 0.5 sol" }).click();
+  await expect(hostScenario.getByTestId("simulation-time")).toHaveText(/0.50 \/ 3.00 sols/);
+  await hostScenario.getByRole("button", { name: "Play simulation" }).click();
+  await expect(guestScenario.getByRole("button", { name: "Pause simulation" })).toBeEnabled();
+  await expect(guestScenario.getByTestId("simulation-time")).toHaveText(/1.00 \/ 3.00 sols/);
+  await guestScenario.getByRole("button", { name: "Pause simulation" }).click();
+  await expect(hostScenario.getByRole("button", { name: "Play simulation" })).toBeEnabled();
+  await guest.reload();
+  await expect(guestScenario.getByRole("combobox", { name: "Dust scenario" })).toHaveValue("modeled-high-v1");
+  const paused = await guestScenario.getByTestId("simulation-time").innerText();
+  expect(paused).not.toContain("0.00 /");
+  await expect(hostScenario.getByTestId("simulation-time")).toHaveText(paused);
+  await guestScenario.getByRole("button", { name: "Reset simulation" }).click();
+  await expect(hostScenario.getByTestId("simulation-time")).toHaveText(/0.00 \/ 3.00 sols/);
+  await host.getByRole("navigation", { name: "Project navigation" }).getByRole("link", { name: "Mission Command", exact: true }).click();
+  await expect(host).toHaveURL(/\/$/);
+  await guestScenario.getByRole("button", { name: "Play simulation" }).click();
+  await expect(guestScenario.getByTestId("simulation-time")).toHaveText(/0.50 \/ 3.00 sols/);
+  await host.close();
+  await expect(guestScenario.getByText("Automatic playback requires the captain to be connected.")).toBeVisible();
+  const time = guestScenario.getByTestId("simulation-time");
+  const beforeManualStep = Number((await time.innerText()).split(" / ")[0]);
+  await guestScenario.getByRole("button", { name: "Step 0.5 sol" }).click();
+  await expect(time).toContainText((beforeManualStep + 0.5).toFixed(2) + " / 3.00 sols");
+});

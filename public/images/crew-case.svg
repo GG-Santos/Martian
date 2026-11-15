@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Open astronaut mission case</title>
+  <desc id="desc">A rugged open equipment case with four recessed suit compartments, hinges, latches, and a carry handle.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+    <g id="case-lid">
+      <path d="M123 315 117 165Q115 141 139 131L711 31Q737 26 754 40L826 94Q842 107 837 129L809 287 752 311 156 354Z" fill="#111519" stroke="#DCE4E5" stroke-width="3.5"/>
+      <path d="M139 139 718 38M754 40 827 97M837 129 809 287M117 165 123 315" stroke="#7F929A" stroke-width="2"/>
+      <path d="m151 306-2-141 574-98 83 56-26 147-38 19-576 45Z" stroke="#B5C4C8" stroke-width="2.4"/>
+      <path d="m173 287-1-110 545-88 62 40-23 122-35 17-544 43Z" stroke="#677B84" stroke-width="1.8"/>
+      <path d="m199 269 1-65 137-24 14 11 3 76-143 24ZM603 199l33-68 103-17-6 92-27 20-94 13Z" stroke="#7F929A" stroke-width="2"/>
+      <path d="m380 174 93-15 24 12 73-13" stroke="#7F929A" stroke-width="1.8"/>
+      <g fill="#111519" stroke="#DCE4E5" stroke-width="2.8">
+        <path d="m255 111 35-6 25 19-4 31-39 6-19-18Z"/>
+        <path d="m642 44 38-6 26 19-2 33-38 7-26-19Z"/>
+      </g>
+      <path d="m256 111 17 14 39-6m329-75 24 19 38-6" stroke="#7F929A" stroke-width="1.8"/>
+      <g stroke="#A8B9BD" stroke-width="2.2">
+        <path d="m206 324 30-7 13 14-2 17-32 5-13-14Z"/>
+        <path d="m665 290 30-6 14 13-3 17-31 6-14-13Z"/>
+      </g>
+    </g>
+    <g id="case-base">
+      <path d="M83 317 747 274 837 335 788 458 205 509 79 422Z" fill="#14191E" stroke="#E0E7E7" stroke-width="3.5"/>
+      <path d="m83 317 123 79 583-45 48-16M205 509l583-51" stroke="#73858D" stroke-width="2"/>
+      <path d="M79 422v51l126 77 583-52v-40M205 509v41" fill="#111519" stroke="#DCE4E5" stroke-width="3.2"/>
+      <path d="m95 464 110 67 583-51" stroke="#667982" stroke-width="1.8"/>
+      <g id="case-compartments" stroke="#9CAEB4" stroke-width="2.3">
+        <path d="m170 360 220-20 60 40-220 20Z"/>
+        <path d="m410 338 230-21 60 40-230 21Z"/>
+        <path d="m220 419 220-19 75 59-219 21Z"/>
+        <path d="m460 398 220-20 75 60-220 21Z"/>
+      </g>
+      <g stroke="#5F737C" stroke-width="1.6">
+        <path d="m187 366 198-17 48 31-198 17Z"/>
+        <path d="m427 344 208-18 48 31-208 18Z"/>
+        <path d="m239 425 196-16 62 47-196 18Z"/>
+        <path d="m479 405 196-18 62 47-197 19Z"/>
+      </g>
+      <g id="case-hardware" fill="#111519" stroke="#C6D2D5" stroke-width="2.7">
+        <path d="m254 500 39-3 2 32-38 4-8-10Z"/>
+        <path d="m672 463 41-4 2 30-39 4-7-9Z"/>
+        <path d="m424 505 25-2 7 17 77-7 7-18 25-2-9 31-124 11Z"/>
+      </g>
+      <path d="m261 509 26-3m392-34 27-3m-257 51 81-7" stroke="#667982" stroke-width="1.6"/>
+    </g>
+  </g>
+</svg>

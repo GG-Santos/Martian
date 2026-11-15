@@ -1,0 +1,20 @@
+.zone-legend { padding: 16px; border-top: 1px solid var(--line); background: var(--panel); }
+.zone-legend h2 { margin-bottom: 12px; }
+.zone-key { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.zone-key > div { display: flex; align-items: flex-start; gap: 8px; }
+.zone-key strong, .zone-key small { display: block; }
+.zone-key small { color: var(--text-muted); font-size: 11px; }
+.zone-swatch { flex: none; width: 14px; height: 14px; border: 1px solid #9fa3a8; margin-top: 2px; }
+.zone-swatch.safe { background: #52625c; }
+.zone-swatch.caution { background: repeating-linear-gradient(45deg, #8c7353, #8c7353 2px, transparent 2px, transparent 5px); }
+.zone-swatch.hazard { background: #9d5c42; }
+.zone-swatch.unknown { background: repeating-linear-gradient(-45deg, #6b7077, #6b7077 1px, transparent 1px, transparent 5px); }
+.zone-legend > p { color: var(--text-muted); font-size: 11px; margin-top: 12px; }
+.zone-detail { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; }
+.zone-detail h3 { margin-bottom: 6px; }
+.zone-detail p { color: var(--text-muted); margin: 7px 0; }
+.zone-detail ul { padding-left: 18px; margin: 8px 0; }
+.zone-marker { min-height: 24px; padding: 3px 7px; font-size: 10px; letter-spacing: .06em; white-space: nowrap; background: #16181c; border: 1px solid #9fa3a8; color: #fff; }
+.zone-marker.safe { border-color: #8eab9d; }
+.zone-marker.caution { border-color: #cfab72; }
+.zone-marker.hazard { border-color: #dc8266; }

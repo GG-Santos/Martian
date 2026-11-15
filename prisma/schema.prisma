@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type MissionPoint {
+  x Float
+  y Float
+}
+
+type MissionCompletion {
+  observation String
+  authorId    String
+}
+
+type MissionResolution {
+  reason   String
+  authorId String
+}
+
+model Mission {
+  id                    String             @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  description           String
+  hypothesis            String
+  point                 MissionPoint
+  equipment             String[]
+  recommendedCrewSize   Int
+  durationMin           Float
+  difficulty            String
+  hazards               String[]
+  expectedObservations  String
+  completionCriteria    String
+  roomCode              String
+  datasetId             String
+  source                String
+  provenance            String
+  status                String
+  createdBy             String?
+  assignedMemberIds     String[]
+  completion            MissionCompletion?
+  resolution            MissionResolution?
+  createdAt             DateTime           @default(now())
+
+  @@index([createdAt])
+}

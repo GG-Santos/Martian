@@ -1,0 +1,6 @@
+# Registration check
+Three transform control points, covering northwest, northeast, and south-center, are retained with source pixels, geographic coordinates, and local meters in public/data/jezero/manifest.json. Nearest-source pixel-center residuals are under one 1.0097 m source pixel diagonal, below the 8 m output cell threshold. Source/optical PDS projection, shape, sample/line offsets match exactly; use those labels rather than embedded JP2 keys.
+
+Visual optical inspection: large shadowed crater in the northeast (~1400 E, 1750 N), smaller crater southwest (~430 E, 740 N), and bright west-rim crater (~280 E, 1450 N) orient the patch. Confirm these landmarks against the terrain and overview during browser QA. These controls check processing registration, not absolute geodetic accuracy. THEMIS uses its published controlled Mars equirectangular transform; native 100 m cells and inter-mission control uncertainty remain. No subpixel thermal feature correspondence is claimed.
+
+Vertical datum: Mars 2000 equipotential surface. Runtime coordinate system is source projected meters translated by the manifest's easting/northing origin. North is positive local y and negative scene z. Grid row 0 is north. Texture outer boundaries match the outer grid sample centers (half-pixel grid padding is explicit in preparation).

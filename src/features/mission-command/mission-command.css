@@ -1,0 +1,192 @@
+.mission-command-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  overflow: hidden;
+  background: #090d11;
+  color: #f3f1ed;
+}
+
+.mission-command-globe {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+@media (min-width: 701px) {
+  .project-shell .mission-command-globe {
+    width: 100vw;
+    height: 100dvh;
+    zoom: calc(1 / var(--viewport-scale, 1));
+  }
+}
+
+.mission-command-globe canvas {
+  touch-action: none;
+}
+
+.globe-loading-screen {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #090d11;
+  color: #f3f1ed;
+  pointer-events: auto;
+}
+
+.globe-loading-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 700px) {
+  .globe-loading-art {
+    height: 72%;
+    top: 2%;
+    bottom: auto;
+  }
+
+}
+
+.mission-command-location {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: min(530px, 54%);
+  padding: 24px 22px 10px 0;
+  text-shadow: 0 2px 8px #000;
+  pointer-events: none;
+}
+
+.mission-command-location h2 {
+  margin: 0 0 12px;
+  font: 600 clamp(40px, 4.7vw, 65px) / .98 "Barlow Condensed", sans-serif;
+}
+
+.mission-command-location p {
+  max-width: 62ch;
+  margin: 0 0 9px;
+  color: #f1efeb;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.mission-command-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #e5eae9;
+  font-size: 11px;
+  text-underline-offset: 4px;
+  pointer-events: auto;
+}
+
+.mission-command-actions {
+  position: absolute;
+  top: 14px;
+  right: 28px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  width: calc((100% - 56px) / 3);
+  padding: 0;
+  background: none;
+}
+
+.mission-command-actions-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 30px;
+}
+
+.mission-command-challenge-label {
+  color: #c6cecf;
+  font-size: 10px;
+  letter-spacing: .15em;
+}
+
+.mission-command-actions h2 {
+  max-width: 16ch;
+  margin: 10px 0 15px;
+  font: 600 clamp(28px, 2.8vw, 42px) / 1.04 "Barlow Condensed", sans-serif;
+}
+
+.mission-command-actions-main > p {
+  max-width: 42ch;
+  margin: 0 0 14px;
+  color: #d5d9d8;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.mission-command-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  min-width: 180px;
+  margin-top: 28px;
+  padding: 12px 14px;
+  border-radius: 4px;
+  background: #f0f0ed;
+  color: #111216;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mission-command-primary:hover {
+  background: #d5d7d9;
+  color: #111216;
+}
+
+.mission-command-page :focus-visible {
+  outline: 2px solid #e6caa7;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .mission-command-page {
+    min-height: 0;
+    overflow: visible;
+    padding-top: 480px;
+  }
+
+  .mission-command-globe {
+    inset: 0 0 auto;
+    height: 480px;
+  }
+
+  .mission-command-location {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    padding: 24px 20px;
+    background: linear-gradient(90deg, #090d11aa, transparent);
+  }
+
+  .mission-command-location h2 {
+    font-size: 43px;
+  }
+
+  .mission-command-actions {
+    position: relative;
+    inset: auto;
+    width: auto;
+    padding: 0 20px;
+    background: none;
+  }
+
+  .mission-command-actions-main {
+    padding: 30px 0 34px;
+  }
+}

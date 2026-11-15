@@ -1,0 +1,12 @@
+{
+  "grid": {
+    "width": 3,
+    "height": 3,
+    "cellSizeM": 10,
+    "westM": 0,
+    "northM": 20,
+    "values": [0, 10, 20, 20, 30, 40, 40, 50, 60]
+  },
+  "point": {"x": 5, "y": 15},
+  "expected": {"elevationM": 15, "slopeDeg": 65.9051574478893}
+}

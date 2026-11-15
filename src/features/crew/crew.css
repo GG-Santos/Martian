@@ -1,0 +1,214 @@
+.playback-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: #141c22;
+  border-block: 1px solid #35434a;
+  flex-shrink: 0;
+}
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a6d8ca;
+}
+.playback-controls > span {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.playback-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+}
+.playback-controls output {
+  font: 13px monospace;
+  color: #e4eeeb;
+  min-width: 65px;
+}
+.playback-controls select {
+  height: 36px;
+  background: #26323a;
+  color: #e0e9e5;
+  border: 1px solid #4a5b64;
+  padding: 4px;
+}
+.playback-bar > input {
+  flex: 1;
+  min-width: 90px;
+  accent-color: #a3dccc;
+}
+.playback-duration {
+  font: 10px monospace;
+  color: #b6c6ce;
+}
+.playback-reason {
+  width: 100%;
+  font-size: 11px;
+  color: #d5bf93;
+}
+.mission-tabs {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #171e24;
+  border-bottom: 1px solid #44515c;
+  padding: 7px;
+  gap: 4px;
+}
+.mission-tabs button {
+  flex: 1;
+  min-height: 44px;
+  border-color: transparent;
+  background: transparent;
+  color: #b6c2cd;
+}
+.mission-tabs button[aria-selected="true"] {
+  background: #30413f;
+  color: #dcf3e9;
+  border-color: #779c90;
+}
+.crew-panel {
+  padding: 20px;
+}
+.crew-panel h2 {
+  font-size: 24px;
+  margin: 0 0 5px;
+}
+.crew-team {
+  margin: 24px 0;
+  border-top: 1px solid #40524f;
+}
+.crew-team h3 {
+  text-transform: capitalize;
+  font-size: 15px;
+  color: #b3e4d4;
+  margin: 12px 0 4px;
+}
+.crew-team.bravo h3 {
+  color: #e9c18e;
+}
+.team-itinerary {
+  font: 10px/1.6 monospace;
+  color: #b9c5cc;
+}
+.crew-team > button {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #354049;
+  background: transparent;
+  text-align: left;
+  border-radius: 0;
+}
+.crew-team > button[aria-pressed="true"] {
+  background: #283730;
+}
+.crew-id {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font: 11px monospace;
+  color: #b5e7d5;
+}
+.bravo .crew-id {
+  color: #efc391;
+}
+.crew-team strong {
+  display: block;
+  font-size: 12px;
+}
+.crew-team small {
+  display: block;
+  color: #b4c1cb;
+  font-size: 10px;
+}
+.crew-activity {
+  margin-left: auto;
+  font-size: 10px;
+  color: #b7c6cc;
+}
+.crew-detail h3 {
+  font-size: 20px;
+}
+.crew-detail h3 span {
+  font: 11px monospace;
+  color: #9fbdba;
+}
+.crew-detail dt {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.crew-detail h4 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.crew-follow {
+  min-height: 44px;
+  width: 100%;
+  background: #c7e5d8;
+  color: #17251e;
+}
+.crew-warning {
+  font-size: 12px;
+  color: #f2ac9d;
+}
+.crew-map-label {
+  padding: 2px 6px;
+  min-height: 23px;
+  font: 10px monospace;
+  border: 1px solid #90cdb7;
+  background: #16251f;
+  color: #d2f5e6;
+}
+.crew-map-label.bravo {
+  color: #f4d9b2;
+  border-color: #d5ad7b;
+  background: #30251d;
+}
+.mission-panel [hidden] {
+  display: none !important;
+}
+@media (max-width: 700px) {
+  .playback-bar {
+    padding: 10px;
+    gap: 8px;
+  }
+  .playback-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .playback-controls > span {
+    font-size: 9px;
+  }
+  .crew-map-label {
+    min-width: 28px;
+    min-height: 28px;
+  }
+  .mission-tabs {
+    position: static;
+  }
+}
+
+.crew-team > button[aria-pressed="true"],
+.crew-team > button[aria-pressed="true"] strong {
+  color: #e5f3eb;
+}
+
+@media (max-width: 700px) {
+  .crew-map-label {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

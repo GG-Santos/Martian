@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 210" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Astronaut field suit</title>
+  <desc id="desc">A waist-up astronaut suit with a rounded helmet, dark visor, shoulder shells, sleeves, gloves, and chest controls.</desc>
+  <g id="astronaut" stroke-linecap="round" stroke-linejoin="round">
+    <g id="suit-body" fill="#111519" stroke="#DCE4E5" stroke-width="3.2">
+      <path d="M57 83q-23-6-35 16l-7 22 7 53 25 4 12-24 12-5 2-56Z"/>
+      <path d="M123 83q23-6 35 16l7 22-7 53-25 4-12-24-12-5-2-56Z"/>
+      <path d="M55 101q0-16 16-21h38q16 5 16 21l-4 69H59Z"/>
+      <path d="m54 157-7 17-18 2-5-13 6-14 14-5Zm72 0 7 17 18 2 5-13-6-14-14-5Z"/>
+    </g>
+    <g id="helmet" fill="#111519" stroke="#E5EBEA" stroke-width="3.5">
+      <path d="M53 72V54q0-36 37-39 37 3 37 39v18l-13 18H66Z"/>
+      <path d="M58 54q2-31 32-32 30 1 32 32l-5 24q-9 13-27 14-18-1-27-14Z"/>
+      <path id="visor" d="M66 48q6-17 24-18 18 1 24 18v20q-8 16-24 17-16-1-24-17Z" fill="#0B0E11"/>
+      <path d="M49 53q-9-3-12 7v13q2 9 11 8l8-5V58Zm82 0q9-3 12 7v13q-2 9-11 8l-8-5V58Z"/>
+    </g>
+    <g id="suit-detail" stroke="#8FA3AA" stroke-width="2.2">
+      <path d="M60 92q-12 5-14 23l-4 21m78-44q12 5 14 23l4 21"/>
+      <path d="m29 142 17 4 11 13m94-17-17 4-11 13"/>
+      <path d="m60 98 12 6m48-6-12 6"/>
+      <path d="M72 84v11m36-11v11m-36 69h36"/>
+      <path d="M59 174h62"/>
+    </g>
+    <g id="chest-controls" fill="#111519" stroke="#DCE4E5" stroke-width="2.4">
+      <rect x="69" y="113" width="42" height="36" rx="4"/>
+      <rect x="76" y="119" width="28" height="12" rx="2" stroke="#8FA3AA"/>
+      <circle cx="80" cy="139" r="2.5"/>
+      <circle cx="91" cy="139" r="2.5"/>
+      <path d="M100 140h5"/>
+    </g>
+  </g>
+</svg>

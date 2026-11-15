@@ -1,0 +1,104 @@
+{
+  "datasetId": "jezero-hirise-048842-048908-v1",
+  "title": "Jezero field excursion",
+  "stops": [
+    {
+      "id": "A",
+      "title": "Surface contact",
+      "point": {
+        "x": 630,
+        "y": 710
+      },
+      "question": "Does the surface texture change across this contact?",
+      "context": "Compare grain size, angularity, and texture on either side. This is a proposed observation, not a confirmed mapped geologic boundary.",
+      "references": [
+        "https://science.nasa.gov/resource/detailed-panorama-of-mars-jezero-crater-delta/",
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985"
+      ],
+      "imageContext": "regional",
+      "image": "regional-panorama.webp",
+      "imageCredit": "NASA/JPL-Caltech/ASU/MSSS"
+    },
+    {
+      "id": "B",
+      "title": "Relief transect",
+      "point": {
+        "x": 1150,
+        "y": 1350
+      },
+      "question": "How does local relief relate to the material exposed?",
+      "context": "Record an outcrop sketch and compare visible texture with the elevation profile. Orbital slope does not resolve individual boulders.",
+      "references": [
+        "https://science.nasa.gov/resource/detailed-panorama-of-mars-jezero-crater-delta/",
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985"
+      ],
+      "imageContext": "regional",
+      "image": "regional-panorama.webp",
+      "imageCredit": "NASA/JPL-Caltech/ASU/MSSS"
+    },
+    {
+      "id": "C",
+      "title": "Thermal context",
+      "point": {
+        "x": 1580,
+        "y": 900
+      },
+      "question": "Can field observations explain the regional IR-brightness pattern?",
+      "context": "Compare loose and coherent surface materials. The coarse daytime mosaic alone cannot establish composition, temperature, or thermal inertia.",
+      "references": [
+        "https://science.nasa.gov/resource/detailed-panorama-of-mars-jezero-crater-delta/",
+        "https://hirise.lpl.arizona.edu/dtm/ESP_048842_1985"
+      ],
+      "imageContext": "regional",
+      "image": "regional-panorama.webp",
+      "imageCredit": "NASA/JPL-Caltech/ASU/MSSS"
+    }
+  ],
+  "presetNodes": [
+    {
+      "id": "habitat-start",
+      "kind": "start",
+      "point": {
+        "x": 420,
+        "y": 420
+      }
+    },
+    {
+      "id": "stop-A",
+      "kind": "stop",
+      "stopId": "A",
+      "point": {
+        "x": 630,
+        "y": 710
+      }
+    },
+    {
+      "id": "stop-B",
+      "kind": "stop",
+      "stopId": "B",
+      "point": {
+        "x": 1150,
+        "y": 1350
+      }
+    },
+    {
+      "id": "stop-C",
+      "kind": "stop",
+      "stopId": "C",
+      "point": {
+        "x": 1580,
+        "y": 900
+      }
+    },
+    {
+      "id": "habitat-end",
+      "kind": "end",
+      "point": {
+        "x": 420,
+        "y": 420
+      }
+    }
+  ],
+  "brief": "Compare surface textures and relief within an archival HiRISE patch of Jezero. Every field station and the habitat are hypothetical.",
+  "regionalContext": "Jezero contains an ancient delta investigated by Perseverance. These demonstration stops are not claimed to be rover-visited sites or delta outcrops."
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "category": "spectral",
+    "title": "Jezero mineral signatures",
+    "scope": "Regional evidence",
+    "instrument": "MRO \u00b7 CRISM / CTX",
+    "location": "Jezero crater, regional view",
+    "observationTime": null,
+    "dateNote": "Published November 12, 2019; acquisition date not supplied",
+    "asset": "atlas/spectral.webp",
+    "imageAlt": "Regional CRISM and CTX Jezero image with green carbonate and red olivine indicators",
+    "credit": "NASA/JPL-Caltech/MSSS/JHU-APL/Purdue/USGS",
+    "sourceUrl": "https://science.nasa.gov/resource/jezero-crater-minerals/",
+    "productId": "PIA23380",
+    "units": "Published mineral indicator colors",
+    "explanation": "Orbital spectral measurements highlight mineral-bearing areas across Jezero. Compare the published regional mineral pattern with the separately registered playable patch.",
+    "key": [
+      {
+        "label": "Green",
+        "description": "Carbonate-bearing material"
+      },
+      {
+        "label": "Red",
+        "description": "Olivine-bearing sand"
+      }
+    ]
+  },
+  {
+    "category": "geophysical",
+    "title": "Beneath the Artuby ridge",
+    "scope": "Regional evidence",
+    "instrument": "Perseverance \u00b7 RIMFAX / HiRISE",
+    "location": "South S\u00e9\u00edtah / Artuby, Jezero crater",
+    "observationTime": null,
+    "dateNote": "Sols 201\u2013202 shown; published December 15, 2021",
+    "asset": "atlas/geophysical.webp",
+    "imageAlt": "Artuby traverse above a RIMFAX radargram with preserved distance and two-way-time axes",
+    "credit": "NASA/JPL-Caltech/University of Arizona/USGS/FFI",
+    "sourceUrl": "https://www.jpl.nasa.gov/images/pia25025-perseverances-traverse-seen-from-above-and-below/",
+    "productId": "PIA25025",
+    "units": "Distance (m), radar two-way time (ns), published vertical axis",
+    "explanation": "The orbital traverse and radargram connect surface layers with subsurface reflections along a measured rover path.",
+    "key": [
+      {
+        "label": "Upper image",
+        "description": "Observed rover traverse over orbital imagery"
+      },
+      {
+        "label": "Lower image",
+        "description": "Radar return brightness beneath that traverse"
+      },
+      {
+        "label": "Red links",
+        "description": "Published correlations between reflectors and exposed layers"
+      }
+    ]
+  },
+  {
+    "category": "radiation",
+    "title": "Radiation at Curiosity",
+    "scope": "Mars context",
+    "instrument": "Curiosity \u00b7 RAD",
+    "location": "Gale crater, Curiosity rover",
+    "observationTime": null,
+    "dateNote": "August 2012\u2013June 2013",
+    "asset": "atlas/radiation.webp",
+    "imageAlt": "Archived Curiosity RAD dose-rate plot from August 2012 to June 2013 with microgray-per-day axis",
+    "credit": "NASA/JPL-Caltech/SwRI",
+    "sourceUrl": "https://science.nasa.gov/resource/radiation-measurements-on-mars/",
+    "productId": "PIA17600",
+    "units": "Absorbed dose rate (\u00b5Gy/day)",
+    "explanation": "This archived plot records the radiation environment at Curiosity during its early surface mission. Its measurement location and period provide Mars context for the expedition.",
+    "key": [
+      {
+        "label": "Horizontal axis",
+        "description": "Calendar months and sols since Curiosity landed"
+      },
+      {
+        "label": "Vertical axis",
+        "description": "Absorbed dose rate in micrograys per day"
+      },
+      {
+        "label": "Circled peak",
+        "description": "Solar particle event identified in the published figure"
+      }
+    ]
+  },
+  {
+    "category": "chemical",
+    "title": "Element maps at Dourbes",
+    "scope": "Rover target",
+    "instrument": "Perseverance \u00b7 PIXL",
+    "location": "Dourbes rock target, Jezero crater",
+    "observationTime": null,
+    "dateNote": "Published December 16, 2021; observation date not supplied",
+    "asset": "atlas/chemical.webp",
+    "imageAlt": "Dourbes optical context and PIXL element map with magnesium silicon calcium key and 3 mm scale",
+    "credit": "NASA/JPL-Caltech",
+    "sourceUrl": "https://www.jpl.nasa.gov/images/pia25041-pixls-view-of-dourbes/",
+    "productId": "PIA25041",
+    "units": "Element-map colors; image scale bar 3 mm",
+    "explanation": "The target-scale composite pairs optical context with an elemental map. The published key shows material associations within this rock.",
+    "key": [
+      {
+        "label": "Blue",
+        "description": "Magnesium indicator in the element map"
+      },
+      {
+        "label": "Red",
+        "description": "Silicon indicator in the element map"
+      },
+      {
+        "label": "Green",
+        "description": "Calcium indicator in the element map"
+      },
+      {
+        "label": "3 mm scale",
+        "description": "Target-scale evidence from one rover measurement"
+      }
+    ]
+  }
+]

@@ -1,0 +1,452 @@
+[
+  {
+    "name": "Olympus Mons",
+    "latitude": 18.6528,
+    "longitude": 226.1975,
+    "kind": "Mons, montes",
+    "diameterKm": 610.13,
+    "region": "Tharsis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4453",
+    "fact": "The Solar System’s largest known volcano rises from the Tharsis region. Its broad shield spans more than 600 km, built by repeated eruptions over a long volcanic history."
+  },
+  {
+    "name": "Arsia Mons",
+    "latitude": -8.2571,
+    "longitude": 239.9075,
+    "kind": "Mons, montes",
+    "diameterKm": 470,
+    "region": "Phoenicis Lacus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/394",
+    "fact": "Arsia is the southernmost of the three aligned Tharsis Montes volcanoes. Its summit caldera records collapse after large volumes of magma drained from beneath the peak."
+  },
+  {
+    "name": "Ascraeus Mons",
+    "latitude": 11.9216,
+    "longitude": 255.9192,
+    "kind": "Mons, montes",
+    "diameterKm": 456.39645,
+    "region": "Tharsis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/417",
+    "fact": "Ascraeus is the northernmost of the Tharsis Montes trio. Its summit stands on the Tharsis rise, where immense shield volcanoes dominate the horizon."
+  },
+  {
+    "name": "Pavonis Mons",
+    "latitude": 1.4801,
+    "longitude": 247.0376,
+    "kind": "Mons, montes",
+    "diameterKm": 366.52951,
+    "region": "Tharsis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4620",
+    "fact": "Pavonis sits between Arsia and Ascraeus Mons in the Tharsis Montes chain. The trio’s near north–south alignment follows the immense Tharsis volcanic province."
+  },
+  {
+    "name": "Elysium Mons",
+    "latitude": 25.0232,
+    "longitude": 147.2138,
+    "kind": "Mons, montes",
+    "diameterKm": 401,
+    "region": "Elysium",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1783",
+    "fact": "Elysium Mons is the largest volcano in Mars’ second major volcanic province. It rises above Elysium Planitia, far from the better-known Tharsis volcanoes."
+  },
+  {
+    "name": "Alba Mons",
+    "latitude": 41.082,
+    "longitude": 249.2906,
+    "kind": "Mons, montes",
+    "diameterKm": 548.02307,
+    "region": "Arcadia",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/14306",
+    "fact": "Alba is Mars’ widest volcano, with an exceptionally low, broad profile spanning roughly 1,600 km. Its gentle slopes contrast with the steep flanks of many shield volcanoes."
+  },
+  {
+    "name": "Melas Chasma",
+    "latitude": -10.5178,
+    "longitude": 287.4613,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 563.52191,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3812",
+    "fact": "Melas is one of the deepest parts of Valles Marineris, with layered deposits and landslide terrain along its walls. The chasma lies near the canyon system’s center."
+  },
+  {
+    "name": "Candor Chasma",
+    "latitude": -6.5328,
+    "longitude": 289.2207,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 810.6087,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1000",
+    "fact": "Candor is a major Valles Marineris chasm between Ophir Chasma to the north and Melas Chasma to the south. Its interior contains layered deposits and steep wall slopes."
+  },
+  {
+    "name": "Ophir Chasma",
+    "latitude": -4.0031,
+    "longitude": 287.6484,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 314.711,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4476",
+    "fact": "Ophir is the northernmost of the connected Valles Marineris chasms. Its long, steep-walled trough opens into the canyon network near Candor Chasma."
+  },
+  {
+    "name": "Ius Chasma",
+    "latitude": -7.2894,
+    "longitude": 275.6109,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 839.90857,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2757",
+    "fact": "Ius forms the western end of Valles Marineris, south of Tithonium Chasma. Its branching troughs and landslide deposits expose a complex history of crustal collapse."
+  },
+  {
+    "name": "Hebes Chasma",
+    "latitude": -1.0745,
+    "longitude": 283.941,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 316.73981,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2402",
+    "fact": "Hebes is an enclosed canyon: it has no obvious outlet connecting it to the surrounding Valles Marineris system. A striking interior mound preserves layered material within the basin."
+  },
+  {
+    "name": "Tithonium Chasma",
+    "latitude": -4.6046,
+    "longitude": 275.7106,
+    "kind": "Chasma, chasmata",
+    "diameterKm": 802.77606,
+    "region": "Coprates",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/6032",
+    "fact": "Tithonium lies on the northern side of western Valles Marineris, opposite Ius Chasma. Its deep trough and bright interior deposits make it a window into the canyon’s layered geology."
+  },
+  {
+    "name": "Noctis Labyrinthus",
+    "latitude": -6.3625,
+    "longitude": 258.8111,
+    "kind": "Labyrinthus, labyrinthi",
+    "diameterKm": 1190.3052,
+    "region": "Phoenicis Lacus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4324",
+    "fact": "“Labyrinth of the Night” is a maze of intersecting valleys at the western end of Valles Marineris. Fault-bounded blocks and collapsed terrain mark the transition toward the great canyon."
+  },
+  {
+    "name": "Gusev",
+    "latitude": -14.5308,
+    "longitude": 175.5244,
+    "kind": "Crater, craters",
+    "diameterKm": 158.125,
+    "region": "Aeolis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2289",
+    "fact": "This 158 km impact crater was explored by NASA’s Spirit rover from 2004 to 2010. Spirit found evidence of ancient water-altered rocks near the Columbia Hills inside the crater."
+  },
+  {
+    "name": "Hellas Planitia",
+    "latitude": -42.4301,
+    "longitude": 70.5025,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 2299.1624,
+    "region": "Hellas",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2432",
+    "fact": "Hellas is a vast impact basin in Mars’ southern hemisphere, more than 2,000 km across. Its floor sits so low that atmospheric pressure there is higher than at most Martian surfaces."
+  },
+  {
+    "name": "Argyre Planitia",
+    "latitude": -49.8406,
+    "longitude": 316.6902,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 892.93286,
+    "region": "Argyre",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/371",
+    "fact": "Argyre is a large southern impact basin ringed by rugged highlands. Outflow channels connect the basin with the broader drainage network that shaped ancient Mars."
+  },
+  {
+    "name": "Isidis Planitia",
+    "latitude": 13.9357,
+    "longitude": 88.3772,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 1224.5798,
+    "region": "Syrtis Major",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2735",
+    "fact": "Isidis is an ancient impact basin east of Syrtis Major. NASA’s Perseverance landing region lies on its western margin, where a river delta once entered Jezero Crater."
+  },
+  {
+    "name": "Utopia Planitia",
+    "latitude": 46.7363,
+    "longitude": 117.5168,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 3560.448,
+    "region": "Casius",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/6260",
+    "fact": "At roughly 3,300 km across, Utopia is the largest recognized impact basin on Mars. NASA’s Viking 2 lander and China’s Zhurong rover both explored this northern plain."
+  },
+  {
+    "name": "Schiaparelli",
+    "latitude": -2.7138,
+    "longitude": 16.7716,
+    "kind": "Crater, craters",
+    "diameterKm": 458.52045,
+    "region": "Sinus Sabaeus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/5366",
+    "fact": "This 460 km crater is named for astronomer Giovanni Schiaparelli, whose 19th-century Mars maps popularized many surface names. Its floor includes layered deposits and wind-sculpted dunes."
+  },
+  {
+    "name": "Holden",
+    "latitude": -26.04,
+    "longitude": 325.981,
+    "kind": "Crater, craters",
+    "diameterKm": 152.66499,
+    "region": "Margaritifer Sinus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2540",
+    "fact": "Holden is a roughly 150 km crater with evidence of both an ancient lake and powerful floods. Its western rim contains Uzboi Vallis, a channel that once carried water toward the basin."
+  },
+  {
+    "name": "Endeavour",
+    "latitude": -2.2836,
+    "longitude": 354.8045,
+    "kind": "Crater, craters",
+    "diameterKm": 21.77899,
+    "region": "Margaritifer Sinus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/14501",
+    "fact": "NASA’s Opportunity rover explored the rim of Endeavour crater for years after driving there from Victoria crater. Its rocks revealed evidence of ancient water flowing through the region."
+  },
+  {
+    "name": "Victoria",
+    "latitude": -2.0523,
+    "longitude": 354.502,
+    "kind": "Crater, craters",
+    "diameterKm": 0.88418001,
+    "region": "Margaritifer Sinus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/14522",
+    "fact": "Opportunity studied Victoria crater from 2006 to 2008, examining layered rocks exposed in its steep walls. The small crater’s scalloped rim helped reveal how wind and impacts reshape Meridiani Planum."
+  },
+  {
+    "name": "Eberswalde",
+    "latitude": -23.9753,
+    "longitude": 326.7029,
+    "kind": "Crater, craters",
+    "diameterKm": 62.18737,
+    "region": "Margaritifer Sinus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1706",
+    "fact": "Eberswalde preserves one of Mars’ clearest fossilized river deltas, laid down where channels once emptied into a crater lake. Its delta-shaped deposits were a candidate landing site for rover exploration."
+  },
+  {
+    "name": "Lyot",
+    "latitude": 50.4671,
+    "longitude": 29.3413,
+    "kind": "Crater, craters",
+    "diameterKm": 221.53101,
+    "region": "Ismenius Lacus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3538",
+    "fact": "At about 50° north, Lyot is the largest impact crater in Mars’ northern lowlands. Channels and sediments on its floor point to episodes when water or debris moved through the basin."
+  },
+  {
+    "name": "Korolev",
+    "latitude": 72.7677,
+    "longitude": 164.584,
+    "kind": "Crater, craters",
+    "diameterKm": 81.368813,
+    "region": "Mare Boreum",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3091",
+    "fact": "Korolev is an 82 km crater near Mars’ north pole, famous for a thick deposit of water ice that persists year-round. The ice cap’s bright surface is about 1.8 km deep at its center."
+  },
+  {
+    "name": "Huygens",
+    "latitude": -13.8819,
+    "longitude": 55.5817,
+    "kind": "Crater, craters",
+    "diameterKm": 467.254,
+    "region": "Iapygia",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2596",
+    "fact": "Huygens is a large ancient crater in the southern highlands. Its heavily eroded rim and infilled floor record a surface modified by impacts, wind, and possible ancient water activity."
+  },
+  {
+    "name": "Kasei Valles",
+    "latitude": 25.1357,
+    "longitude": 297.1216,
+    "kind": "Vallis, valles",
+    "diameterKm": 1580,
+    "region": "Lunae Palus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2942",
+    "fact": "Kasei Valles is a vast outflow-channel system extending about 1,500 km from the Tharsis region toward Chryse Planitia. Catastrophic floods carved its branching channels and streamlined islands."
+  },
+  {
+    "name": "Ares Vallis",
+    "latitude": 10.2924,
+    "longitude": 334.3917,
+    "kind": "Vallis, valles",
+    "diameterKm": 1757.6658,
+    "region": "Oxia Palus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/358",
+    "fact": "Ares Vallis is an ancient outflow channel where NASA’s Pathfinder lander and Sojourner rover arrived in 1997. Streamlined landforms and rocks there preserve evidence of powerful floods."
+  },
+  {
+    "name": "Mawrth Vallis",
+    "latitude": 22.4304,
+    "longitude": 343.0274,
+    "kind": "Vallis, valles",
+    "diameterKm": 634.6344,
+    "region": "Oxia Palus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3763",
+    "fact": "Mawrth Vallis cuts through some of Mars’ most extensive clay-rich layered rocks. Orbital spectra show minerals formed in the presence of water, making it a key site for studying ancient habitability."
+  },
+  {
+    "name": "Nili Fossae",
+    "latitude": 22.0182,
+    "longitude": 76.6948,
+    "kind": "Fossa, fossae",
+    "diameterKm": 727.90631,
+    "region": "Syrtis Major",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4271",
+    "fact": "Nili Fossae is a set of arcuate troughs along the northwestern edge of Isidis basin. The region’s diverse clay minerals and carbonate-bearing rocks preserve evidence of water-rock reactions."
+  },
+  {
+    "name": "Athabasca Valles",
+    "latitude": 8.5358,
+    "longitude": 155.0129,
+    "kind": "Vallis, valles",
+    "diameterKm": 270,
+    "region": "Elysium",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/453",
+    "fact": "Athabasca Valles is a young-looking outflow channel in Elysium Planitia, associated with flood lavas and possible catastrophic water release. Its smooth floor is crossed by distinctive ridges."
+  },
+  {
+    "name": "Planum Boreum",
+    "latitude": 87.32,
+    "longitude": 54.96,
+    "kind": "Planum, plana",
+    "diameterKm": 354.63,
+    "region": "Mare Boreum",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4754",
+    "fact": "Planum Boreum is the layered north polar plateau, about 1,000 km wide. Its stacked ice and dust layers preserve a climate record shaped by changes in Mars’ orbit and atmosphere."
+  },
+  {
+    "name": "Planum Australe",
+    "latitude": -83.35,
+    "longitude": 157.7,
+    "kind": "Planum, plana",
+    "diameterKm": 1429.87,
+    "region": "Mare Australe",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/4753",
+    "fact": "Planum Australe is Mars’ south polar plateau, capped by layered deposits of water ice and dust. A seasonal layer of frozen carbon dioxide grows and retreats across it each year."
+  },
+  {
+    "name": "Syrtis Major Planum",
+    "latitude": 9.2007,
+    "longitude": 67.103,
+    "kind": "Planum, plana",
+    "diameterKm": 1214.864,
+    "region": "Syrtis Major",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/5796",
+    "fact": "Syrtis Major is a dark volcanic plateau whose broad shield and caldera complex formed from ancient lava flows. Its eastern edge borders the Isidis impact basin."
+  },
+  {
+    "name": "Arabia Terra",
+    "latitude": 21.249,
+    "longitude": 5.7185,
+    "kind": "Terra, terrae",
+    "diameterKm": 4851.7363,
+    "region": "Arabia",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/336",
+    "fact": "Arabia Terra is an enormous, heavily cratered highland region in Mars’ northern hemisphere. Its eroded landscapes include layered deposits and landforms that may record ancient groundwater activity."
+  },
+  {
+    "name": "Meridiani Planum",
+    "latitude": -0.04,
+    "longitude": 356.86,
+    "kind": "Planum, plana",
+    "diameterKm": 1058.53,
+    "region": "Margaritifer Sinus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3854",
+    "fact": "NASA’s Opportunity rover worked across Meridiani Planum for nearly 15 years. Hematite-rich spherules and sedimentary layers there showed that liquid water once altered the rocks."
+  },
+  {
+    "name": "Elysium Planitia",
+    "latitude": 2.979,
+    "longitude": 154.7372,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 3000.7893,
+    "region": "Elysium",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1784",
+    "fact": "Elysium Planitia is a broad volcanic plain and the landing region of NASA’s InSight mission. InSight measured marsquakes there, revealing details of the planet’s interior."
+  },
+  {
+    "name": "Chryse Planitia",
+    "latitude": 28.4333,
+    "longitude": 319.6927,
+    "kind": "Planitia, planitiae",
+    "diameterKm": 1542.4379,
+    "region": "Oxia Palus",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1203",
+    "fact": "Chryse Planitia is a low northern plain reached by NASA’s Viking 1 lander in 1976. Several large outflow channels empty toward it, linking the plain to Mars’ ancient flood history."
+  },
+  {
+    "name": "Terra Cimmeria",
+    "latitude": -32.6795,
+    "longitude": 147.7458,
+    "kind": "Terra, terrae",
+    "diameterKm": 5855.8726,
+    "region": "Eridania",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/5930",
+    "fact": "Terra Cimmeria is a vast southern highland terrain, heavily marked by ancient impacts. Magnetic measurements show strong crustal remanence here, evidence of Mars’ early global magnetic field."
+  },
+  {
+    "name": "Apollinaris Mons",
+    "latitude": -9.1712,
+    "longitude": 174.793,
+    "kind": "Mons, montes",
+    "diameterKm": 275.39508,
+    "region": "Aeolis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/14307",
+    "fact": "Apollinaris Mons is an isolated volcano near Gusev crater, rising above the Aeolis region. Its broad edifice and summit caldera point to a long-lived volcanic history."
+  },
+  {
+    "name": "Hecates Tholus",
+    "latitude": 32.1195,
+    "longitude": 150.2443,
+    "kind": "Tholus, tholi",
+    "diameterKm": 181.57188,
+    "region": "Cebrenia",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/2407",
+    "fact": "Hecates Tholus is a broad volcanic mountain in the Elysium province. A large summit caldera and surrounding deposits record volcanic collapse and later modification by ice and erosion."
+  },
+  {
+    "name": "Hadriacus Mons",
+    "latitude": -31.2938,
+    "longitude": 91.8567,
+    "kind": "Mons, montes",
+    "diameterKm": 450,
+    "region": "Hellas",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/14309",
+    "fact": "Hadriacus Mons is an eroded volcanic edifice on the northeastern rim of Hellas basin. Nearby channels and deposits suggest that volcanic heat may once have interacted with subsurface ice."
+  },
+  {
+    "name": "Ma'adim Vallis",
+    "latitude": -21.9808,
+    "longitude": 177.5021,
+    "kind": "Vallis, valles",
+    "diameterKm": 913.11328,
+    "region": "Aeolis",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3772",
+    "fact": "Ma’adim Vallis is a long channel that runs from the highlands toward Gusev crater. Its size and branching source terrain are consistent with major episodes of flowing water in Mars’ past."
+  },
+  {
+    "name": "Dao Vallis",
+    "latitude": -37.6126,
+    "longitude": 88.8868,
+    "kind": "Vallis, valles",
+    "diameterKm": 794.00256,
+    "region": "Hellas",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/1409",
+    "fact": "Dao Vallis begins near the volcanic highlands east of Hellas and runs toward the basin. Its broad channel and tributaries may have formed when volcanic heat released subsurface water."
+  },
+  {
+    "name": "Mangala Valles",
+    "latitude": -11.3247,
+    "longitude": 208.6079,
+    "kind": "Vallis, valles",
+    "diameterKm": 900,
+    "region": "Memnonia",
+    "source": "https://planetarynames.wr.usgs.gov/Feature/3628",
+    "fact": "Mangala Valles is an outflow-channel network cut into the southern Tharsis region. Its source includes a large chaotic terrain, where collapse likely released water that carved the channels."
+  }
+]

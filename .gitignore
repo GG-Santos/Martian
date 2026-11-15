@@ -30,8 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# app-local persistence and browser test output
+.data/
+.data-staging/
+test-results/
+test-results-*/
+playwright-report/
+
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -43,6 +51,7 @@ next-env.d.ts
 # AI assistants and agent configuration
 .codex/
 .agents/
+.superpowers/
 .impeccable/
 .claude/
 .cursor/
@@ -57,3 +66,8 @@ GEMINI.md
 *.prompt.md
 *.instructions.md
 .github/copilot-instructions.md
+
+# Python analysis and generated data
+__pycache__/
+.venv/
+analysis/outputs/
