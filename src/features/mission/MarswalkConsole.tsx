@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   ArrowLeft,
@@ -39,7 +39,7 @@ import {
   type ScienceCategory,
 } from "../science/science-atlas";
 import { ScienceEvidence } from "../science/ScienceEvidence";
-import { ExpeditionEvidence } from "./ExpeditionEvidence";
+import { AtmosphericView } from "../science/AtmosphericView";
 import { MarswalkMap, type SurfaceLayer } from "./MarswalkMap";
 import {
   buildWalkTimeline,
@@ -157,10 +157,28 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
   const { snapshot: room, connection, setExpeditionPlan } = useRoom();
   const [selectedStage, setStage] = useState<Stage>("plan");
   const [layer, setLayer] = useState<SurfaceLayer>("optical");
+  const atlasNavigation = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = atlasNavigation.current;
+    if (!nav) return;
+    const keepSelectionVisible = () => {
+      const selected = nav.querySelector<HTMLElement>('[aria-pressed="true"]');
+      if (!selected || nav.scrollWidth <= nav.clientWidth) return;
+      const parent = nav.getBoundingClientRect(),
+        child = selected.getBoundingClientRect();
+      nav.scrollLeft +=
+        child.left - parent.left - (parent.width - child.width) / 2;
+    };
+    keepSelectionVisible();
+    const observer = new ResizeObserver(keepSelectionVisible);
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, [layer, selectedStage]);
   const [atlas, setAtlas] = useState<
     Partial<Record<ScienceCategory, ScienceEvidenceRecord>>
   >({});
   const [thermal, setThermal] = useState<Uint8Array | null>(null);
+  const [slope, setSlope] = useState<Uint8Array | null>(null);
   const [dataState, setDataState] = useState<"loading" | "ready" | "failed">(
     "loading",
   );
@@ -178,6 +196,7 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
     void Promise.all([
       loadScienceAtlas("/data/jezero", mission.manifest),
       loadScalarLayer("/data/jezero", "thermal", mission.manifest),
+      loadScalarLayer("/data/jezero", "slope", mission.manifest),
       loadOptionalAsset(
         "/data/jezero",
         "scenario.json",
@@ -185,10 +204,11 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
         fetch,
       ),
     ])
-      .then(([records, scalar, bytes]) => {
+      .then(([records, scalar, slopeRaster, bytes]) => {
         if (!active) return;
         setAtlas(records);
         setThermal(scalar);
+        setSlope(slopeRaster);
         if (!bytes) {
           setDataState("failed");
           return;
@@ -373,7 +393,7 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
     layer === "thermal"
       ? `${mission.manifest.thermalDnRange.join("–")} DN · relative IR brightness, not °C`
       : layer === "slope"
-        ? "0–30° · terrain gradient"
+        ? "0° · 10° · 15° · 30°+ · derived slope"
         : `${mission.manifest.elevationRangeM.map(Math.round).join(" to ")} m · elevation`;
   return (
     <div className={`marswalk-console stage-${stage}`}>
@@ -734,12 +754,15 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
           </aside>
           <section className="walk-map-column" aria-label="Mars surface atlas">
             <div className="walk-atlas">
-              <nav aria-label="Science atlas">
+              <nav ref={atlasNavigation} aria-label="Science atlas">
                 {atlasLayers.map(({ id, title, Icon }) => (
                   <button
                     key={id}
                     aria-pressed={layer === id}
-                    disabled={id === "thermal" && !thermal}
+                    disabled={
+                      (id === "thermal" && !thermal) ||
+                      (id === "slope" && !slope)
+                    }
                     onClick={() => {
                       setLayer(id);
                       setAddingWaypoint(false);
@@ -781,20 +804,17 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
             </div>
             {archive ? (
               <div className="walk-archive">
-                <header>
-                  <h2>{currentLayer.title} reference</h2>
-                  <p>
-                    {atlas[layer as ScienceCategory]?.scope ?? "Rover archive"}{" "}
-                    · this product is not registered to the local route.
-                  </p>
+                <div className="science-reference-back">
                   <Button variant="outline" onClick={() => setLayer("optical")}>
                     <ArrowLeft size={15} /> Back to the surface
                   </Button>
-                </header>
+                  <span>Reference view · original source scale</span>
+                </div>
                 {layer === "atmospheric" ? (
-                  <ExpeditionEvidence manifest={mission.manifest} />
+                  <AtmosphericView manifest={mission.manifest} />
                 ) : atlas[layer as ScienceCategory] ? (
                   <ScienceEvidence
+                    key={layer}
                     record={atlas[layer as ScienceCategory]!}
                     manifest={mission.manifest}
                   />
@@ -816,6 +836,7 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
                   opacity={opacity}
                   layer={layer}
                   thermal={thermal}
+                  slope={slope}
                   crewPoint={
                     stage === "simulation" && sample
                       ? sample.point
@@ -842,6 +863,12 @@ export function MarswalkConsole({ mission }: { mission: MissionData }) {
                   <div className={`walk-raster-key key-${layer}`}>
                     <span />
                     {layerRange}
+                    {layer === "slope" && (
+                      <small>
+                        8 m analysis grid · no-data transparent · illustrative
+                        10° / 15° bands
+                      </small>
+                    )}
                   </div>
                 )}
               </>

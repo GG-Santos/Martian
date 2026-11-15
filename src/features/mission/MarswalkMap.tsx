@@ -24,7 +24,10 @@ import type { Hazard } from "../hazards/hazard-types";
 import { hazardPolygons } from "../hazards/hazard-geometry";
 import type { ScienceCategory } from "../science/science-atlas";
 import { scenarioHazardColors } from "../hazards/scenario-hazard-colors";
-import { sampleSlopeDeg } from "../terrain/spatial";
+import {
+  surfaceRasterPixels,
+  sampleSurfaceRaster,
+} from "../terrain/surface-raster";
 
 export type SurfaceLayer = ScienceCategory | "slope";
 const shellColors = {
@@ -55,6 +58,7 @@ export function MarswalkMap({
   room,
   layer,
   thermal,
+  slope,
   route,
   hazards,
   crewPoint,
@@ -66,6 +70,7 @@ export function MarswalkMap({
   room: RoomSnapshot;
   layer: SurfaceLayer;
   thermal: Uint8Array | null;
+  slope: Uint8Array | null;
   route?: CrewRouteOption;
   hazards: Hazard[];
   crewPoint?: LocalPoint;
@@ -74,7 +79,10 @@ export function MarswalkMap({
   opacity: number;
 }) {
   const rasterImage = useRef<SVGImageElement>(null);
-  const rasterCache = useRef(new Map<string, string>());
+  const rasterCache = useRef(
+    new Map<string, { source: Uint8Array | Float32Array; url: string }>(),
+  );
+  const [probe, setProbe] = useState<LocalPoint | null>(null);
   const mapElement = useRef<HTMLDivElement>(null);
   const [screenSize, setScreenSize] = useState(500);
   const [viewport, setViewport] = useState({ x: -180, y: -180, size: 2408 });
@@ -100,75 +108,42 @@ export function MarswalkMap({
     return () => observer.disconnect();
   }, []);
   useEffect(() => {
-    if (!["thermal", "topographic", "slope"].includes(layer)) return;
+    if (layer !== "thermal" && layer !== "topographic" && layer !== "slope")
+      return;
+    const grid = mission.grid;
+    const source =
+      layer === "slope" ? slope : layer === "thermal" ? thermal : grid.values;
+    if (!source) {
+      rasterImage.current?.removeAttribute("href");
+      return;
+    }
     const cached = rasterCache.current.get(layer);
-    if (cached) {
-      rasterImage.current?.setAttribute("href", cached);
+    if (cached?.source === source) {
+      rasterImage.current?.setAttribute("href", cached.url);
       return;
     }
     const canvas = document.createElement("canvas");
-    const grid = mission.grid;
     canvas.width = grid.width;
     canvas.height = grid.height;
     const context = canvas.getContext("2d");
     if (!context) return;
+    const range =
+      layer === "thermal" ? mission.manifest.thermalDnRange : elevationRange;
     const pixels = context.createImageData(grid.width, grid.height);
-    const palette =
-      layer === "thermal"
-        ? [
-            [42, 21, 72],
-            [211, 73, 90],
-            [255, 224, 143],
-          ]
-        : layer === "slope"
-          ? [
-              [72, 112, 107],
-              [210, 169, 94],
-              [190, 73, 53],
-            ]
-          : [
-              [59, 78, 93],
-              [126, 151, 141],
-              [225, 202, 157],
-            ];
-    for (let i = 0; i < grid.values.length; i++) {
-      const value =
-        layer === "thermal"
-          ? thermal?.[i]
-          : layer === "slope"
-            ? sampleSlopeDeg(grid, {
-                x: grid.westM + (i % grid.width) * grid.cellSizeM,
-                y: grid.northM - Math.floor(i / grid.width) * grid.cellSizeM,
-              })
-            : grid.values[i];
-      const range =
-        layer === "thermal"
-          ? mission.manifest.thermalDnRange
-          : layer === "slope"
-            ? [0, 30]
-            : elevationRange;
-      if (
-        value == null ||
-        !Number.isFinite(value) ||
-        (layer === "thermal" && value === 0)
-      )
-        continue;
-      const t =
-        Math.max(0, Math.min(1, (value - range[0]) / (range[1] - range[0]))) *
-        2;
-      const lower = Math.min(1, Math.floor(t)),
-        fraction = t - lower;
-      for (let c = 0; c < 3; c++)
-        pixels.data[i * 4 + c] =
-          palette[lower][c] +
-          (palette[lower + 1][c] - palette[lower][c]) * fraction;
-      pixels.data[i * 4 + 3] = 215;
-    }
+    pixels.data.set(
+      surfaceRasterPixels(grid, layer, { slope, thermal }, range),
+    );
     context.putImageData(pixels, 0, 0);
     const url = canvas.toDataURL();
-    rasterCache.current.set(layer, url);
+    rasterCache.current.set(layer, { source, url });
     rasterImage.current?.setAttribute("href", url);
-  }, [layer, mission, thermal, elevationRange]);
+  }, [layer, mission, slope, thermal, elevationRange]);
+  const reading =
+    probe &&
+    (layer === "slope" || layer === "thermal" || layer === "topographic")
+      ? sampleSurfaceRaster(mission.grid, probe, layer, { slope, thermal })
+      : null;
+
   const routePath = useMemo(
     () =>
       route?.nodes
@@ -202,6 +177,7 @@ export function MarswalkMap({
         }}
         onPointerDown={(e) => {
           if ((e.target as Element).closest(".walk-map-marker")) return;
+          setProbe(null);
           e.currentTarget.setPointerCapture(e.pointerId);
           drag.current = {
             x: e.clientX,
@@ -213,7 +189,16 @@ export function MarswalkMap({
         }}
         onPointerMove={(e) => {
           const d = drag.current;
-          if (!d) return;
+          if (!d) {
+            const matrix = e.currentTarget.getScreenCTM();
+            if (matrix) {
+              const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(
+                matrix.inverse(),
+              );
+              setProbe({ x: p.x, y: bounds.northM - p.y });
+            }
+            return;
+          }
           const rect = e.currentTarget.getBoundingClientRect();
           const scale = viewport.size / Math.min(rect.width, rect.height);
           if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 4) d.moved = true;
@@ -223,6 +208,10 @@ export function MarswalkMap({
               x: d.startX - (e.clientX - d.x) * scale,
               y: d.startY - (e.clientY - d.y) * scale,
             }));
+        }}
+        onPointerLeave={() => setProbe(null)}
+        onPointerCancel={() => {
+          drag.current = null;
         }}
         onPointerUp={(e) => {
           const d = drag.current;
@@ -256,6 +245,7 @@ export function MarswalkMap({
         {["thermal", "topographic", "slope"].includes(layer) && (
           <image
             key={layer}
+            className="walk-raster"
             ref={rasterImage}
             x={0}
             y={0}
@@ -412,6 +402,22 @@ export function MarswalkMap({
         </small>
       </div>
       <span className="walk-north">N ↑</span>
+      {probe && layer !== "optical" && (
+        <output className="walk-raster-reading" aria-live="off">
+          {layer === "slope"
+            ? "Slope"
+            : layer === "thermal"
+              ? "IR brightness"
+              : "Elevation"}{" "}
+          ·{" "}
+          {reading === null
+            ? "Unknown / outside coverage"
+            : `${reading.toFixed(layer === "thermal" ? 0 : 2)} ${layer === "slope" ? "°" : layer === "thermal" ? "DN" : "m"}`}
+          <small>
+            {mission.grid.cellSizeM} m analysis cell · pointer sample
+          </small>
+        </output>
+      )}
       <div className="walk-map-tools">
         <button aria-label="Zoom in" onClick={() => zoom(0.8)}>
           <ZoomIn size={17} />

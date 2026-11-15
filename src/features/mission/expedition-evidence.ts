@@ -62,10 +62,16 @@ export function validateEvidence(value: unknown): ExpeditionEvidence {
         p.label?.startsWith("https://"),
     ) &&
     Array.isArray(weather.rows) &&
+    weather.rows.length > 0 &&
     weather.rows.length <= 8 &&
+    new Set(weather.rows.map((row) => row?.hour)).size ===
+      weather.rows.length &&
     weather.rows.every(
       (r) =>
-        Number.isFinite(r.hour) &&
+        !!r &&
+        Number.isInteger(r.hour) &&
+        r.hour >= 0 &&
+        r.hour < 24 &&
         keys.every(
           (k) =>
             (r[k] === null || Number.isFinite(r[k])) &&
