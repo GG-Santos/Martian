@@ -24,6 +24,7 @@ export function CrewMissionBoard({ selectedId, onSelect, onAccept, onBack, timel
   const [quests, setQuests] = useState<Quest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [catalogWarning, setCatalogWarning] = useState("");
   const [query, setQuery] = useState("");
   const [difficulty, setDifficulty] = useState("all");
   const [duration, setDuration] = useState("all");
@@ -34,7 +35,12 @@ export function CrewMissionBoard({ selectedId, onSelect, onAccept, onBack, timel
       if (!response.ok) throw new Error("The mission catalog could not be loaded. Refresh to try again.");
       const result: unknown = await response.json();
       if (!Array.isArray(result)) throw new Error("The mission catalog returned an invalid response.");
-      if (active) setQuests(result.filter((quest): quest is Quest => Boolean(quest && typeof quest === "object" && typeof quest.id === "string" && quest.status === "published")));
+      if (active) {
+        if (response.headers.get("x-mission-catalog-status") === "bundled-fallback") {
+          setCatalogWarning("Saved crew proposals are unavailable right now. Bundled missions remain available.");
+        }
+        setQuests(result.filter((quest): quest is Quest => Boolean(quest && typeof quest === "object" && typeof quest.id === "string" && quest.status === "published")));
+      }
     }).catch((reason: unknown) => { if (active) setError(reason instanceof Error ? reason.message : "The mission catalog could not be loaded."); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
@@ -48,6 +54,7 @@ export function CrewMissionBoard({ selectedId, onSelect, onAccept, onBack, timel
   const clearFilters = () => { setQuery(""); setDifficulty("all"); setDuration("all"); };
   return <section className="crew-setup-board" aria-label="Mission selection">
     {error && <Alert variant="destructive" role="alert">{error}</Alert>}
+    {catalogWarning && <Alert role="status">{catalogWarning}</Alert>}
     {loading ? <p className="crew-catalog-state" role="status">Loading available missions…</p>
       : !quests.length ? <div className="crew-mission-empty"><span className="eyebrow">MISSION BOARD</span><h2>No published missions</h2><p>Submit a quest first, then return here to choose it.</p><Button type="button" onClick={() => window.location.assign("/board?submit=1")}>Submit a Quest</Button></div>
         : <div className="crew-mission-layout">

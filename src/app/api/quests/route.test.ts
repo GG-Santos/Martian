@@ -14,6 +14,21 @@ describe("quest API handlers", () => {
     expect(quests.slice(0, -1).every((quest: { source: string }) => quest.source === "built-in")).toBe(true);
   });
 
+  it("keeps bundled missions available when MongoDB is unavailable", async () => {
+    const { GET } = createQuestHandlers({
+      list: vi.fn().mockRejectedValue(new Error("database unavailable")),
+      create: vi.fn(),
+    });
+
+    const response = await GET();
+    const quests = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-mission-catalog-status")).toBe("bundled-fallback");
+    expect(quests.length).toBeGreaterThan(0);
+    expect(quests.every((quest: { source: string }) => quest.source === "built-in")).toBe(true);
+  });
+
   it("returns a generic server error when MongoDB cannot save a proposal", async () => {
     const { POST } = createQuestHandlers({ list: vi.fn(), create: vi.fn().mockRejectedValue(new Error("private database detail")) });
 

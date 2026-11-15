@@ -70,10 +70,14 @@ export default function BoardPage() {
   const hasFilters = Boolean(query.trim() || difficulty !== "all" || source !== "all" || duration !== "all");
   const clearFilters = () => { setQuery(""); setDifficulty("all"); setSource("all"); setDuration("all"); };
   const [error, setError] = useState("");
+  const [catalogWarning, setCatalogWarning] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("/api/quests").then(async response => {
       if (!response.ok) throw new Error("Could not load the catalog. Please refresh and try again.");
+      if (response.headers.get("x-mission-catalog-status") === "bundled-fallback") {
+        setCatalogWarning("Saved crew proposals are unavailable right now. Bundled missions remain available.");
+      }
       setQuests(await response.json());
     }).catch((reason: Error) => setError(reason.message)).finally(() => setLoading(false));
   }, []);
@@ -101,6 +105,7 @@ export default function BoardPage() {
       <QuestForm missionId="jezero" cancel={() => setView("browse")} submit={submit} />
     </> : <>
       {error && <Alert className="board-error" variant="destructive">{error}</Alert>}
+      {catalogWarning && <Alert role="status">{catalogWarning}</Alert>}
       <section className="quest-catalog" aria-label="Quest catalog">
         <div className="quest-catalog-tools"><div className="quest-filters"><label className="quest-search"><Search size={16} /><Input aria-label="Search quests" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search quests" /></label><SelectField aria-label="Filter by difficulty" value={difficulty} onChange={event => setDifficulty(event.target.value)}><option value="all">Any difficulty</option><option value="low">Low</option><option value="moderate">Moderate</option><option value="high">High</option></SelectField><SelectField aria-label="Filter by duration" value={duration} onChange={event => setDuration(event.target.value)}><option value="all">Any duration</option><option value="short">45 min or less</option><option value="long">Over 45 min</option></SelectField><SelectField aria-label="Filter by source" value={source} onChange={event => setSource(event.target.value)}><option value="all">All sources</option><option value="built-in">Bundled objectives</option><option value="crew">Crew proposals</option></SelectField><Button onClick={() => setView("submit")}><Plus data-icon="inline-start" /> Submit quest</Button></div>{hasFilters && <div className="quest-filter-summary"><Button type="button" variant="link" size="sm" onClick={clearFilters}>Clear filters</Button></div>}</div>
         <div className="quest-grid">{filtered.map(quest => <Card className="quest-tile" render={<Link href={`/board/${encodeURIComponent(quest.id)}`} />} key={quest.id}>

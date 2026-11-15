@@ -8,10 +8,16 @@ type QuestCatalog = Pick<PrismaCatalog, "list" | "create">;
 export function createQuestHandlers(catalog: QuestCatalog = new PrismaCatalog()) {
   return {
     async GET() {
+      const bundledMissions = catalogObjectives();
       try {
-        return Response.json([...catalogObjectives(), ...await catalog.list()]);
+        return Response.json([...bundledMissions, ...await catalog.list()]);
       } catch {
-        return Response.json({ error: "Could not load quests." }, { status: 500 });
+        return Response.json(bundledMissions, {
+          headers: {
+            "cache-control": "no-store",
+            "x-mission-catalog-status": "bundled-fallback",
+          },
+        });
       }
     },
 
