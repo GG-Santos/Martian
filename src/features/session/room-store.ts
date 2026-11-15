@@ -47,6 +47,8 @@ export class RoomStore {
         restored.capacity = validCapacity(restored.capacity ?? 4);
         for (const member of restored.members) {
           if (options.resetConnectionsOnRestore !== false) member.connected = false;
+          if (member.isBot) member.connected = true;
+          member.isBot ??= false;
           member.avatar ??= { ...defaultAvatar };
           member.role = validRole(member.role, member.isHost ? "Captain" : "Crew");
         }
@@ -155,6 +157,29 @@ export class RoomStore {
           room.revision++;
           return result(room, member.id);
         }
+        break;
+      }
+      case "add-bot": {
+        requireHost(member);
+        requireSetup(room);
+        if (room.members.length >= room.capacity) throw new Error("Room is full");
+        const avatar: AvatarConfig = {
+          shell: pickRandom(avatarShells),
+          body: pickRandom(avatarBodies),
+          eyes: pickRandom(avatarEyes),
+          mouth: pickRandom(avatarMouths),
+        };
+        const bot = this.makeMember(
+          `${pickRandom(BOT_CALLSIGNS)}-${Math.floor(Math.random() * 90 + 10)}`,
+          pickRandom(BOT_ROLES),
+          this.randomId(),
+          false,
+          avatar,
+        );
+        bot.isBot = true;
+        bot.ready = true;
+        room.members.push(bot);
+        room.resources[bot.id] = initialResources();
         break;
       }
       case "ready":
@@ -302,6 +327,14 @@ export class RoomStore {
         resources.oxygen = Math.max(0, round(resources.oxygen - actualDistance * OXYGEN_PER_M));
         resources.stamina = Math.max(0, round(resources.stamina - actualDistance * STAMINA_PER_M));
         room.positions[member.id] = moved;
+        if (member.isHost) {
+          for (const bot of room.members.filter((candidate) => candidate.isBot)) {
+            room.positions[bot.id] = { ...moved };
+            room.resources[bot.id].oxygen = resources.oxygen;
+            room.resources[bot.id].stamina = resources.stamina;
+            bot.lastMoveAt = this.now();
+          }
+        }
         member.lastMoveAt = this.now();
         break;
       }
@@ -356,6 +389,9 @@ export class RoomStore {
 }
 
 function normalizeCode(code: string): string { return typeof code === "string" ? code.trim().toUpperCase() : ""; }
+const BOT_CALLSIGNS = ["Astra", "Pioneer", "Comet", "Nova", "Orbit", "Scout", "Sol", "Cosmo"];
+const BOT_ROLES = ["Geologist", "Navigator", "Engineer", "Field Scientist", "Medic", "Cartographer"];
+function pickRandom<T>(items: readonly T[]): T { return items[Math.floor(Math.random() * items.length)]; }
 function validName(name: string): string {
   if (typeof name !== "string" || name.trim().length < 1 || name.trim().length > 32) throw new Error("Invalid member name");
   return name.trim();
@@ -455,7 +491,7 @@ function requireSetup(room: StoredRoom) { if (room.status !== "setup") throw new
 function snapshot(room: StoredRoom): RoomSnapshot {
   return {
     code: room.code, crewName: room.crewName, captainEditing: room.captainEditing ?? false, revision: room.revision, status: room.status,
-    members: room.members.map(({ id, name, role, avatar, isHost, ready, connected, joinedAt }) => ({ id, name, role, avatar, isHost, ready, connected, joinedAt })),
+    members: room.members.map(({ id, name, role, avatar, isHost, ready, connected, joinedAt, isBot }) => ({ id, name, role, avatar, isHost, ready, connected, joinedAt, isBot: Boolean(isBot) })),
     base: room.base ? { ...room.base } : null, missionId: room.missionId,
     mission: room.mission ? structuredClone(room.mission) : null, capacity: room.capacity,
     baseScenario: room.baseScenario ? { ...room.baseScenario } : undefined,

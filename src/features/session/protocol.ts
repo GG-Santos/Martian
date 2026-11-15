@@ -17,6 +17,7 @@ export type RoomMember = {
   connected: boolean;
   joinedAt: number;
   avatar: AvatarConfig;
+  isBot?: boolean;
 };
 
 export type MemberResources = {
@@ -55,6 +56,7 @@ export type RoomSnapshot = {
 export type ClientCommand =
   | { type: "create"; name: string; crewName?: string; role?: string; avatar?: AvatarConfig; mission: RoomMission; base: LocalPoint; capacity: number; baseScenario: { version: 1; locationId: string; seed: string } }
   | { type: "join"; code: string; name: string; role?: string; avatar?: AvatarConfig }
+  | { type: "add-bot"; code: string; expectedRevision: number }
   | { type: "reconnect"; code: string; token: string }
   | { type: "leave"; code: string; expectedRevision: number }
   | { type: "disband"; code: string; expectedRevision: number }

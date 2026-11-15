@@ -130,6 +130,9 @@
 .lobby-stage canvas{display:block!important;width:100%!important;height:100%!important}
 .lobby-stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 100%,#a9c1bf0d,transparent 63%);z-index:1}
 .lobby-stage-labels{position:absolute;bottom:12px;left:0;right:0;z-index:2;pointer-events:none;text-align:center}
+.lobby-stage-add-buttons{position:absolute;inset:0;z-index:2;pointer-events:none}
+.lobby-stage-add-buttons button{position:absolute;top:62%;display:grid;place-items:center;width:34px;height:34px;padding:0;transform:translate(-50%,-50%);border:1px solid #a9c1bf66;border-radius:50%;background:#182129d9;color:#e5eef1;pointer-events:auto;cursor:pointer;transition:background .16s ease,border-color .16s ease,transform .16s ease}
+.lobby-stage-add-buttons button:hover,.lobby-stage-add-buttons button:focus-visible{transform:translate(-50%,-50%) scale(1.08);border-color:#a9c1bf;background:#31464a;outline:none}
 .lobby-stage-labels>div{position:absolute;bottom:0;display:grid;gap:3px;width:20%;padding:0 4px;transform:translateX(-50%)}.lobby-stage-labels strong{display:-webkit-box;min-height:2.4em;overflow:hidden;font-size:12px;line-height:1.2;white-space:normal;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}.lobby-stage-labels small{font-size:9px;color:#adb6bf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lobby-stage-labels span{font:10px ui-monospace,monospace;color:#9eabb1}
 .crew-lobby-grid{display:grid;grid-template-columns:minmax(320px,.82fr) minmax(0,1.4fr)}.crew-lobby-roster{padding:28px;border-right:1px solid #34373e}
 .crew-lobby-roster .avatar-creator{padding:18px 0;border-right:0;margin-top:18px;background:none}

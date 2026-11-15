@@ -234,7 +234,7 @@ export default function CrewPage() {
     if (destination === "lobby" || (destination !== step && !completedSetupSteps.includes(destination) && !availableSetupSteps.includes(destination))) return;
     if (destination === "details" || destination === "character" || destination === "mission" || destination === "base") setStep(destination);
   };
-  const sendRoom = (command: { type: "ready"; ready: boolean } | { type: "set-equipment"; equipment: string[] } | { type: "set-avatar"; avatar: AvatarConfig } | { type: "set-profile"; name: string; role?: string; avatar: AvatarConfig } | { type: "select-base"; point: { x: number; y: number } } | { type: "select-mission"; missionId: string } | { type: "captain-editing"; editing: boolean } | { type: "update-setup"; crewName: string; name: string; role?: string; avatar: AvatarConfig; mission: Quest; base: LocalPoint | null; capacity: number } | { type: "launch" }) => {
+  const sendRoom = (command: { type: "ready"; ready: boolean } | { type: "add-bot" } | { type: "set-equipment"; equipment: string[] } | { type: "set-avatar"; avatar: AvatarConfig } | { type: "set-profile"; name: string; role?: string; avatar: AvatarConfig } | { type: "select-base"; point: { x: number; y: number } } | { type: "select-mission"; missionId: string } | { type: "captain-editing"; editing: boolean } | { type: "update-setup"; crewName: string; name: string; role?: string; avatar: AvatarConfig; mission: Quest; base: LocalPoint | null; capacity: number } | { type: "launch" }) => {
     if (snapshot) send({ ...command, code: snapshot.code, expectedRevision: snapshot.revision });
   };
   const beginHostSetup = (destination: CrewSetupStep = "character") => {
@@ -353,7 +353,7 @@ export default function CrewPage() {
     {snapshot && !editingSetup && !editingMember && (<div className="crew-lobby">
       <div className="crew-lobby-grid">
         <section className="crew-lobby-panel" aria-labelledby="crew-lobby-heading"><header className="crew-lobby-panel-header"><div><span className="eyebrow">CREW ROOM / {snapshot.code}</span><h1 id="crew-lobby-heading">{snapshot.crewName}</h1><p>{snapshot.status === "launched" ? "Expedition launched" : `${snapshot.members.filter(member => member.ready).length} / ${snapshot.members.length} ready`}</p></div><div className="crew-lobby-code"><span>ROOM CODE</span><strong data-testid="room-code">{snapshot.code}</strong><Button size="sm" variant="outline" aria-label="Copy room code" onClick={async () => { await navigator.clipboard.writeText(snapshot.code); setCopied(true); }}>{copied ? <Check size={15} /> : <Copy size={15} />}</Button></div></header>
-          <LobbyStage members={snapshot.members} selfId={memberId} capacity={snapshot.capacity} />
+          <LobbyStage members={snapshot.members} selfId={memberId} capacity={snapshot.capacity} canAddBot={isHost && snapshot.status === "setup" && !snapshot.captainEditing && connection === "online"} onAddBot={() => sendRoom({ type: "add-bot" })} />
           <div className="crew-lobby-panel-timeline"><CrewSetupTimeline current="lobby" mode={isHost ? "create" : "join"} completed={isHost ? ["details", "mission", "base", "character"] : ["details", "character"]} available={snapshot.status !== "setup" ? [] : isHost ? ["details", "mission", "base", "character"] : ["details", "character"]} onNavigate={destination => {
             if (destination === "lobby") return;
             if (isHost && snapshot.status === "setup") beginHostSetup(destination);

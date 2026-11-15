@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { ContactShadows } from "@react-three/drei";
+import { Plus } from "lucide-react";
 import { Vector2 } from "three";
 import type { RoomMember } from "../session/protocol";
 import { defaultAvatar, type AvatarConfig } from "./avatar-types";
@@ -68,7 +69,7 @@ export function AvatarPreview({ avatar, label = "3D astronaut preview", cameraDi
   </div>;
 }
 
-export function LobbyStage({ members, selfId, capacity = 4 }: { members: RoomMember[]; selfId: string | null; capacity?: number }) {
+export function LobbyStage({ members, selfId, capacity = 4, canAddBot = false, onAddBot }: { members: RoomMember[]; selfId: string | null; capacity?: number; canAddBot?: boolean; onAddBot?: () => void }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const [stageAspect, setStageAspect] = useState(1);
   useEffect(() => {
@@ -83,7 +84,7 @@ export function LobbyStage({ members, selfId, capacity = 4 }: { members: RoomMem
     observer.observe(stage);
     return () => observer.disconnect();
   }, []);
-  const slots = Array.from({ length: 5 }, (_, index) => index);
+  const slots = Array.from({ length: Math.max(1, Math.min(5, capacity)) }, (_, index) => index);
   const cameraDepth = Math.hypot(2.2, 8.7);
   const halfViewWidth = cameraDepth * Math.tan(Math.PI / 10) * stageAspect;
   const outerSlotCount = Math.max(1, Math.ceil((slots.length - 1) / 2));
@@ -94,12 +95,12 @@ export function LobbyStage({ members, selfId, capacity = 4 }: { members: RoomMem
   const orderedMembers = [...members].sort((left, right) => Number(right.id === selfId) - Number(left.id === selfId));
   const visualMembers = slots.map((_, index) => orderedMembers[index]);
   const stageDescription = visualMembers.map((member, index) => member
-    ? `${member.name}, ${member.role || "Astronaut"}${member.isHost ? ", captain" : ""}, ${member.ready ? "ready" : member.connected ? "waiting" : "offline"}${member.id === selfId ? ", you" : ""}`
-    : index >= capacity ? `Closed slot ${index + 1}` : `Open slot ${index + 1}`).join("; ");
+    ? `${member.name}, ${member.role || "Astronaut"}${member.isHost ? ", captain" : ""}${member.isBot ? ", bot" : ""}, ${member.ready ? "ready" : member.connected ? "waiting" : "offline"}${member.id === selfId ? ", you" : ""}`
+    : `Open slot ${index + 1}`).join("; ");
   const avatarScale = slots.length > 3
     ? Math.min(0.78 * Math.min(1, Math.max(0.54, stageAspect / 1.5)), slotSpacing * 0.88 / 2.16)
     : 0.86;
-  return <div ref={stageRef} className="lobby-stage" role="img" aria-label={`3D crew formation: ${stageDescription}`}>
+  return <div ref={stageRef} className="lobby-stage" role="group" aria-label={`3D crew formation: ${stageDescription}`}>
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2.2, 8.7], fov: 36 }} gl={{ alpha: true, antialias: true }}>
       <StageLight />
       {slotXs.map((x, index) => <group key={x} position={[x, 0.65, 0]}>
@@ -107,16 +108,16 @@ export function LobbyStage({ members, selfId, capacity = 4 }: { members: RoomMem
         {visualMembers[index] && <GroundedLobbyAvatar avatar={visualMembers[index].avatar} scale={avatarScale} ready={visualMembers[index].ready} />}
       </group>)}
     </Canvas>
+    {canAddBot && onAddBot && <div className="lobby-stage-add-buttons" aria-label="Add a crew bot">{slotXs.map((x, index) => visualMembers[index] ? null : <button key={x} type="button" aria-label={`Add bot to open slot ${index + 1}`} title="Add a randomized crew bot" style={{ left: `${50 + x * 50 / halfViewWidth}%` }} onClick={onAddBot}><Plus size={20} aria-hidden="true" /></button>)}</div>}
     <div className="lobby-stage-labels">{slotXs.map((x, index) => {
       const member = visualMembers[index];
-      const closed = !member && index >= capacity;
-      const status = member ? member.ready ? "READY" : member.connected ? "STANDBY" : "OFFLINE" : closed ? "CLOSED" : "OPEN SLOT";
+      const status = member ? `${member.isBot ? "BOT · " : ""}${member.ready ? "READY" : member.connected ? "STANDBY" : "OFFLINE"}` : "OPEN SLOT";
       const role = member?.role || "Astronaut";
       const projectedLeft = 50 + x * 50 / halfViewWidth;
       const labelWidth = Math.min(20, slotSpacing * 50 / halfViewWidth * 0.92);
-      return <div key={x} className={closed ? "lobby-stage-slot--closed" : undefined} style={{ left: `${projectedLeft}%`, width: `${labelWidth}%` }}>
-        <strong>{member?.name ?? `${closed ? "CLOSED" : "OPEN"} SLOT ${String(index + 1).padStart(2, "0")}`}</strong>
-        <small>{member ? `${role}${member.isHost && role.toLowerCase() !== "captain" ? " · CAPTAIN" : ""}` : closed ? "OUTSIDE CREW CAPACITY" : "AWAITING ASTRONAUT"}</small>
+      return <div key={x} style={{ left: `${projectedLeft}%`, width: `${labelWidth}%` }}>
+        <strong>{member?.name ?? `OPEN SLOT ${String(index + 1).padStart(2, "0")}`}</strong>
+        <small>{member ? `${role}${member.isHost && role.toLowerCase() !== "captain" ? " · CAPTAIN" : ""}` : "AWAITING ASTRONAUT"}</small>
         <span className={`lobby-stage-status${member?.ready ? " is-ready" : ""}`}><i aria-hidden="true" />{status}</span>
       </div>;
     })}</div>
